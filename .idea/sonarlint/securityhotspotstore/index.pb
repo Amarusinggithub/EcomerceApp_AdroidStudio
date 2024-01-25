@@ -38,3 +38,7 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 
 Q.idea/sonarlint/securityhotspotstore/d/2/d2a4383452aad84a18429a5844d31330a012a9e6,7\f\7fcac164c7a46b8fc6411ea93226c884af6044db
+n
+>app/src/main/java/com/example/myecomerceapp/CategoryModel.java,e\a\ea8accaca8900462cb423660dfb54638a3091620
+p
+@app/src/main/java/com/example/myecomerceapp/CategoryAdapter.java,9\7\97654ed072c0f32b2082677e40a4e4f81c7c2891
