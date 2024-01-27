@@ -1,16 +1,16 @@
 package com.example.myecomerceapp;
 
 public class CategoryModel {
-    private String catogoryTitle;
-    private int categoryImage;
+    private final String categoryTitle;
+    private final int categoryImage;
 
-    public CategoryModel(String catogoryTitle ,int categoryImage) {
-        this.catogoryTitle=catogoryTitle;
+    public CategoryModel(String categoryTitle ,int categoryImage) {
+        this.categoryTitle =categoryTitle;
         this.categoryImage = categoryImage;
     }
 
-    public String getCatogoryTitle() {
-        return catogoryTitle;
+    public String getCategoryTitle() {
+        return categoryTitle;
     }
 
     public int getCategoryImage() {

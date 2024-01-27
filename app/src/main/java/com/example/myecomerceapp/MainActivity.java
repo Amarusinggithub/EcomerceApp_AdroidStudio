@@ -7,25 +7,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
-    private CategoryAdapter categoryAdapter;
-     private  ArrayList<CategoryModel> categoryModelArrayList=null;
-    private RecyclerView categoryRecycleView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        categoryRecycleView=findViewById(R.id.categoriesRecycleView);
+        RecyclerView categoryRecycleView = findViewById(R.id.categoriesRecycleView);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         categoryRecycleView.setLayoutManager(linearLayoutManager);
-        categoryAdapter=new CategoryAdapter(AddCategoriesToArrayList());
+        CategoryAdapter categoryAdapter = new CategoryAdapter(makeAndGetData());
         categoryRecycleView.setAdapter(categoryAdapter);
     }
 
-    public ArrayList<CategoryModel> AddCategoriesToArrayList() {
-        categoryModelArrayList = new ArrayList<>();
+    public List<CategoryModel> makeAndGetData() {
+        List<CategoryModel> categoryModelArrayList = new ArrayList<>();
         categoryModelArrayList.add(new CategoryModel("Fashion", R.drawable.fashoin_category_bg));
         categoryModelArrayList.add(new CategoryModel("Groceries", R.drawable.groceries_catecory_bg));
         categoryModelArrayList.add(new CategoryModel("Electronics", R.drawable.electronics_category_bg));

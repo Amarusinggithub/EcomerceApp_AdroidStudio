@@ -9,13 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
-    private ArrayList<CategoryModel> categoryModelArrayList;
+    private final List<CategoryModel> categoryModelArrayList;
 
-    public CategoryAdapter(ArrayList<CategoryModel> categoryModelArrayList) {
+    public CategoryAdapter(List<CategoryModel> categoryModelArrayList) {
         this.categoryModelArrayList = categoryModelArrayList;
     }
 
@@ -29,7 +29,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.MyViewHolder holder, int position) {
     CategoryModel categoryModel=categoryModelArrayList.get(position);
-    holder.categoryTitle.setText(categoryModel.getCatogoryTitle());
+    holder.categoryTitle.setText(categoryModel.getCategoryTitle());
     holder.categoryImage.setBackgroundResource(categoryModel.getCategoryImage());
     }
 
