@@ -28,8 +28,6 @@ Oapp/src/androidTest/java/com/example/myecomerceapp/ExampleInstrumentedTest.java
 gradlew.bat,2\a\2a45a911a8f1836b0b6c5b758962572012d8f8c3
 7
 gradlew,5\b\5bbfa66edb4db3c7c33c5181f43510990d3307f9
-m
-=app/src/main/java/com/example/myecomerceapp/MainActivity.java,2\b\2bae2136b2acc342f17e10256cd68a2a6196eca2
 
 Q.idea/sonarlint/securityhotspotstore/f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e,2\a\2a357145b04aeee0545d8bc616c6d89a975ff771
 S
@@ -38,7 +36,23 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 
 Q.idea/sonarlint/securityhotspotstore/d/2/d2a4383452aad84a18429a5844d31330a012a9e6,7\f\7fcac164c7a46b8fc6411ea93226c884af6044db
-n
->app/src/main/java/com/example/myecomerceapp/CategoryModel.java,e\a\ea8accaca8900462cb423660dfb54638a3091620
-p
-@app/src/main/java/com/example/myecomerceapp/CategoryAdapter.java,9\7\97654ed072c0f32b2082677e40a4e4f81c7c2891
+q
+Aapp/src/main/java/com/example/myecomerceapp/models/ItemModel.java,c\e\cedfb0593f3a778e1ac124083b112a0e14f01f17
+u
+Eapp/src/main/java/com/example/myecomerceapp/adapters/ItemAdapter.java,b\f\bfeb050bdc9b4b799ef2533e332ca4ddfa06b43b
+u
+Eapp/src/main/java/com/example/myecomerceapp/models/CategoryModel.java,8\8\8825e54187886bdede5ddf5c6f42dcee7f9ea788
+i
+9app/src/main/java/com/example/myecomerceapp/ItemView.java,b\6\b6a472c593b60cedb1e73b0bb4e8260e4135efef
+y
+Iapp/src/main/java/com/example/myecomerceapp/adapters/CategoryAdapter.java,d\4\d40e31c6f2425d86d513351fdf7edc9b328867f1
+x
+Happ/src/main/java/com/example/myecomerceapp/FashionGridViewActivity.java,1\7\173b9c8166ff1336e99572777d5174ee09c656f0
+z
+Japp/src/main/java/com/example/myecomerceapp/GroceriesGridViewActivity.java,1\a\1a27599423b3fa5dee4ef6b103bc9a53fb586aee
+s
+Capp/src/main/java/com/example/myecomerceapp/CategoriesActivity.java,b\b\bb1c4afd5974c804d9cd33c32eba25dbd99ed10c
+u
+Eapp/src/main/java/com/example/myecomerceapp/ItemOnClickInterface.java,6\e\6e67800233d5a3af227e9368d33722b2f865aba1
+u
+Eapp/src/main/java/com/example/myecomerceapp/ItemGridViewActivity.java,9\a\9a0dd942a60becf79f1c3991c241bbef5a2797f5

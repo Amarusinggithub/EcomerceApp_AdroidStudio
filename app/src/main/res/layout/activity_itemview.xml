@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<ImageView
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="40dp"
+    android:layout_marginLeft="40dp"
+    android:layout_marginBottom="20dp"
+    android:id="@+id/itemImage"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:background="@mipmap/ic_launcher_round"
+    />
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_below="@id/itemImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_below="@id/itemName"
+        android:id="@+id/itemPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/itemDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_below="@id/itemPrice"
+        android:id="@+id/itemQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"/>
+
+    <ImageButton
+        android:layout_toEndOf="@id/itemQuantity"
+        android:id="@+id/plussBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageButton
+        android:layout_toStartOf="@id/itemQuantity"
+        android:id="@+id/minusBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_below="@id/itemQuantity"
+        android:text="Buy"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/button_style"
+        android:id="@+id/buyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Swift Cart</string>
+    <string name="app_name">SwiftCart</string>
     <string name="categorytitle">CategoryTitle</string>
+    <string name="quantity">0</string>
+    <string name="buy">Buy</string>
+    <string name="item_price">Item Price</string>
+    <string name="item_title">Item title</string>
 
 
 </resources>
