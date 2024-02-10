@@ -1,28 +1,22 @@
-package com.example.myecomerceapp;
+package com.example.myecomerceapp.fragments;
 
 import android.os.Bundle;
-import android.view.TextureView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-public class ItemView extends AppCompatActivity {
-ImageView itemImage;
-TextView itemName,itemPrice,itemDescription,itemQuantity;
-Button buyBtn;
-ImageButton minusBtn,plusBtn;
+import com.example.myecomerceapp.R;
 
+public class ItemViewFragment extends Fragment {
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_itemview);
-
-        itemImage=findViewById(R.id.itemImage);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+       /* itemImage=findViewById(R.id.itemImage);
         itemName=findViewById(R.id.itemName);
         itemPrice=findViewById(R.id.itemPrice);
         itemDescription=findViewById(R.id.itemDescription);
@@ -39,6 +33,6 @@ ImageButton minusBtn,plusBtn;
         itemImage.setBackgroundResource(image);
         itemName.setText(name);
         itemPrice.setText(price);
-        itemDescription.setText(description);
+        itemDescription.setText(description);*/
     }
 }

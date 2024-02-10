@@ -5,6 +5,26 @@
     <string name="buy">Buy</string>
     <string name="item_price">Item Price</string>
     <string name="item_title">Item title</string>
+    <string name="pcs_and_parts">PCs and Parts</string>
+    <string name="smartphones_and_tablets">Smartphones and Tablets</string>
+    <string name="audio_and_video_equipment">Audio and Video Equipment</string>
+    <string name="gaming">Gaming</string>
+    <string name="wearables">Wearables</string>
+    <string name="smart_home_and_networking">Smart Home and Networking</string>
+    <string name="home_appliances">Home Appliances</string>
+    <string name="cartegories">Cartegories</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_click">Title click</string>
+    <string name="menu_camera">Camera</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="menu_group">Group</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

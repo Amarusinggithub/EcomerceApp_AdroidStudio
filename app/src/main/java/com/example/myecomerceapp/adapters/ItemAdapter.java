@@ -7,13 +7,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.myecomerceapp.CategoriesActivity;
 import com.example.myecomerceapp.ItemOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.ItemModel;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ItemAdapter extends BaseAdapter {
 
