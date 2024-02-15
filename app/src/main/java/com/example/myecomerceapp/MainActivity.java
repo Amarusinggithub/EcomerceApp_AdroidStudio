@@ -1,8 +1,11 @@
 package com.example.myecomerceapp;
 
+import static com.example.myecomerceapp.fragments.ItemGridViewFragment.getData;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -10,30 +13,53 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Switch;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myecomerceapp.adapters.BannerAdapter;
+import com.example.myecomerceapp.fragments.AccountFragment;
+import com.example.myecomerceapp.fragments.CartFragment;
 import com.example.myecomerceapp.fragments.CategoryFragment;
-import com.example.myecomerceapp.fragments.ItemGridViewFragment;
-import com.example.myecomerceapp.fragments.ItemViewFragment;
+import com.example.myecomerceapp.fragments.SalesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener   {
+public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener , ItemOnClickInterface {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+   public static RecyclerView bannerRecycleView;
+    FrameLayout frameLayout;
+   public static TextView specialsTv;
+
+   public static SearchView searchView;
     BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.toolbar);
+        /*toolbar = findViewById(R.id.toolbar);*/
         bottomNavigationView=findViewById(R.id.bottomnav);
+        specialsTv=findViewById(R.id.specalstv);
+        frameLayout=findViewById(R.id.frameLayout);
+        searchView=findViewById(R.id.searchview);
+
+        bannerRecycleView = findViewById(R.id.bannerRecycleView);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        bannerRecycleView.setLayoutManager(linearLayoutManager);
+        BannerAdapter bannerAdapter = new BannerAdapter(getData("Fashion"),this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        bannerRecycleView.setAdapter(bannerAdapter);
+
+
+
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -41,13 +67,28 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 if (item.getItemId()== R.id.home){
 
                         loadFragment(new CategoryFragment());
+                        bannerRecycleView.setVisibility(View.VISIBLE);
+
 
                 }
-                else if (item.getItemId()== R.id.settings) {
-                    loadFragment(new ItemGridViewFragment());
+                else if (item.getItemId()== R.id.sales) {
+                    loadFragment(new SalesFragment());
+                    removeBannerRecyclerView();
+
+
 
                 } else if (item.getItemId()== R.id.account) {
-                    loadFragment(new ItemViewFragment());
+                    loadFragment(new AccountFragment());
+                    removeBannerRecyclerView();
+
+
+
+                }else if (item.getItemId()== R.id.cart) {
+                    loadFragment(new CartFragment());
+                    removeBannerRecyclerView();
+
+
+
                 }
                 return true;
             }
@@ -57,6 +98,16 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         setupDrawer();
         loadFragment(new CategoryFragment());
     }
+
+    public static void removeSearchView() {
+        searchView.setVisibility(View.GONE);
+    }
+
+    public static  void removeBannerRecyclerView(){
+        specialsTv.setVisibility(View.GONE);
+        bannerRecycleView.setVisibility(View.GONE);
+    }
+
     private  void loadFragment(Fragment fragment) {
 
         FragmentManager fm = getSupportFragmentManager();
@@ -64,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
-
 
     private void setupDrawer() {
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -99,10 +149,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 Toast.LENGTH_SHORT).show());
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+
+
+        return true;
     }
 
     @Override
@@ -122,6 +173,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     @Override
     public void onDrawerStateChanged(int newState) {
+
+    }
+
+
+    @Override
+    public void onItemClicked(int position) {
 
     }
 }
