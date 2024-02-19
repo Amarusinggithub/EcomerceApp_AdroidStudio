@@ -42,8 +42,8 @@ public class CategoryFragment extends Fragment implements ItemOnClickInterface {
         categoryModelArrayList.add(new CategoryModel("Groceries", R.drawable.groceries_category_bg,"Groceries"));
         categoryModelArrayList.add(new CategoryModel("Electronics", R.drawable.electronics_category_bg,"Electronics"));
         categoryModelArrayList.add(new CategoryModel("Home Appliances", R.drawable.homeappliances_category_bg,"Home Appliances"));
-        categoryModelArrayList.add(new CategoryModel("Personal Care", R.drawable.personalcare_category_bg,"Personal Care"));
-        categoryModelArrayList.add(new CategoryModel("Sports And Adventure", R.drawable.sports_andoutdoors_category_bg,"Sports And Adventure"));
+       /* categoryModelArrayList.add(new CategoryModel("Personal Care", R.drawable.personalcare_category_bg,"Personal Care"));
+        categoryModelArrayList.add(new CategoryModel("Sports And Adventure", R.drawable.sports_andoutdoors_category_bg,"Sports And Adventure"));*/
         return categoryModelArrayList;
     }
     private void loadFragment(Fragment fragment) {

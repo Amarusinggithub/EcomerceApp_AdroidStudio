@@ -37,7 +37,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
 
         ItemModel itemModel=itemModels.get(position);
         holder.image.setBackgroundResource(itemModel.getItemImage());
-        holder.text.setText(itemModel.getItemName());
+        /*holder.text.setText(itemModel.getItemName());*/
     }
 
     @Override
@@ -54,7 +54,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
             super(itemView);
 
             image=itemView.findViewById(R.id.bannerImage);
-            text=itemView.findViewById(R.id.bannerTitle);
+         /*   text=itemView.findViewById(R.id.bannerTitle);*/
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

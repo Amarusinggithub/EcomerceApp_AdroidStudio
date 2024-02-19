@@ -16,7 +16,7 @@ import java.util.List;
 public class ItemAdapter extends BaseAdapter {
 
     private final ItemOnClickInterface itemGridViewInterface;
-    private final List<ItemModel> itemModelArrayList;
+    private List<ItemModel> itemModelArrayList;
 
     public ItemAdapter(ItemOnClickInterface itemGridViewInterface, List<ItemModel> itemModelArrayList) {
         this.itemGridViewInterface = itemGridViewInterface;
@@ -57,6 +57,10 @@ public class ItemAdapter extends BaseAdapter {
        });
 
         return convertView;
+    }
+
+    public void filteredList(List <ItemModel> filteredList){
+        itemModelArrayList=filteredList;
     }
 }
 

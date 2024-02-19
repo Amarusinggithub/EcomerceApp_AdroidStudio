@@ -65,9 +65,11 @@
 
     <Button
         android:layout_below="@id/addtocartbtn"
-        android:text="Buy"
+        android:text="@string/buy"
         android:textAlignment="center"
-        android:textSize="20dp"
+        style="@style/Widget.Material3.Button.Icon"
+
+        android:textSize="20sp"
         android:textAllCaps="true"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -80,11 +82,12 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"/>
+
     <Button
         android:layout_below="@id/itemDescription"
-        android:text="ADD TO CART"
+        android:text="@string/add_to_cart"
         android:textAlignment="center"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textAllCaps="true"
         android:textStyle="bold"
         android:textColor="@color/white"
