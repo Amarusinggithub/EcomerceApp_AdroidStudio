@@ -23,6 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activitys.LoginActivity"
+            android:exported="false"/>
+        <activity android:name=".activitys.CreateAccountActivity"
+            android:exported="false"/>
+        <activity android:name=".activitys.SplashScreenActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

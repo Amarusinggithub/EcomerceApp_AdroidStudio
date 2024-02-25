@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myecomerceapp.ItemOnClickInterface;
+import com.example.myecomerceapp.interfaces.ItemOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.BannerAdapter;
 import com.example.myecomerceapp.fragments.AccountFragment;

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myecomerceapp.ItemOnClickInterface;
+import com.example.myecomerceapp.interfaces.ItemOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.CategoryModel;
 

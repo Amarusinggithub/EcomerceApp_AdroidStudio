@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.myecomerceapp.ItemOnClickInterface;
+import com.example.myecomerceapp.interfaces.ItemOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.ItemModel;
 
