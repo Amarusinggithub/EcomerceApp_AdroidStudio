@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myecomerceapp.ItemOnClickInterface;
-import com.example.myecomerceapp.MainActivity;
+import com.example.myecomerceapp.activitys.MainActivity;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.CategoryAdapter;
 import com.example.myecomerceapp.models.CategoryModel;

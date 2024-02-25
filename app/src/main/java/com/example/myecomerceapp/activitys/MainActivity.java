@@ -1,6 +1,5 @@
-package com.example.myecomerceapp;
+package com.example.myecomerceapp.activitys;
 
-import static com.example.myecomerceapp.fragments.ItemGridViewFragment.categoryId;
 import static com.example.myecomerceapp.fragments.ItemGridViewFragment.filter;
 import static com.example.myecomerceapp.fragments.ItemGridViewFragment.getData;
 
@@ -19,12 +18,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myecomerceapp.ItemOnClickInterface;
+import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.BannerAdapter;
 import com.example.myecomerceapp.fragments.AccountFragment;
 import com.example.myecomerceapp.fragments.CartFragment;
 import com.example.myecomerceapp.fragments.CategoryFragment;
 import com.example.myecomerceapp.fragments.SalesFragment;
-import com.example.myecomerceapp.models.ItemModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -34,8 +34,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
