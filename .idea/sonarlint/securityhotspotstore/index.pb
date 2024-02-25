@@ -44,8 +44,6 @@ u
 Eapp/src/main/java/com/example/myecomerceapp/models/CategoryModel.java,8\8\8825e54187886bdede5ddf5c6f42dcee7f9ea788
 y
 Iapp/src/main/java/com/example/myecomerceapp/adapters/CategoryAdapter.java,d\4\d40e31c6f2425d86d513351fdf7edc9b328867f1
-u
-Eapp/src/main/java/com/example/myecomerceapp/ItemOnClickInterface.java,6\e\6e67800233d5a3af227e9368d33722b2f865aba1
 {
 Kapp/src/main/java/com/example/myecomerceapp/fragments/ItemViewFragment.java,4\3\4329bfd15aba3e6f589b73ed428a05a72418f4b1
 
@@ -64,8 +62,6 @@ x
 Happ/src/main/java/com/example/myecomerceapp/activitys/LoginActivity.java,e\c\ec011c85f17cc08ef3741b35bf2baf0fd07b4cba
 €
 Papp/src/main/java/com/example/myecomerceapp/activitys/CreateAccountActivity.java,e\d\ed47643c1fac5e16062bc4a893533382a84eaef2
-w
-Gapp/src/main/java/com/example/myecomerceapp/activitys/SplashScreen.java,7\f\7ffa9b82e52253d2255cac747cc6f9deb21b295b
 w
 Gapp/src/main/java/com/example/myecomerceapp/activitys/MainActivity.java,4\3\43bdea5aa82ad6b949dfc39a09253c4d57a42f30
 
