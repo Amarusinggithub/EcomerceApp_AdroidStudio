@@ -13,6 +13,7 @@
 
     <TextView
         android:id="@+id/itemName"
+        style="@style/backgroundColor"
         android:layout_below="@id/itemImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +27,7 @@
         android:id="@+id/itemPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/backgroundColor"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
@@ -35,6 +37,7 @@
         android:id="@+id/itemDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/backgroundColor"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
@@ -47,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        style="@style/backgroundColor"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"/>

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SwiftCart</string>
-    <string name="categorytitle">CategoryTitle</string>
+    <string name="categorytitle">Category Title</string>
     <string name="quantity">0</string>
     <string name="buy">Buy</string>
     <string name="item_price">Item Price</string>
@@ -19,13 +19,13 @@
     <string name="menu_group">Group</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="groceries">Groceries</string>
-    <string name="fashion">Fashion</string>
-    <string name="electronics">Electronics</string>
-    <string name="pet_supplies">Pet Supplies</string>
-    <string name="personal_care">Personal Care</string>
-    <string name="sports_and_adventure">Sports And Adventure</string>
     <string name="add_to_cart">ADD TO CART</string>
+    <string name="smartphones">Smartphones</string>
+    <string name="laptop">Laptop</string>
+    <string name="games">Games</string>
+    <string name="gaming_consoles">Gaming Consoles</string>
+    <string name="specials_for_you">Specials For You</string>
+    <string name="categories">Categories</string>
 
 
 </resources>

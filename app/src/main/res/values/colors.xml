@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FBFBFE</color>
+    <color name="white">#FFFF</color>
+    <color name="black">#000000</color>
     <color name="my_dark_text_color">#eae9fc</color>
     <color name="my_dark_background_color">#010104</color>
     <color name="my_light_text_color">#040316</color>
     <color name="my_light_background_color">#fbfbfe</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="my_light_primary">#2f27ce</color>
-    <color name="my_light_secondary_clor">#dddbff</color>
+    <color name="my_light_secondary_color">#dddbff</color>
     <color name="my_light_accent_color">#443dff</color>
     <color name="my_dark_primary">#3a31d8</color>
-    <color name="my_dark_secondary_clor">#020024</color>
+    <color name="my_dark_secondary_color">#020024</color>
     <color name="my_dark_accent_color">#0600c2</color>
-
 </resources>

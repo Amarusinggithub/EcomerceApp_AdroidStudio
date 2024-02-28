@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*toolbar = findViewById(R.id.toolbar);*/
+        toolbar = findViewById(R.id.toolbar);
         bottomNavigationView=findViewById(R.id.bottomnav);
         specialsTv=findViewById(R.id.specalstv);
         frameLayout=findViewById(R.id.frameLayout);

@@ -2,6 +2,30 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MyEcomerceApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+         <item name="colorPrimary">@color/my_dark_primary</item>
+        <item name="colorSecondary">@color/my_dark_secondary_color</item>
+        <item name="colorPrimaryVariant">@color/my_dark_accent_color</item>
+        <item name="android:statusBarColor" >@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.PrimarySurface</item>
+        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowStyle</item>
     </style>
+
+    <style name="AppTheme.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="Theme.MyEcomerceApp" parent="Base.Theme.MyEcomerceApp" />
+
+    <style name="textColor">
+        <item name="android:textColor">@color/my_dark_text_color</item>
+    </style>
+
+    <style name="backgroundColor">
+        <item name="android:background">@color/my_dark_background_color</item>
+    </style>
+
+    <style name="secondaryColor">
+        <item name="android:background">@color/my_dark_secondary_color</item>
+    </style>
+
 </resources>

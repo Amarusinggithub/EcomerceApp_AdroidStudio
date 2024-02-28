@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -29,8 +30,9 @@ public class CategoryFragment extends Fragment implements ItemOnClickInterface {
                              Bundle savedInstanceState) {
         View categorieRecycleView=inflater.inflate(R.layout.fragment_category, container, false);
         RecyclerView categoryRecycleView = categorieRecycleView.findViewById(R.id.categoriesRecycleView);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
-        categoryRecycleView.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        categoryRecycleView.setLayoutManager(linearLayoutManager);
         CategoryAdapter categoryAdapter = new CategoryAdapter(this, getCategoryData());
         categoryRecycleView.setAdapter(categoryAdapter);
         return categorieRecycleView;
@@ -38,17 +40,14 @@ public class CategoryFragment extends Fragment implements ItemOnClickInterface {
 
     public static List<CategoryModel> getCategoryData() {
         List<CategoryModel> categoryModelArrayList = new ArrayList<>();
-        categoryModelArrayList.add(new CategoryModel("Fashion", R.drawable.fashion_category_bg,"Fashion"));
-        categoryModelArrayList.add(new CategoryModel("Groceries", R.drawable.groceries_category_bg,"Groceries"));
-        categoryModelArrayList.add(new CategoryModel("Electronics", R.drawable.electronics_category_bg,"Electronics"));
-        categoryModelArrayList.add(new CategoryModel("Home Appliances", R.drawable.homeappliances_category_bg,"Home Appliances"));
-       /* categoryModelArrayList.add(new CategoryModel("Personal Care", R.drawable.personalcare_category_bg,"Personal Care"));
-        categoryModelArrayList.add(new CategoryModel("Sports And Adventure", R.drawable.sports_andoutdoors_category_bg,"Sports And Adventure"));*/
+        categoryModelArrayList.add(new CategoryModel("Phones", R.drawable.smartphones_category_icon,"SmartPhones"));
+        categoryModelArrayList.add(new CategoryModel("Laptop", R.drawable.laptop_category_icon,"Laptop"));
+        categoryModelArrayList.add(new CategoryModel("Games", R.drawable.games_category_icon,"Games"));
+        categoryModelArrayList.add(new CategoryModel("Consoles",R.drawable.gamingconsoles_category_icon ,"Gaming Consoles"));
+        categoryModelArrayList.add(new CategoryModel("Appliances",R.drawable.homeappliance_category_icon,"Home Appliances"));
         return categoryModelArrayList;
     }
     private void loadFragment(Fragment fragment) {
-
-
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
@@ -60,7 +59,7 @@ public class CategoryFragment extends Fragment implements ItemOnClickInterface {
         MainActivity.removeBannerRecyclerView();
         CategoryModel categoryModel=getCategoryData().get(position);
         ItemGridViewFragment itemGridViewFragment=new ItemGridViewFragment();
-        itemGridViewFragment.categoryId=categoryModel.getCategoryId();
+        ItemGridViewFragment.categoryId=categoryModel.getCategoryId();
         loadFragment(itemGridViewFragment);
     }
 

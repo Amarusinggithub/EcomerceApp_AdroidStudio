@@ -8,18 +8,14 @@
             app:showAsAction="never">
             <menu>
                 <group android:checkableBehavior="single">
-                    <item android:id="@+id/Fashion"
-                        android:title="@string/fashion" />
-                    <item android:id="@+id/Groceries"
-                        android:title="@string/groceries" />
-                    <item android:id="@+id/Electronics"
-                        android:title="@string/electronics" />
-                    <item android:id="@+id/PetSupplies"
-                        android:title="@string/pet_supplies" />
-                    <item android:id="@+id/PersonalCare"
-                        android:title="@string/personal_care" />
-                    <item android:id="@+id/SportsAndAdventure"
-                        android:title="@string/sports_and_adventure" />
+                    <item android:id="@+id/SmartPhones"
+                        android:title="@string/smartphones" />
+                    <item android:id="@+id/Laptop"
+                        android:title="@string/laptop" />
+                    <item android:id="@+id/Games"
+                        android:title="@string/games" />
+                    <item android:id="@+id/GamingConsoles"
+                        android:title="@string/gaming_consoles" />
                     <item android:id="@+id/HomeAppliances"
                         android:title="@string/home_appliances" />
                 </group>
