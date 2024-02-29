@@ -28,7 +28,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
     @NonNull
     @Override
     public BannerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.banner_recycleview,parent,false);
+        View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.specials_recycleview,parent,false);
         return new MyViewHolder(itemView,itemOnClickInterface);
     }
 

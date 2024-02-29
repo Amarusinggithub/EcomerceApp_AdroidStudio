@@ -31,6 +31,10 @@
         <item name="android:background">@color/my_light_secondary_color</item>
     </style>
 
+    <style name="acccentColor">
+        <item name="android:background">@color/my_light_accent_color</item>
+    </style>
+
 
 
 </resources>

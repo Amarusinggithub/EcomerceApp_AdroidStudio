@@ -19,7 +19,7 @@ public class ItemViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        MainActivity.removeSearchView();
+
         View itemView=inflater.inflate(R.layout.fragment_itemview, container, false);
 
         Bundle args = getArguments();

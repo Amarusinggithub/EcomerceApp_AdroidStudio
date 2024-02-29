@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="-8dp"
+    android:layout_marginStart="6dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -12,7 +11,6 @@
         android:layout_height="wrap_content"
         android:elevation="20dp"
         app:cardCornerRadius="10dp"
-
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
@@ -45,9 +43,9 @@
         android:layout_height="wrap_content"
         android:text="@string/categorytitle"
 
-        android:textSize="13sp"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="4dp"
+        android:textSize="11sp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="12dp"
         android:textAlignment="center"
         style="@style/textColor"
         android:layout_below="@id/cardview"

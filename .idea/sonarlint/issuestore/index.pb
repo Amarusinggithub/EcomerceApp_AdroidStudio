@@ -56,8 +56,6 @@ w
 Gapp/src/main/java/com/example/myecomerceapp/fragments/CartFragment.java,6\9\696e7573f17f35e406e18f452c54c27315ef56b5
 z
 Japp/src/main/java/com/example/myecomerceapp/fragments/AccountFragment.java,6\3\6399d627140a4e93c1024d777fc6ada51002b777
-{
-Kapp/src/main/java/com/example/myecomerceapp/fragments/CategoryFragment.java,1\7\173e949c11f9c3ef1f552444505e86f2f9976ed8
 x
 Happ/src/main/java/com/example/myecomerceapp/activitys/LoginActivity.java,e\c\ec011c85f17cc08ef3741b35bf2baf0fd07b4cba
 €

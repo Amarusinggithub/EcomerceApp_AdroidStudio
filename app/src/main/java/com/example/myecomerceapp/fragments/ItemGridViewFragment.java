@@ -1,6 +1,8 @@
 package com.example.myecomerceapp.fragments;
 
 
+import static com.example.myecomerceapp.activitys.MainActivity.removeBannerRecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +24,16 @@ import com.example.myecomerceapp.adapters.ItemAdapter;
 import com.example.myecomerceapp.models.ItemModel;
 
 public class ItemGridViewFragment extends Fragment implements ItemOnClickInterface {
-    public static String categoryId;
-    static List<ItemModel>  filtertedList;
+    public static  String categoryId;
+    public static List<ItemModel>  filtertedList;
     public static ItemAdapter itemAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View ItemCridView=inflater.inflate(R.layout.fragment_item_grid_view, container, false);
-
         GridView itemGridView =ItemCridView.findViewById( R.id.gridView);
-         itemAdapter = new ItemAdapter(this, getData(categoryId));
+        itemAdapter = new ItemAdapter(this, getData(categoryId));
         itemGridView.setNumColumns(2);
         itemGridView.setAdapter(itemAdapter);
 
@@ -43,14 +44,13 @@ public class ItemGridViewFragment extends Fragment implements ItemOnClickInterfa
         for(ItemModel item:getData(categoryId)){
             if(item.getItemName().toLowerCase().contains(newText.toLowerCase())){
                 filtertedList.add(item);
-
             }
         }itemAdapter.filteredList(filtertedList);
 
     }
 
     public static List<ItemModel> getData(String categoryId) {
-        List<ItemModel>ItemsArrayList = new ArrayList<>();
+        List<ItemModel>itemsArrayList = new ArrayList<>();
         if ("SmartPhones".equals(categoryId)) {
 
         } else if ("Laptop".equals(categoryId)) {
@@ -62,7 +62,7 @@ public class ItemGridViewFragment extends Fragment implements ItemOnClickInterfa
         } else if ("Home Appliances".equals(categoryId)) {
 
         }
-        return ItemsArrayList;
+        return itemsArrayList;
 
     }
 
