@@ -125,8 +125,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             }
         });
 */
-
-
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()== R.id.home){
                 addBannerRecyclerView();
@@ -152,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         });
 
         setSupportActionBar(toolbar);
-
         setupDrawer();
 
     }
@@ -252,7 +249,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     }
 
-
     @Override
     public void onItemClicked(int position) {
         removeBannerRecyclerView();
@@ -262,6 +258,5 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         ItemGridViewFragment.categoryId=categoryModel.getCategoryId();
         loadFragment(itemGridViewFragment);
     }
-
 
 }

@@ -70,6 +70,26 @@
             style="@style/backgroundColor"
             />
 
+        <TextView
+            android:id="@+id/popularproducttv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Popular Products"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            style="@style/textColor"
+            android:layout_below="@id/specialsbanner"
+            android:layout_margin="10dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/popularproductrecycleview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/popularproducttv"
+            style="@style/backgroundColor"
+            />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomnav"
             style="@style/backgroundColor"
@@ -88,6 +108,9 @@
             android:visibility="gone"
             android:layout_below="@id/categoriesRecycleView"
             />
+
+
+
 
     </RelativeLayout>
 
