@@ -70,3 +70,7 @@ x
 Happ/src/main/java/com/example/myecomerceapp/database/SQLiteDbHelper.java,0\f\0f77e88d96a92b0157e4325f481f3dc01e783b05
 y
 Iapp/src/main/java/com/example/myecomerceapp/database/DatabaseManager.java,5\f\5f3046960e6fcda3e4ccb68244dd15e60e122cf5
+}
+Mapp/src/main/java/com/example/myecomerceapp/activitys/searchViewActivity.java,7\e\7e1928735e687974cc3f82965730bc18c997b376
+}
+Mapp/src/main/java/com/example/myecomerceapp/activitys/SearchViewActivity.java,5\f\5f9a76d1c9d248619b8805170cb087157476c8ae

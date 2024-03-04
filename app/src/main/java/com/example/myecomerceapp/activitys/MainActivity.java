@@ -1,7 +1,7 @@
 package com.example.myecomerceapp.activitys;
 
 
-import static com.example.myecomerceapp.fragments.ItemGridViewFragment.getData;
+
 
 
 
@@ -30,8 +30,8 @@ import com.example.myecomerceapp.fragments.AccountFragment;
 import com.example.myecomerceapp.fragments.CartFragment;
 import com.example.myecomerceapp.fragments.SalesFragment;
 import com.example.myecomerceapp.models.CategoryModel;
+import com.example.myecomerceapp.models.ItemModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.FragmentManager;
@@ -52,12 +52,15 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static FrameLayout frameLayout;
    public static TextView specialsTv;
 
-   public static SearchView searchView;
+
 
     public static CardView displayBanner;
 
     public static RecyclerView categoryRecycleView;
 
+    public static  TextView popularProductstv;
+
+    public static RecyclerView popularProductsRecycleview;
 
 
     BottomNavigationView bottomNavigationView;
@@ -66,19 +69,22 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Variables
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView=findViewById(R.id.bottomnav);
         specialsTv=findViewById(R.id.specalstv);
         frameLayout=findViewById(R.id.frameLayout);
         displayBanner=findViewById(R.id.displayBanner);
-        /*searchView=findViewById(R.id.searchview);*/
+
        specialsBanner = findViewById(R.id.specialsbanner);
        categoryRecycleView = findViewById(R.id.categoriesRecycleView);
+       popularProductsRecycleview=findViewById(R.id.popularproductrecycleview);
+       popularProductstv=findViewById(R.id.popularproducttv);
 
-        //special banner recycleview
+        //specials banner recycleview
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
        specialsBanner.setLayoutManager(linearLayoutManager);
-        BannerAdapter bannerAdapter = new BannerAdapter(getData("Fashion"),this);
+        BannerAdapter bannerAdapter = new BannerAdapter(getData("specials"),this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
        specialsBanner.setAdapter(bannerAdapter);
 
@@ -111,39 +117,26 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         }, 0, 3000);
 
 
-       /* searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filter(newText);
-
-                return true;
-            }
-        });
-*/
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()== R.id.home){
-                addBannerRecyclerView();
+                addViews();
 
             }
             else if (item.getItemId()== R.id.sales) {
                 loadFragment(new SalesFragment());
                 categoryRecycleView.setVisibility(View.GONE);
-                removeBannerRecyclerView();
+                removeViews();
 
             } else if (item.getItemId()== R.id.account) {
                 loadFragment(new AccountFragment());
                 categoryRecycleView.setVisibility(View.GONE);
-                removeBannerRecyclerView();
+                removeViews();
 
             }else if (item.getItemId()== R.id.cart) {
                 loadFragment(new CartFragment());
                 categoryRecycleView.setVisibility(View.GONE);
-                removeBannerRecyclerView();
+                removeViews();
 
             }
             return true;
@@ -164,21 +157,44 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         return categoryModelArrayList;
     }
 
-    public static  void removeBannerRecyclerView(){
+    public static List<ItemModel> getData(String Id) {
+        List<ItemModel>itemsArrayList = new ArrayList<>();
+        if ("SmartPhones".equals(Id)) {
+
+        } else if ("Laptop".equals(Id)) {
+
+        }else if ("Games".equals(Id)) {
+
+        }  else if ("Gaming Consoles ".equals(Id)) {
+
+        } else if ("Home Appliances".equals(Id)) {
+
+        }else if ("specials".equals(Id)) {
+
+        }
+        return itemsArrayList;
+
+    }
+
+    public static  void removeViews(){
         frameLayout.setVisibility(View.VISIBLE);
        /* searchView.setVisibility(View.GONE);*/
         specialsTv.setVisibility(View.GONE);
        specialsBanner.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
+       popularProductstv.setVisibility(View.GONE);
+       popularProductsRecycleview.setVisibility(View.GONE);
     }
 
-    public static  void addBannerRecyclerView(){
+    public static  void addViews(){
         frameLayout.setVisibility(View.GONE);
        /* searchView.setVisibility(View.VISIBLE);*/
         categoryRecycleView.setVisibility(View.VISIBLE);
         specialsTv.setVisibility(View.VISIBLE);
        specialsBanner.setVisibility(View.VISIBLE);
        displayBanner.setVisibility(View.VISIBLE);
+       popularProductsRecycleview.setVisibility(View.VISIBLE);
+       popularProductstv.setVisibility(View.VISIBLE);
 
     }
 
@@ -251,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     @Override
     public void onItemClicked(int position) {
-        removeBannerRecyclerView();
+        removeViews();
         categoryRecycleView.setVisibility(View.VISIBLE);
         CategoryModel categoryModel=getCategoryData().get(position);
         ItemGridViewFragment itemGridViewFragment=new ItemGridViewFragment();

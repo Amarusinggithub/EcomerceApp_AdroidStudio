@@ -1,7 +1,7 @@
 package com.example.myecomerceapp.fragments;
 
 
-import static com.example.myecomerceapp.activitys.MainActivity.removeBannerRecyclerView;
+import static com.example.myecomerceapp.activitys.MainActivity.getData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import com.example.myecomerceapp.models.ItemModel;
 
 public class ItemGridViewFragment extends Fragment implements ItemOnClickInterface {
     public static  String categoryId;
-    public static List<ItemModel>  filtertedList;
+
     public static ItemAdapter itemAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,32 +39,7 @@ public class ItemGridViewFragment extends Fragment implements ItemOnClickInterfa
 
         return ItemCridView;
     }
-    public static void filter(String newText) {
-        filtertedList= new ArrayList<>();
-        for(ItemModel item:getData(categoryId)){
-            if(item.getItemName().toLowerCase().contains(newText.toLowerCase())){
-                filtertedList.add(item);
-            }
-        }itemAdapter.filteredList(filtertedList);
 
-    }
-
-    public static List<ItemModel> getData(String categoryId) {
-        List<ItemModel>itemsArrayList = new ArrayList<>();
-        if ("SmartPhones".equals(categoryId)) {
-
-        } else if ("Laptop".equals(categoryId)) {
-
-        }else if ("Games".equals(categoryId)) {
-
-        }  else if ("Gaming Consoles ".equals(categoryId)) {
-
-        } else if ("Home Appliances".equals(categoryId)) {
-
-        }
-        return itemsArrayList;
-
-    }
 
     private  void loadFragment(Fragment fragment) {
         FragmentManager fm = getActivity().getSupportFragmentManager();

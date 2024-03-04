@@ -11,7 +11,6 @@
         android:elevation="15dp"
         android:background="@color/my_light_background_color"
         android:layout_marginStart="10dp"
-
         >
 
         <ImageView

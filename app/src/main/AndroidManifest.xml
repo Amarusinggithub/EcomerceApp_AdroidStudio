@@ -29,6 +29,8 @@
             android:exported="false"/>
         <activity android:name=".activitys.SplashScreenActivity"
             android:exported="false"/>
+        <activity android:name=".activitys.SearchViewActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

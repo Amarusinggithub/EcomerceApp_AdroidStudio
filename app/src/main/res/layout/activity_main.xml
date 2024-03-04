@@ -7,11 +7,14 @@
     android:id="@+id/drawer_layout"
     style="@style/backgroundColor"
     tools:context=".activitys.MainActivity">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/home_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         style="@style/backgroundColor">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -74,7 +77,7 @@
             android:id="@+id/popularproducttv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Popular Products"
+            android:text="@string/popular_products"
             android:textAlignment="viewStart"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -89,6 +92,20 @@
             android:layout_below="@+id/popularproducttv"
             style="@style/backgroundColor"
             />
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
+
+</ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomnav"
@@ -100,19 +117,11 @@
             android:layout_alignParentBottom="true"
             />
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
-            android:layout_below="@id/categoriesRecycleView"
-            />
-
-
 
 
     </RelativeLayout>
+
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
