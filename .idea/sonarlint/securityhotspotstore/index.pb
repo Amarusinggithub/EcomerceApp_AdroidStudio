@@ -74,3 +74,5 @@ Iapp/src/main/java/com/example/myecomerceapp/database/DatabaseManager.java,5\f\
 Mapp/src/main/java/com/example/myecomerceapp/activitys/searchViewActivity.java,7\e\7e1928735e687974cc3f82965730bc18c997b376
 }
 Mapp/src/main/java/com/example/myecomerceapp/activitys/SearchViewActivity.java,5\f\5f9a76d1c9d248619b8805170cb087157476c8ae
+w
+Gapp/src/main/java/com/example/myecomerceapp/activitys/AppConstants.java,5\5\5518580b14d46bde666c0ab1e46c70153f0ee6ff

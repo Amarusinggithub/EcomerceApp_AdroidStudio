@@ -171,6 +171,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         }else if ("specials".equals(Id)) {
 
+        }else if ("everything".equals(Id)) {
+
         }
         return itemsArrayList;
 
@@ -178,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     public static  void removeViews(){
         frameLayout.setVisibility(View.VISIBLE);
-       /* searchView.setVisibility(View.GONE);*/
         specialsTv.setVisibility(View.GONE);
        specialsBanner.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
@@ -188,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     public static  void addViews(){
         frameLayout.setVisibility(View.GONE);
-       /* searchView.setVisibility(View.VISIBLE);*/
         categoryRecycleView.setVisibility(View.VISIBLE);
         specialsTv.setVisibility(View.VISIBLE);
        specialsBanner.setVisibility(View.VISIBLE);
