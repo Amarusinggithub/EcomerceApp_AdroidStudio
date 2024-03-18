@@ -129,7 +129,7 @@
         android:layout_marginBottom="15dp"/>
 
     <Button
-        android:id="@+id/signinbtn"
+        android:id="@+id/signupbtn"
         android:layout_below="@id/confirmpasswordet"
         android:text="sign up"
         android:textAllCaps="true"
@@ -145,7 +145,7 @@
 
     <TextView
         android:id="@+id/alreadyhaveanaccounttv"
-        android:layout_below="@id/signinbtn"
+        android:layout_below="@id/signupbtn"
         android:text="Already Have An Account?"
         android:textSize="15sp"
         android:layout_width="match_parent"
@@ -158,7 +158,7 @@
     <TextView
         android:id="@+id/signintv"
         android:text="Sign In"
-        android:layout_below="@id/signinbtn"
+        android:layout_below="@id/signupbtn"
         android:layout_alignEnd="@id/alreadyhaveanaccounttv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

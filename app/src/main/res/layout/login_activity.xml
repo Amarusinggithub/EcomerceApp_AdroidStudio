@@ -120,7 +120,7 @@
         android:layout_marginBottom="15dp"/>
 
     <TextView
-        android:id="@+id/signtv"
+        android:id="@+id/signuptv"
         android:text="Sign Up"
         android:layout_below="@id/signinbtn"
         android:layout_alignEnd="@id/donthaveanaccounttv"

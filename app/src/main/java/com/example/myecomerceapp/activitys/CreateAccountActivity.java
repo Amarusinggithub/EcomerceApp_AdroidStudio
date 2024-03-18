@@ -2,24 +2,40 @@ package com.example.myecomerceapp.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myecomerceapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CreateAccountActivity extends AppCompatActivity {
     EditText usernameet,emailet,passwordet,confirmpasswordet;
     TextView forgetPasswordtv,signIntv;
     Button signUpBtn;
+    private FirebaseAuth mAuth;
+
+    String email,password;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
 
         //Variables
         usernameet=findViewById(R.id.usernameet);
@@ -29,10 +45,34 @@ public class CreateAccountActivity extends AppCompatActivity {
         forgetPasswordtv=findViewById(R.id.forgetpasswordtv);
         signIntv=findViewById(R.id.signintv);
 
-        signIntv.setOnClickListener(new View.OnClickListener() {
+        signUpBtn=findViewById(R.id.signupbtn);
+
+        signIntv.setOnClickListener(v -> {
+            startActivity(new Intent(CreateAccountActivity.this,LoginActivity.class));
+
+        });
+
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CreateAccountActivity.this,MainActivity.class));
+                email=emailet.getEditableText().toString();
+                password=passwordet.getEditableText().toString();
+
+
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                FirebaseUser user = mAuth.getCurrentUser();
+
+                            } else {
+
+
+                                Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
 
             }
         });
