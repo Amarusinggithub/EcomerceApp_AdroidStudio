@@ -16,6 +16,11 @@
         
         <activity
             android:name=".activitys.CreateAccountActivity"
+            android:exported="false">
+        </activity>
+        <activity android:name=".activitys.LoginActivity"
+            android:exported="false"/>
+        <activity android:name=".activitys.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activitys.LoginActivity"
-            android:exported="false"/>
-        <activity android:name=".activitys.MainActivity"
-            android:exported="false"/>
         <activity android:name=".activitys.SplashScreenActivity"
             android:exported="false"/>
         <activity android:name=".activitys.SearchViewActivity"

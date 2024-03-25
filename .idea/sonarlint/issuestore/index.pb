@@ -66,10 +66,6 @@ Gapp/src/main/java/com/example/myecomerceapp/activitys/MainActivity.java,4\3\43
 Oapp/src/main/java/com/example/myecomerceapp/activitys/SplashScreenActivity.java,1\3\13aa617e76cebe323dfe1c24352eb7b13aded308
 €
 Papp/src/main/java/com/example/myecomerceapp/interfaces/ItemOnClickInterface.java,4\9\4999c28d2c69cefc2e1a48e8be2ebb20ac1f464d
-x
-Happ/src/main/java/com/example/myecomerceapp/database/SQLiteDbHelper.java,0\f\0f77e88d96a92b0157e4325f481f3dc01e783b05
-y
-Iapp/src/main/java/com/example/myecomerceapp/database/DatabaseManager.java,5\f\5f3046960e6fcda3e4ccb68244dd15e60e122cf5
 }
 Mapp/src/main/java/com/example/myecomerceapp/activitys/searchViewActivity.java,7\e\7e1928735e687974cc3f82965730bc18c997b376
 }
