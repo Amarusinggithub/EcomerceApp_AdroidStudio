@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.myecomerceapp.MainActivity;
+import com.example.myecomerceapp.activities.MainActivity;
 import com.example.myecomerceapp.R;
 
 public class ItemViewFragment extends Fragment {

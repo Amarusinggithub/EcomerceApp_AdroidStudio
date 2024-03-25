@@ -1,8 +1,6 @@
 package com.example.myecomerceapp.fragments;
 
 
-import android.content.Intent;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.TextView;
 
-import com.example.myecomerceapp.ItemOnClickInterface;
+import com.example.myecomerceapp.interfaces.ItemOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.ItemAdapter;
 import com.example.myecomerceapp.models.ItemModel;
-
-
-import java.util.Objects;
 
 public class ItemGridViewFragment extends Fragment implements ItemOnClickInterface {
     public static String categoryId;
