@@ -14,7 +14,7 @@
         android:id="@+id/Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Grid View"
+        android:text=""
         android:textSize="40dp"
         android:textAlignment="center"
         />

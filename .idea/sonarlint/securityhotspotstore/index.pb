@@ -62,3 +62,5 @@ z
 Japp/src/main/java/com/example/myecomerceapp/fragments/AccountFragment.java,6\3\6399d627140a4e93c1024d777fc6ada51002b777
 {
 Kapp/src/main/java/com/example/myecomerceapp/fragments/CategoryFragment.java,1\7\173e949c11f9c3ef1f552444505e86f2f9976ed8
+x
+Happ/src/main/java/com/example/myecomerceapp/activities/MainActivity.java,5\0\509f8601ba55bb04b98ef29a3ab603c66b8aa527

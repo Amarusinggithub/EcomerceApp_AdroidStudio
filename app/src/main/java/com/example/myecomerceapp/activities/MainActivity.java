@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         frameLayout=findViewById(R.id.frameLayout);
         searchView=findViewById(R.id.searchview);
 
+        searchView.setVisibility(View.GONE);
+
         bannerRecycleView = findViewById(R.id.bannerRecycleView);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         bannerRecycleView.setLayoutManager(linearLayoutManager);
