@@ -1,31 +1,33 @@
-package com.example.myecomerceapp.activitys;
+package com.example.myecomerceapp.activities;
 
 import android.os.Bundle;
-import android.view.View;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myecomerceapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity {
     TextView signUpTv;
     EditText emailEt,passwordEt;
     Button signInbtn;
 
-    private FirebaseAuth mAuth;
+    static FirebaseAuth mAuth;
 
     String email,password;
+
+    public FirebaseUser user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,8 +46,16 @@ public class LoginActivity extends AppCompatActivity {
 
         signInbtn.setOnClickListener(v -> {
 
-            email=emailEt.getEditableText().toString();
-            password=passwordEt.getEditableText().toString();
+            if (isValidEmail(emailEt.getEditableText().toString())){
+                email=emailEt.getEditableText().toString();
+                try {
+                    password=encryotPassword(passwordEt.getEditableText().toString());
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
+            }else {
+
+            }
 
 
             mAuth.signInWithEmailAndPassword(email, password)
@@ -63,6 +73,23 @@ public class LoginActivity extends AppCompatActivity {
                     });
         });
 
+    }
 
+    private String encryotPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest md= MessageDigest.getInstance("SHA-256");
+        byte[] messageDigest =md.digest(password.getBytes());
+        BigInteger bigInteger=new BigInteger(1,messageDigest);
+
+        return bigInteger.toString(16);
+    }
+
+    public final static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+         user = mAuth.getCurrentUser();
     }
 }

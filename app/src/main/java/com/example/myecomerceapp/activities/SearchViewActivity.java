@@ -1,7 +1,7 @@
-package com.example.myecomerceapp.activitys;
+package com.example.myecomerceapp.activities;
 
-import static com.example.myecomerceapp.activitys.MainActivity.getData;
-import static com.example.myecomerceapp.fragments.ItemGridViewFragment.itemAdapter;
+import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
+import static com.example.myecomerceapp.fragments.GridViewFragment.itemAdapter;
 
 import android.os.Bundle;
 
@@ -10,14 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.ItemModel;
+import com.example.myecomerceapp.models.ProductModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchViewActivity extends AppCompatActivity {
     public SearchView searchView;
-    public  List<ItemModel> filtertedList;
+    public  List<ProductModel> filtertedList;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +32,8 @@ public class SearchViewActivity extends AppCompatActivity {
     public  void filter(String newText) {
 
         filtertedList= new ArrayList<>();
-        for(ItemModel item: getData("categoryId")){
-            if(item.getItemName().toLowerCase().contains(newText.toLowerCase())){
+        for(ProductModel item: getProductsData("categoryId")){
+            if(item.getProductName().toLowerCase().contains(newText.toLowerCase())){
                 filtertedList.add(item);
             }
         }itemAdapter.filteredList(filtertedList);

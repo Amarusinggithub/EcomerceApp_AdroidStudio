@@ -7,30 +7,30 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.myecomerceapp.interfaces.ItemOnClickInterface;
+import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.ItemModel;
+import com.example.myecomerceapp.models.ProductModel;
 
 import java.util.List;
 
 public class ItemAdapter extends BaseAdapter {
 
-    private final ItemOnClickInterface itemGridViewInterface;
-    private List<ItemModel> itemModelArrayList;
+    private final MyOnClickInterface itemGridViewInterface;
+    private List<ProductModel> productModelArrayList;
 
-    public ItemAdapter(ItemOnClickInterface itemGridViewInterface, List<ItemModel> itemModelArrayList) {
+    public ItemAdapter(MyOnClickInterface itemGridViewInterface, List<ProductModel> productModelArrayList) {
         this.itemGridViewInterface = itemGridViewInterface;
-        this.itemModelArrayList = itemModelArrayList;
+        this.productModelArrayList = productModelArrayList;
     }
 
     @Override
     public int getCount() {
-        return itemModelArrayList.size();
+        return productModelArrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return itemModelArrayList.get(position);
+        return productModelArrayList.get(position);
     }
 
     @Override
@@ -45,22 +45,22 @@ public class ItemAdapter extends BaseAdapter {
        TextView itemName= convertView.findViewById(R.id.itemTitle);
        TextView itemPrice=convertView.findViewById(R.id.itemPrice);
 
-        ItemModel itemModel=itemModelArrayList.get(position);
-        itemImage.setBackgroundResource(itemModel.getItemImage());
-        itemName.setText(itemModel.getItemName());
-        itemPrice.setText(itemModel.getItemPrice());
+        ProductModel productModel = productModelArrayList.get(position);
+        itemImage.setBackgroundResource(productModel.getProductImage());
+        itemName.setText(productModel.getProductName());
+        itemPrice.setText(productModel.getProductPrice());
         convertView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-                       itemGridViewInterface.onItemClicked(position);
+                       itemGridViewInterface.onClicked(position);
            }
        });
 
         return convertView;
     }
 
-    public void filteredList(List <ItemModel> filteredList){
-        itemModelArrayList=filteredList;
+    public void filteredList(List <ProductModel> filteredList){
+        productModelArrayList =filteredList;
     }
 }
 

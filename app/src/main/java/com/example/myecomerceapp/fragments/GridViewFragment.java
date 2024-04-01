@@ -1,10 +1,7 @@
 package com.example.myecomerceapp.fragments;
 
 
-import static com.example.myecomerceapp.activitys.MainActivity.getData;
-
-import java.util.ArrayList;
-import java.util.List;
+import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
 
 
 import android.os.Bundle;
@@ -18,12 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import com.example.myecomerceapp.interfaces.ItemOnClickInterface;
+import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.ItemAdapter;
-import com.example.myecomerceapp.models.ItemModel;
+import com.example.myecomerceapp.models.ProductModel;
 
-public class ItemGridViewFragment extends Fragment implements ItemOnClickInterface {
+public class GridViewFragment extends Fragment implements MyOnClickInterface {
     public static  String categoryId;
 
     public static ItemAdapter itemAdapter;
@@ -33,7 +30,7 @@ public class ItemGridViewFragment extends Fragment implements ItemOnClickInterfa
         // Inflate the layout for this fragment
         View ItemCridView=inflater.inflate(R.layout.fragment_item_grid_view, container, false);
         GridView itemGridView =ItemCridView.findViewById( R.id.gridView);
-        itemAdapter = new ItemAdapter(this, getData(categoryId));
+        itemAdapter = new ItemAdapter(this, getProductsData(categoryId));
         itemGridView.setNumColumns(2);
         itemGridView.setAdapter(itemAdapter);
 
@@ -49,13 +46,13 @@ public class ItemGridViewFragment extends Fragment implements ItemOnClickInterfa
     }
 
     @Override
-    public void onItemClicked(int position) {
-        ItemModel item = getData(categoryId).get(position);
+    public void onClicked(int position) {
+        ProductModel item = getProductsData(categoryId).get(position);
         Bundle bundle = new Bundle();
-        bundle.putString("ItemName", item.getItemName());
-        bundle.putString("ItemPrice", item.getItemPrice());
-        bundle.putString("ItemDescription", item.getItemSpecs());
-        bundle.putInt("ItemImage", item.getItemImage());
+        bundle.putString("ItemName", item.getProductName());
+        bundle.putString("ItemPrice", item.getProductPrice());
+        bundle.putString("ItemDescription", item.getProductDescription());
+        bundle.putInt("ItemImage", item.getProductImage());
         ItemViewFragment itemViewFragment = new ItemViewFragment();
         itemViewFragment.setArguments(bundle);
         loadFragment(itemViewFragment);

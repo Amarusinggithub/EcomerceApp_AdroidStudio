@@ -1,4 +1,4 @@
-package com.example.myecomerceapp.activitys;
+package com.example.myecomerceapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

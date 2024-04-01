@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:id="@+id/categories">
+
         <item
             android:id="@+id/categories_dropdown"
             android:title="@string/cartegories"
-            app:showAsAction="never">
+            >
             <menu>
-                <group android:checkableBehavior="single">
+
                     <item android:id="@+id/SmartPhones"
                         android:title="@string/smartphones" />
                     <item android:id="@+id/Laptop"
@@ -18,9 +18,8 @@
                         android:title="@string/gaming_consoles" />
                     <item android:id="@+id/HomeAppliances"
                         android:title="@string/home_appliances" />
-                </group>
+
             </menu>
         </item>
-    </group>
 
 </menu>

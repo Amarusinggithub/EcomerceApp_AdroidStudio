@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     style="@style/backgroundColor"
-    tools:context=".activitys.MainActivity">
+    tools:context=".activities.MainActivity">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

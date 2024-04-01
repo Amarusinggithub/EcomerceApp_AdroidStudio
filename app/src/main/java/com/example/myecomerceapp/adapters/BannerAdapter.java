@@ -9,40 +9,40 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myecomerceapp.interfaces.ItemOnClickInterface;
+import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.ItemModel;
+import com.example.myecomerceapp.models.ProductModel;
 
 import java.util.List;
 
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHolder> {
 
-    private final List<ItemModel> itemModels;
-    private final ItemOnClickInterface itemOnClickInterface;
+    private final List<ProductModel> productModels;
+    private final MyOnClickInterface myOnClickInterface;
 
-    public BannerAdapter(List<ItemModel> itemModels, ItemOnClickInterface itemOnClickInterface) {
-        this.itemModels = itemModels;
-        this.itemOnClickInterface = itemOnClickInterface;
+    public BannerAdapter(List<ProductModel> productModels, MyOnClickInterface myOnClickInterface) {
+        this.productModels = productModels;
+        this.myOnClickInterface = myOnClickInterface;
     }
 
     @NonNull
     @Override
     public BannerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.specials_recycleview,parent,false);
-        return new MyViewHolder(itemView,itemOnClickInterface);
+        return new MyViewHolder(itemView, myOnClickInterface);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BannerAdapter.MyViewHolder holder, int position) {
 
-        ItemModel itemModel=itemModels.get(position);
-        holder.image.setBackgroundResource(itemModel.getItemImage());
-        /*holder.text.setText(itemModel.getItemName());*/
+        ProductModel productModel = productModels.get(position);
+        holder.image.setBackgroundResource(productModel.getProductImage());
+        /*holder.text.setText(productModel.getItemName());*/
     }
 
     @Override
     public int getItemCount() {
-        return itemModels.size();
+        return productModels.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -50,7 +50,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
         ImageView image;
         TextView text;
 
-        public MyViewHolder(@NonNull View itemView,ItemOnClickInterface itemOnClickInterface) {
+        public MyViewHolder(@NonNull View itemView, MyOnClickInterface myOnClickInterface) {
             super(itemView);
 
             image=itemView.findViewById(R.id.bannerImage);
@@ -59,10 +59,10 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (itemOnClickInterface!=null){
+                    if (myOnClickInterface !=null){
                         int position=getAdapterPosition();
                         if (position!= RecyclerView.NO_POSITION){
-                            itemOnClickInterface.onItemClicked(position);
+                            myOnClickInterface.onClicked(position);
                         }
                     }
                 }
