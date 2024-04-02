@@ -11,9 +11,6 @@
         app:cardCornerRadius="10dp"
         style="@style/backgroundColor"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         >
 
         <LinearLayout
@@ -26,7 +23,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:id="@+id/itemImage"
+                android:id="@+id/productImage"
                 android:scaleType="fitCenter"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -36,7 +33,7 @@
 
             <TextView
 
-                android:id="@+id/itemTitle"
+                android:id="@+id/productTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -50,7 +47,7 @@
                 />
 
             <TextView
-                android:id="@+id/itemPrice"
+                android:id="@+id/productPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/item_price"

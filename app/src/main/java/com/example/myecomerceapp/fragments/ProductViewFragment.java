@@ -1,5 +1,8 @@
 package com.example.myecomerceapp.fragments;
 
+import static com.example.myecomerceapp.activities.MainActivity.frameLayout;
+import static com.example.myecomerceapp.activities.MainActivity.removeViews;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myecomerceapp.R;
 
-public class ItemViewFragment extends Fragment {
+public class ProductViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class ItemViewFragment extends Fragment {
             itemPriceTextView.setText(itemPrice);
             itemDescriptionTextView.setText(itemDescription);
             itemImageView.setBackgroundResource(itemImageResource);
+            removeViews();
+            frameLayout.setVisibility(View.VISIBLE);
         }
 
         return itemView;

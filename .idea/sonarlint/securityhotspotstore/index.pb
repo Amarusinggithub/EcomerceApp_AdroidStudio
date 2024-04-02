@@ -37,13 +37,9 @@ S
 Å
 Q.idea/sonarlint/securityhotspotstore/d/2/d2a4383452aad84a18429a5844d31330a012a9e6,7\f\7fcac164c7a46b8fc6411ea93226c884af6044db
 u
-Eapp/src/main/java/com/example/myecomerceapp/adapters/ItemAdapter.java,b\f\bfeb050bdc9b4b799ef2533e332ca4ddfa06b43b
-u
 Eapp/src/main/java/com/example/myecomerceapp/models/CategoryModel.java,8\8\8825e54187886bdede5ddf5c6f42dcee7f9ea788
 y
 Iapp/src/main/java/com/example/myecomerceapp/adapters/CategoryAdapter.java,d\4\d40e31c6f2425d86d513351fdf7edc9b328867f1
-{
-Kapp/src/main/java/com/example/myecomerceapp/fragments/ItemViewFragment.java,4\3\4329bfd15aba3e6f589b73ed428a05a72418f4b1
 w
 Gapp/src/main/java/com/example/myecomerceapp/adapters/BannerAdapter.java,3\c\3c577e425e3188edb2bd15a5113c184031d35703
 x
@@ -64,8 +60,6 @@ q
 Aapp/src/main/java/com/example/myecomerceapp/models/UserModel.java,3\7\37c25d93f2d09e3f33875e1d304a2bedf16dac6e
 x
 Happ/src/main/java/com/example/myecomerceapp/activities/MainActivity.java,5\0\509f8601ba55bb04b98ef29a3ab603c66b8aa527
-{
-Kapp/src/main/java/com/example/myecomerceapp/fragments/GridViewFragment.java,1\f\1fcd834c93d34ee260f7139bfa961c2cbdeaf8f2
 ~
 Napp/src/main/java/com/example/myecomerceapp/interfaces/MyOnClickInterface.java,d\d\dd9c9c2bfabe81ef688fd058100d8575001acec9
 Ä
@@ -76,3 +70,9 @@ Napp/src/main/java/com/example/myecomerceapp/activities/SearchViewActivity.java
 Qapp/src/main/java/com/example/myecomerceapp/activities/CreateAccountActivity.java,2\8\282eabaf91519ef77a35943f1c03c79801512fc9
 y
 Iapp/src/main/java/com/example/myecomerceapp/activities/LoginActivity.java,e\5\e53ccafbdd946fe13b963c8518722dbea9cde216
+~
+Napp/src/main/java/com/example/myecomerceapp/fragments/ProductViewFragment.java,3\8\38e0e84797404cf757636782db696055dcf585a2
+x
+Happ/src/main/java/com/example/myecomerceapp/adapters/ProductAdapter.java,2\3\232fae711ddd711ca14ad8e0aa26e55b0e5e2899
+Ü
+Vapp/src/main/java/com/example/myecomerceapp/fragments/ProductRecyclerViewFragment.java,f\e\fecf6c575a6733a1256ddd252204b7eecc63d131

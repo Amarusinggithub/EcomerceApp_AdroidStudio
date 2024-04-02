@@ -1,7 +1,6 @@
 package com.example.myecomerceapp.activities;
 
 import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
-import static com.example.myecomerceapp.fragments.GridViewFragment.itemAdapter;
 
 import android.os.Bundle;
 
@@ -36,7 +35,8 @@ public class SearchViewActivity extends AppCompatActivity {
             if(item.getProductName().toLowerCase().contains(newText.toLowerCase())){
                 filtertedList.add(item);
             }
-        }itemAdapter.filteredList(filtertedList);
+        }
+       /* productAdapter.filteredList(filtertedList);*/
 
     }
 }

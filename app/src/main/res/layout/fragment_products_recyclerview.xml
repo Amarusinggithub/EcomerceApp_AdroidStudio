@@ -3,27 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.GridViewFragment">
+    tools:context=".fragments.ProductRecyclerViewFragment">
 
 
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/Header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Item Grid View"
-        style="@style/backgroundColor"
-        android:textSize="40dp"
-        android:textAlignment="center"
-        />
 
-
-    <GridView
-        android:layout_below="@id/Header"
-        android:id="@+id/gridView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="1"

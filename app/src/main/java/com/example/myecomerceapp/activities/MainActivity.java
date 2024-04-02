@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myecomerceapp.adapters.CategoryAdapter;
-import com.example.myecomerceapp.fragments.GridViewFragment;
+import com.example.myecomerceapp.fragments.ProductRecyclerViewFragment;
 import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.BannerAdapter;
@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
    public static RecyclerView specialsBanner;
     public static FrameLayout frameLayout;
    public static TextView specialsTv;
-
-
 
     public static CardView displayBanner;
 
@@ -123,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()== R.id.home){
+                removeViews();
                 addViews();
 
             }
@@ -152,11 +151,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     public static List<CategoryModel> getCategory() {
         List<CategoryModel> categoryModelArrayList = new ArrayList<>();
-        categoryModelArrayList.add(new CategoryModel("Phones", R.drawable.smartphones_category_icon,"SmartPhones"));
+        categoryModelArrayList.add(new CategoryModel("Phones", R.drawable.smartphones_category_icon,"Phones"));
         categoryModelArrayList.add(new CategoryModel("Laptop", R.drawable.laptop_category_icon,"Laptop"));
         categoryModelArrayList.add(new CategoryModel("Games", R.drawable.games_category_icon,"Games"));
-        categoryModelArrayList.add(new CategoryModel("Consoles",R.drawable.gamingconsoles_category_icon ,"Gaming Consoles"));
-        categoryModelArrayList.add(new CategoryModel("Appliances",R.drawable.homeappliance_category_icon,"Home Appliances"));
+        categoryModelArrayList.add(new CategoryModel("Consoles",R.drawable.gamingconsoles_category_icon ,"Consoles"));
+        categoryModelArrayList.add(new CategoryModel("Appliances",R.drawable.homeappliance_category_icon,"Appliances"));
         return categoryModelArrayList;
     }
 
@@ -203,21 +202,21 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             productsArrayList.add(new ProductModel(R.drawable.red_dead_redempdemtion_game,"Red Dead Redemption 2","$56.99","Red Dead Redemption 2, the critically acclaimed open world epic from Rockstar Games and the highest rated game of the console generation, now enhanced for PC with new Story Mode content, visual upgrades and more.","Games"));
             productsArrayList.add(new ProductModel(R.drawable.battlefield_3_game,"Battlefield 3: Premium Edition ","$39.99","Ramp up the intensity in Battlefield 3 and enjoy total freedom to fight the way you want. Explore nine massive multiplayer maps and use loads of vehicles, weapons, and gadgets to help you turn up the heat. Plus, every second of battle gets you closer to unlocking tons of extras and moving up in the Ranks. So get in the action. Key Features: Play to your strengths.","Games"));
 
-        }  else if ("Gaming Consoles ".equals(Id)) {
-            productsArrayList.add(new ProductModel(R.drawable.nintendo_switch,"Nintendo Switch™","$296.01","Play at home or on the go with one system The Nintendo Switch™ system is designed to go wherever you do, instantly transforming from a home console you play on TV to a portable system you can play anywhere. So you get more time to play the games you love, however you like.","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.meta_quest,"Meta Quest 2","$199.00","Meta Quest 2 is the all-in-one system that truly sets you free to explore in VR. Simply put on the headset and enter fully-immersive, imagination-defying worlds. A built-in battery, fast processor and immersive graphics keep your experience smooth and seamless, while 3D positional audio, hand tracking and easy-to-use controllers make virtual worlds feel real.","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.xbox_series_s,"Microsoft Xbox Series S ","$299.00","2021 Microsoft Xbox Series S 512GB Game All-Digital Console, One Xbox Wireless Controller, 1440p Gaming Resolution, 4K Streaming, 3D Sound, WiFi, White","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.ps4_slim,"Sony PlayStation 4 Slim","$223.99","Edition:Slim 1TB The all new lighter and slimmer PlayStation4 system has a 1TB hard drive for all of the greatest games, TV, music and more. Incredible Games You've come to the right place.","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.steam_deck,"Valve Steam Deck ","$526.99","Valve Steam Deck 512GB Handheld Gaming Console, 1280 x 800 LCD Display, with Carring case, Tempered Film and Soft Silicone Protective Case","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.asus_ally,"ASUS ROG Ally","$659.99","Any Game, Anywhere. Sink deep into your favourite AAA or indie games and watch the hours melt away with an expansive Full HD 120Hz display and incredibly comfortable ergonomics.","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.xbox_series_x," Xbox Series X ","$439.99","Next Gen Console Bundle - Xbox Series X 1TB + 8K Premium HDMI Cable - 4 feet- 48Gbps Hight Speed HDR for Gaming Console.","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.ps5,"PlayStation PS5 Console","$659.00","PlayStation 5 console, DualSense Wireless Controller, Base, HDMI Cable, AC power cord, USB cable, God of War Ragnarok full game voucher\n","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.ps4_pro,"Sony PlayStation 4 Pro","$244.00","Sony PlayStation 4 Pro w/ Accessories, 1TB HDD, CUH-7215B - Jet Black.Enhanced games - PS4 Pro games burst into life with intensely sharp graphics, stunningly vibrant colours, textures and environments and smoother, more stable performance","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.ps4,"PlayStation 4","$205.00","ncredible games; Endless entertainment,1 TB hard drive,Blu-ray technology, delivers exceptional video quality.","Gaming Consoles"));
+        }  else if ("Consoles".equals(Id)) {
+            productsArrayList.add(new ProductModel(R.drawable.nintendo_switch,"Nintendo Switch™","$296.01","Play at home or on the go with one system The Nintendo Switch™ system is designed to go wherever you do, instantly transforming from a home console you play on TV to a portable system you can play anywhere. So you get more time to play the games you love, however you like.","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.meta_quest,"Meta Quest 2","$199.00","Meta Quest 2 is the all-in-one system that truly sets you free to explore in VR. Simply put on the headset and enter fully-immersive, imagination-defying worlds. A built-in battery, fast processor and immersive graphics keep your experience smooth and seamless, while 3D positional audio, hand tracking and easy-to-use controllers make virtual worlds feel real.","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.xbox_series_s,"Microsoft Xbox Series S ","$299.00","2021 Microsoft Xbox Series S 512GB Game All-Digital Console, One Xbox Wireless Controller, 1440p Gaming Resolution, 4K Streaming, 3D Sound, WiFi, White","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.ps4_slim,"Sony PlayStation 4 Slim","$223.99","Edition:Slim 1TB The all new lighter and slimmer PlayStation4 system has a 1TB hard drive for all of the greatest games, TV, music and more. Incredible Games You've come to the right place.","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.steam_deck,"Valve Steam Deck ","$526.99","Valve Steam Deck 512GB Handheld Gaming Console, 1280 x 800 LCD Display, with Carring case, Tempered Film and Soft Silicone Protective Case","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.asus_ally,"ASUS ROG Ally","$659.99","Any Game, Anywhere. Sink deep into your favourite AAA or indie games and watch the hours melt away with an expansive Full HD 120Hz display and incredibly comfortable ergonomics.","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.xbox_series_x," Xbox Series X ","$439.99","Next Gen Console Bundle - Xbox Series X 1TB + 8K Premium HDMI Cable - 4 feet- 48Gbps Hight Speed HDR for Gaming Console.","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.ps5,"PlayStation PS5 Console","$659.00","PlayStation 5 console, DualSense Wireless Controller, Base, HDMI Cable, AC power cord, USB cable, God of War Ragnarok full game voucher\n","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.ps4_pro,"Sony PlayStation 4 Pro","$244.00","Sony PlayStation 4 Pro w/ Accessories, 1TB HDD, CUH-7215B - Jet Black.Enhanced games - PS4 Pro games burst into life with intensely sharp graphics, stunningly vibrant colours, textures and environments and smoother, more stable performance","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.ps4,"PlayStation 4","$205.00","ncredible games; Endless entertainment,1 TB hard drive,Blu-ray technology, delivers exceptional video quality.","Consoles"));
             productsArrayList.add(new ProductModel(R.drawable.xbox_one_s,"Xbox One S","$224.99","Microsoft - Xbox One S 500GB Console - White - ZQ9-00028 ","Gaming Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.xbox_1,"Xbox One ","$176.00","This item includes the Xbox One console, 1 wireless controller, HDMI cable, and power supply . For more troubleshooting steps please check the manufacturer's webiste","Gaming Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.xbox_1,"Xbox One ","$176.00","This item includes the Xbox One console, 1 wireless controller, HDMI cable, and power supply . For more troubleshooting steps please check the manufacturer's webiste","Consoles"));
 
-        } else if (" Appliances".equals(Id)) {
+        } else if ("Appliances".equals(Id)) {
             productsArrayList.add(new ProductModel(R.drawable.samsung_32_qled_tv,"SAMSUNG 32-Inch Class QLED 4K Q60C Series Quantum","$447.99","SAMSUNG 32-Inch Class QLED 4K Q60C Series Quantum HDR, Dual LED, Object Tracking Sound Lite, Q-Symphony, Motion Xcelerator, Gaming Hub, Smart TV with Alexa Built-in (QN32Q60C, 2023 Model),Titan Gray","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.air_fryer,"Instant Vortex Plus 6QT ClearCook Air Fryer","$89.95","Instant Vortex Plus 6QT ClearCook Air Fryer, Clear Windows, Custom Program Options, 6-in-1 Functions, Crisps, Broils, Roasts, Dehydrates, Bakes, Reheats, from the Makers of Instant Pot, Black","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.smart_fan,"Dreo Smart Tower Fan"," $63.99","Dreo Smart Tower Fan for Bedroom, Standing Fans for Indoors, 90° Oscillating, Quiet 26ft/s Velocity Floor Fan with Remote, 5 Speeds, 8H Timer, Voice Control Bladeless Room Fan, Works with Alexa","Appliances"));
@@ -240,7 +239,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
     public static  void removeViews(){
-        frameLayout.setVisibility(View.VISIBLE);
+        categoryRecycleView.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.GONE);
         specialsTv.setVisibility(View.GONE);
        specialsBanner.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
     public static  void addViews(){
-        frameLayout.setVisibility(View.GONE);
+
         categoryRecycleView.setVisibility(View.VISIBLE);
         specialsTv.setVisibility(View.VISIBLE);
        specialsBanner.setVisibility(View.VISIBLE);
@@ -330,10 +330,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public void onClicked(int position) {
         removeViews();
         categoryRecycleView.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
         CategoryModel categoryModel= getCategory().get(position);
-        GridViewFragment itemGridViewFragment=new GridViewFragment();
-        GridViewFragment.categoryId=categoryModel.getCategoryId();
-        loadFragment(itemGridViewFragment);
+        ProductRecyclerViewFragment itemProductRecyclerViewFragment =new ProductRecyclerViewFragment();
+        ProductRecyclerViewFragment.categoryId=categoryModel.getCategoryId();
+        loadFragment(itemProductRecyclerViewFragment);
     }
 
 
