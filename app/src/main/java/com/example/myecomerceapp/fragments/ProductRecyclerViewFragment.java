@@ -21,10 +21,12 @@ import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.ProductAdapter;
 import com.example.myecomerceapp.models.ProductModel;
 
+import java.io.Serializable;
+
 public class ProductRecyclerViewFragment extends Fragment implements MyOnClickInterface {
     public static  String categoryId;
 
-    public static ProductAdapter productAdapter;
+    public static  ProductAdapter productAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,12 +51,12 @@ public class ProductRecyclerViewFragment extends Fragment implements MyOnClickIn
 
     @Override
     public void onClicked(int position) {
-        ProductModel item = getProductsData(categoryId).get(position);
+        ProductModel product = getProductsData(categoryId).get(position);
         Bundle bundle = new Bundle();
-        bundle.putString("ItemName", item.getProductName());
-        bundle.putString("ItemPrice", item.getProductPrice());
-        bundle.putString("ItemDescription", item.getProductDescription());
-        bundle.putInt("ItemImage", item.getProductImage());
+        bundle.putString("productName", product.getProductName());
+        bundle.putString("proPrice", product.getProductPrice());
+        bundle.putString("productDescription", product.getProductDescription());
+        bundle.putInt("productImage", product.getProductImage());
         ProductViewFragment productViewFragment = new ProductViewFragment();
         productViewFragment.setArguments(bundle);
         loadFragment(productViewFragment);

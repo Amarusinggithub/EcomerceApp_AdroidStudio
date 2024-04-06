@@ -55,7 +55,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             productImage=itemView.findViewById(R.id.productImage);
             productName=itemView.findViewById(R.id.productTitle);
-            productPrice=itemView.findViewById(R.id.productPrice);
+            productPrice=itemView.findViewById(R.id.Price);
 
             itemView.setOnClickListener(v -> {
                 int position=getAdapterPosition();

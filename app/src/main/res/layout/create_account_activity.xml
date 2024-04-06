@@ -20,8 +20,8 @@
         />
 
     <TextView
-        android:id="@+id/usernametv"
-        android:text="Fulllname"
+        android:id="@+id/firstnametv"
+        android:text="Firstname"
         android:inputType="textPersonName"
         android:layout_below="@id/signuptv"
         android:layout_width="match_parent"
@@ -35,11 +35,39 @@
 
     <EditText
 
-        android:hint="Enter Username..."
-        android:id="@+id/usernameet"
+        android:hint="Enter Firstname.."
+        android:id="@+id/firstnameet"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_below="@id/usernametv"
+        android:layout_below="@id/firstnametv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/lastnametv"
+        android:text="Lastname"
+        android:inputType="textPersonName"
+        android:layout_below="@id/firstnameet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"/>
+
+    <EditText
+
+        android:hint="Enter Lastname..."
+        android:id="@+id/lastnameet"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@id/lastnametv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -49,7 +77,7 @@
 
     <TextView
         android:id="@+id/emailtv"
-        android:layout_below="@id/usernameet"
+        android:layout_below="@id/lastnameet"
         android:textSize="20sp"
         android:textStyle="bold"
         android:text="Email"
@@ -147,25 +175,24 @@
         android:id="@+id/alreadyhaveanaccounttv"
         android:layout_below="@id/signupbtn"
         android:text="Already Have An Account?"
-        android:textSize="15sp"
-        android:layout_width="match_parent"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"/>
 
     <TextView
         android:id="@+id/signintv"
-        android:text="Sign In"
+        android:text="SignIn"
         android:layout_below="@id/signupbtn"
-        android:layout_alignEnd="@id/alreadyhaveanaccounttv"
+        android:layout_toEndOf="@id/alreadyhaveanaccounttv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="150dp"
         android:layout_marginBottom="15dp"/>
 

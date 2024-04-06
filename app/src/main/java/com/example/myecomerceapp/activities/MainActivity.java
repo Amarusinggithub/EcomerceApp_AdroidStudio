@@ -48,18 +48,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-   public static RecyclerView specialsBanner;
+
     public static FrameLayout frameLayout;
-   public static TextView specialsTv;
-
     public static CardView displayBanner;
-
     public static RecyclerView categoryRecycleView;
-
     public static  TextView popularProductstv;
-
     public static RecyclerView popularProductsRecycleview;
-
     public FirebaseUser user;
 
 
@@ -72,51 +66,18 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         //Variables
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView=findViewById(R.id.bottomnav);
-        specialsTv=findViewById(R.id.specalstv);
         frameLayout=findViewById(R.id.frameLayout);
         displayBanner=findViewById(R.id.displayBanner);
-
-       specialsBanner = findViewById(R.id.specialsbanner);
-       categoryRecycleView = findViewById(R.id.categoriesRecycleView);
-       popularProductsRecycleview=findViewById(R.id.popularproductrecycleview);
-       popularProductstv=findViewById(R.id.popularproducttv);
-
-
-        //specials banner recycleview
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-       specialsBanner.setLayoutManager(linearLayoutManager);
-        BannerAdapter bannerAdapter = new BannerAdapter(getProductsData("specials"),this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-       specialsBanner.setAdapter(bannerAdapter);
+        categoryRecycleView = findViewById(R.id.categoriesRecycleView);
+        popularProductsRecycleview=findViewById(R.id.popularproductrecycleview);
+        popularProductstv=findViewById(R.id.popularproducttv);
 
       //category recycleView
-        LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(this);
-        linearLayoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
-        categoryRecycleView.setLayoutManager(linearLayoutManager1);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        categoryRecycleView.setLayoutManager(linearLayoutManager);
         CategoryAdapter categoryAdapter = new CategoryAdapter(this, getCategory());
         categoryRecycleView.setAdapter(categoryAdapter);
-
-        // instanciate and declare a 'TimerClass', pass 'delay' and 'period' arguments
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                if(linearLayoutManager.findLastCompletelyVisibleItemPosition() < (bannerAdapter.getItemCount() -1)) {
-
-
-                    linearLayoutManager.smoothScrollToPosition(specialsBanner, new RecyclerView.State(), linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1);
-
-                } else if(linearLayoutManager.findLastCompletelyVisibleItemPosition() == (bannerAdapter.getItemCount() -1)) {
-
-                    // scroll back to the first item in recyclerview
-                    linearLayoutManager.smoothScrollToPosition(specialsBanner, new RecyclerView.State(), 0);
-
-                }
-
-            }// end 'run' method
-        }, 0, 3000);
-
 
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -182,20 +143,20 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             productsArrayList.add(new ProductModel(R.drawable.asus_tuff_a16,"ASUS TUF Gaming A16 Laptop","$979.00","ASUS TUF Gaming A16 Laptop 16.0\" 165 Hz FHD+WVA (8-Core AMD Ryzen 7 7735HS, 16GB DDR5, 1TB PCIe SSD, AMD Radeon RX 7600S 8GB, Backlit KYB, WiFi 6, Win11 Home) with Dockztorm Hub","Laptop"));
             productsArrayList.add(new ProductModel(R.drawable.acer_nitro_17,"Acer Nitro 17 Gaming Laptop","$983.48","Acer Nitro 17 Gaming Laptop AMD Ryzen 7 7840HS Octa-Core CPU 17.3\" FHD 165Hz IPS Display NVIDIA GeForce RTX 4050 16GB DDR5 1TB SSD Wi-Fi 6E RGB Backlit KB AN17-41-R6L9","Laptop"));
             productsArrayList.add(new ProductModel(R.drawable.msi_sword_15,"MSI Newest Sword 15 Gaming Laptop"," $1,199.99","MSI Newest Sword 15 Gaming Laptop, 15.6\" FHD 144Hz IPS-Type Display, NVIDIA GeForce RTX 4060, Intel Core i7-12650H, 32GB DDR4, 1TB PCIe SSD, Wi-Fi 6, Windows 11 Home, Backlit Keyboard, White/OLY","Laptop"));
-            productsArrayList.add(new ProductModel(R.drawable.msi_raider_laptop,"MSI Raider GE76 Gaming Laptop","$1,391.03","MSI Raider GE76 Gaming Laptop: Intel Core i9-12900H, GeForce RTX 3060, 17.3\" 144Hz FHD Display,16GB DDR5, 1TB NVMe SSD, Thunderbolt 4, Cooler Boost 5, Win 11 Home: Titanium Blue 12UE-871","Laptop"));
-            productsArrayList.add(new ProductModel(R.drawable.gigabyte_laptop,"GIGABYTE - G6 (2024) Gaming Laptop","$999.00","GIGABYTE - G6 (2024) Gaming Laptop - 165Hz 1920x1200 WUXGA - NVIDIA GeForce RTX 4050 - Intel i7-13620H - 1TB SSD with 16GB DDR5 RAM - Win11 Home+ (G6 MF-H2US854KH)","Laptop"));
-            productsArrayList.add(new ProductModel(R.drawable.razor_laptop,"Razer Blade 16 (2024) Gaming Laptop","$4,699.99","Razer Blade 16 (2024) Gaming Laptop: 16” Mini LED Dual Mode 4K UHD+ 120Hz / FHD+ 240Hz – NVIDIA GeForce RTX 4090 – Intel Core i9-14900HX - 64GB DDR5 RAM  - 4TB M.2 SSD – Chroma RGB – Black","Laptop"));
-            productsArrayList.add(new ProductModel(R.drawable.hp_xictus_laptop,"HP Victus 15 Gaming Laptop ","$578.00","HP Victus 15 Gaming Laptop 15.6\" FHD IPS 144Hz AMD 7000 Ryzen 5 7535HS (Beats i7-11800H) GeForce RTX 2050 4GB Graphic Backlit USB-C B&O Win11 Black + HDMI Cable (8GB RAM | 512GB PCIe SSD)","Laptop"));
-            productsArrayList.add(new ProductModel(R.drawable.msi_pulse,"MSI Pulse 17 Gaming Laptop","$1,899.00","MSI Pulse 17 Gaming Laptop: 13th Gen i9, 17” 240Hz QHD Display, NVIDIA GeForce RTX 4070, 32GB DDR5, 1TB NVMe SSD, Cooler Boost 5, Win11 Home: Black B13VGK-887US","Laptop"));
+            productsArrayList.add(new ProductModel(R.drawable.msi_raider_laptop,"MSI Raider GE76 Laptop","$1,391.03","MSI Raider GE76 Gaming Laptop: Intel Core i9-12900H, GeForce RTX 3060, 17.3\" 144Hz FHD Display,16GB DDR5, 1TB NVMe SSD, Thunderbolt 4, Cooler Boost 5, Win 11 Home: Titanium Blue 12UE-871","Laptop"));
+            productsArrayList.add(new ProductModel(R.drawable.gigabyte_laptop,"GIGABYTE - G6 (2024) Laptop","$999.00","GIGABYTE - G6 (2024) Gaming Laptop - 165Hz 1920x1200 WUXGA - NVIDIA GeForce RTX 4050 - Intel i7-13620H - 1TB SSD with 16GB DDR5 RAM - Win11 Home+ (G6 MF-H2US854KH)","Laptop"));
+            productsArrayList.add(new ProductModel(R.drawable.razor_laptop,"Razer Blade 16 Laptop","$4,699.99","Razer Blade 16 (2024) Gaming Laptop: 16” Mini LED Dual Mode 4K UHD+ 120Hz / FHD+ 240Hz – NVIDIA GeForce RTX 4090 – Intel Core i9-14900HX - 64GB DDR5 RAM  - 4TB M.2 SSD – Chroma RGB – Black","Laptop"));
+            productsArrayList.add(new ProductModel(R.drawable.hp_xictus_laptop,"HP Victus 15 Laptop ","$578.00","HP Victus 15 Gaming Laptop 15.6\" FHD IPS 144Hz AMD 7000 Ryzen 5 7535HS (Beats i7-11800H) GeForce RTX 2050 4GB Graphic Backlit USB-C B&O Win11 Black + HDMI Cable (8GB RAM | 512GB PCIe SSD)","Laptop"));
+            productsArrayList.add(new ProductModel(R.drawable.msi_pulse,"MSI Pulse 17 Laptop","$1,899.00","MSI Pulse 17 Gaming Laptop: 13th Gen i9, 17” 240Hz QHD Display, NVIDIA GeForce RTX 4070, 32GB DDR5, 1TB NVMe SSD, Cooler Boost 5, Win11 Home: Black B13VGK-887US","Laptop"));
 
         }else if ("Games".equals(Id)) {
             productsArrayList.add(new ProductModel(R.drawable.mass_effect_legendary,"Mass Effect Legendary","$59.99","One person is all that stands between humanity and the greatest threat it's ever faced. Relive the Legend of Commander shepard in the highly acclaimed mass Effect Trilogy with the mass Effect legendary Edition. Includes single-player base content and DLC from mass Effect, mass Effect 2, and mass Effect 3, plus Promo weapons, armors, and packs - all remastered and optimized for 4K Ultra HD.\n","Games"));
             productsArrayList.add(new ProductModel(R.drawable.dead_space_game,"Dead Space Standard","$59.99","The sci-fi survival horror classic Dead Space returns, completely rebuilt from the ground up to offer a deeper and more immersive experience. This remake brings jaw-dropping visual fidelity, suspenseful atmospheric audio, and improvements to gameplay while staying faithful to the original game’s thrilling vision. Isaac ","Games"));
             productsArrayList.add(new ProductModel(R.drawable.star_wars_jedi_game,"Star Wars Jedi: Survivor Standard","$69.99","The story of Cal Kestis continues in Star Wars Jedi: Survivor, a third person galaxy-spanning action-adventure game from Respawn Entertainment, developed in collaboration with Lucasfilm Games. This narratively-driven, single player title picks up five years after the events of Star Wars Jedi: Fallen Order and follows Cal’s increasingly desperate fight as the galaxy descends further into darkness. ","Games"));
             productsArrayList.add(new ProductModel(R.drawable.transformers_game,"Transformers: Fall of Cybertron","$49.99","Transformers: Fall of Cybertron is a third-person shooter that returns players to the Transformer's planet of Cybertron for the final battles of the legendary war that preceded their arrival on Earth. The game continues the story of the earlier game, Transformers: War for Cybertron.","Games"));
-            productsArrayList.add(new ProductModel(R.drawable.nfs_unbound_game,"Need for Speed Unbound Palace Edition Bundle","$79.99","The world is your canvas in Need for Speed Unbound. Prove you have what it takes to win The Grand, Lakeshore’s ultimate street racing challenge. Across four intense weeks of racing, earn enough cash to enter weekly qualifiers, beat the competition, and make your mark on the street racing scene while outdriving and outsmarting the cops.","Games"));
+            productsArrayList.add(new ProductModel(R.drawable.nfs_unbound_game,"Need for Speed Unbound Palace","$79.99","The world is your canvas in Need for Speed Unbound. Prove you have what it takes to win The Grand, Lakeshore’s ultimate street racing challenge. Across four intense weeks of racing, earn enough cash to enter weekly qualifiers, beat the competition, and make your mark on the street racing scene while outdriving and outsmarting the cops.","Games"));
             productsArrayList.add(new ProductModel(R.drawable.god_war_game,"God of War Standard","$44.99","Kratos is a father again. As mentor and protector to Atreus, a son determined to earn his respect, he is forced to deal with and control the rage that has long defined him while out in a very dangerous world with his son.","Games"));
-            productsArrayList.add(new ProductModel(R.drawable.madden_nfl_gmae,"Madden NFL 24 Standard","$69.99","More realistic character movement and smarter AI gives you control to play out your gameplay strategy with the confidence to dominate any opponent in Madden NFL 24. *NEW GAMEPLAY MECHANICS ONLY ON PlayStation 5, Xbox Series X|S and PC. SAPIEN technology provides a leap forward in character technology introduces new anatomically accurate NFL player skeletons that are more responsive and true-to-life player motion.","Games"));
+            productsArrayList.add(new ProductModel(R.drawable.madden_nfl_gmae,"Madden NFL 24 ","$69.99","More realistic character movement and smarter AI gives you control to play out your gameplay strategy with the confidence to dominate any opponent in Madden NFL 24. *NEW GAMEPLAY MECHANICS ONLY ON PlayStation 5, Xbox Series X|S and PC. SAPIEN technology provides a leap forward in character technology introduces new anatomically accurate NFL player skeletons that are more responsive and true-to-life player motion.","Games"));
             productsArrayList.add(new ProductModel(R.drawable.mafia_game,"Mafia: Definitive Edition ","$39.99","Play a Mob Movie: Live the life of a Prohibition-era gangster and rise through the ranks of the Mafia.","Games"));
             productsArrayList.add(new ProductModel(R.drawable.the_outer_worlds_game,"The Outer Worlds: Standard ","$29.99","The Outer Worlds is an award-winning single-player first-person sci-fi RPG from Obsidian Entertainment and Private Division.","Games"));
             productsArrayList.add(new ProductModel(R.drawable.the_immortals_game,"Immortals of Aveum Standard","$59.99","Summon your power, stop the Everwar, save the realms. Immortals of Aveum is a single-player first person magic shooter that tells the story of Jak as he joins an elite order of battlemages to save a world on the edge of abyss. Master three forces of magic, unleash spells with deadly skill, and decimate legions of enemies in a game that defies conventions of what we’ve come to expect from first person shooters.","Games"));
@@ -207,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             productsArrayList.add(new ProductModel(R.drawable.meta_quest,"Meta Quest 2","$199.00","Meta Quest 2 is the all-in-one system that truly sets you free to explore in VR. Simply put on the headset and enter fully-immersive, imagination-defying worlds. A built-in battery, fast processor and immersive graphics keep your experience smooth and seamless, while 3D positional audio, hand tracking and easy-to-use controllers make virtual worlds feel real.","Consoles"));
             productsArrayList.add(new ProductModel(R.drawable.xbox_series_s,"Microsoft Xbox Series S ","$299.00","2021 Microsoft Xbox Series S 512GB Game All-Digital Console, One Xbox Wireless Controller, 1440p Gaming Resolution, 4K Streaming, 3D Sound, WiFi, White","Consoles"));
             productsArrayList.add(new ProductModel(R.drawable.ps4_slim,"Sony PlayStation 4 Slim","$223.99","Edition:Slim 1TB The all new lighter and slimmer PlayStation4 system has a 1TB hard drive for all of the greatest games, TV, music and more. Incredible Games You've come to the right place.","Consoles"));
-            productsArrayList.add(new ProductModel(R.drawable.steam_deck,"Valve Steam Deck ","$526.99","Valve Steam Deck 512GB Handheld Gaming Console, 1280 x 800 LCD Display, with Carring case, Tempered Film and Soft Silicone Protective Case","Consoles"));
+            productsArrayList.add(new ProductModel(R.drawable.steam_deck,"Valve Steam Deck","$526.99","Valve Steam Deck 512GB Handheld Gaming Console, 1280 x 800 LCD Display, with Carring case, Tempered Film and Soft Silicone Protective Case","Consoles"));
             productsArrayList.add(new ProductModel(R.drawable.asus_ally,"ASUS ROG Ally","$659.99","Any Game, Anywhere. Sink deep into your favourite AAA or indie games and watch the hours melt away with an expansive Full HD 120Hz display and incredibly comfortable ergonomics.","Consoles"));
             productsArrayList.add(new ProductModel(R.drawable.xbox_series_x," Xbox Series X ","$439.99","Next Gen Console Bundle - Xbox Series X 1TB + 8K Premium HDMI Cable - 4 feet- 48Gbps Hight Speed HDR for Gaming Console.","Consoles"));
             productsArrayList.add(new ProductModel(R.drawable.ps5,"PlayStation PS5 Console","$659.00","PlayStation 5 console, DualSense Wireless Controller, Base, HDMI Cable, AC power cord, USB cable, God of War Ragnarok full game voucher\n","Consoles"));
@@ -217,21 +178,19 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             productsArrayList.add(new ProductModel(R.drawable.xbox_1,"Xbox One ","$176.00","This item includes the Xbox One console, 1 wireless controller, HDMI cable, and power supply . For more troubleshooting steps please check the manufacturer's webiste","Consoles"));
 
         } else if ("Appliances".equals(Id)) {
-            productsArrayList.add(new ProductModel(R.drawable.samsung_32_qled_tv,"SAMSUNG 32-Inch Class QLED 4K Q60C Series Quantum","$447.99","SAMSUNG 32-Inch Class QLED 4K Q60C Series Quantum HDR, Dual LED, Object Tracking Sound Lite, Q-Symphony, Motion Xcelerator, Gaming Hub, Smart TV with Alexa Built-in (QN32Q60C, 2023 Model),Titan Gray","Appliances"));
-            productsArrayList.add(new ProductModel(R.drawable.air_fryer,"Instant Vortex Plus 6QT ClearCook Air Fryer","$89.95","Instant Vortex Plus 6QT ClearCook Air Fryer, Clear Windows, Custom Program Options, 6-in-1 Functions, Crisps, Broils, Roasts, Dehydrates, Bakes, Reheats, from the Makers of Instant Pot, Black","Appliances"));
+            productsArrayList.add(new ProductModel(R.drawable.samsung_32_qled_tv,"SAMSUNG 32-Inch QLED 4K Q60C ","$447.99","SAMSUNG 32-Inch Class QLED 4K Q60C Series Quantum HDR, Dual LED, Object Tracking Sound Lite, Q-Symphony, Motion Xcelerator, Gaming Hub, Smart TV with Alexa Built-in (QN32Q60C, 2023 Model),Titan Gray","Appliances"));
+            productsArrayList.add(new ProductModel(R.drawable.air_fryer," ClearCook Air Fryer","$89.95","Instant Vortex Plus 6QT ClearCook Air Fryer, Clear Windows, Custom Program Options, 6-in-1 Functions, Crisps, Broils, Roasts, Dehydrates, Bakes, Reheats, from the Makers of Instant Pot, Black","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.smart_fan,"Dreo Smart Tower Fan"," $63.99","Dreo Smart Tower Fan for Bedroom, Standing Fans for Indoors, 90° Oscillating, Quiet 26ft/s Velocity Floor Fan with Remote, 5 Speeds, 8H Timer, Voice Control Bladeless Room Fan, Works with Alexa","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.air_purifier,"LEVOIT Air Purifier","$189.99","LEVOIT Air Purifiers for Home Large Room Up to 1980 Ft² in 1 Hr With Air Quality Monitor, Smart WiFi and Auto Mode, 3-in-1 Filter Captures Pet Allergies, Smoke, Dust, Core 400S/Core 400S-P, White","Appliances"));
-            productsArrayList.add(new ProductModel(R.drawable.thermostat,"Google Nest Learning Thermostat ","$199.98","Google Nest Learning Thermostat - Programmable Smart Thermostat for Home - 3rd Generation Nest Thermostat - Works with Alexa - Stainless Steel","Appliances"));
+            productsArrayList.add(new ProductModel(R.drawable.thermostat,"Google Nest Thermostat ","$199.98","Google Nest Learning Thermostat - Programmable Smart Thermostat for Home - 3rd Generation Nest Thermostat - Works with Alexa - Stainless Steel","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.roomba, "iRobot Roomba 694 Robot Vacuum","$219.99","iRobot Roomba 694 Robot Vacuum-Wi-Fi Connectivity, Personalized Cleaning Recommendations, Works with Alexa, Good for Pet Hair, Carpets, Hard Floors, Self-Charging, Roomba 694","Appliances"));
-            productsArrayList.add(new ProductModel(R.drawable.amazon_echo,"Amazon Echo Dot (5th Gen) ","$59.99","Amazon Echo Dot (5th Gen) with clock | Compact smart speaker with Alexa and enhanced LED display for at-a-glance clock, timers, weather, and more | Cloud Blue","Appliances"));
+            productsArrayList.add(new ProductModel(R.drawable.amazon_echo,"Amazon Echo Dot","$59.99","Amazon Echo Dot (5th Gen) with clock | Compact smart speaker with Alexa and enhanced LED display for at-a-glance clock, timers, weather, and more | Cloud Blue","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.soundbar,"Bose TV Speaker"," $229.00","Bose TV Speaker - Soundbar for TV with Bluetooth and HDMI-ARC Connectivity, Black, Includes Remote Control","Appliances"));
-            productsArrayList.add(new ProductModel(R.drawable.vaccume_cleaner,"Dyson Ball Animal 3 Upright Vacuum Cleaner"," $299.00","Ball technology. Navigate around obstacles with a simple turn of the wrist. For easy, precise maneuvering around your home.","Appliances"));
+            productsArrayList.add(new ProductModel(R.drawable.vaccume_cleaner,"Dyson Ball Animal 3 Vacuum"," $299.00","Ball technology. Navigate around obstacles with a simple turn of the wrist. For easy, precise maneuvering around your home.","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.blender,"Ninja BL770 Mega Kitchen System"," $159.95","Ninja BL770 Mega Kitchen System, 1500W, 4 Functions for Smoothies, Processing, Dough, Drinks & More, with 72-oz.* Blender Pitcher, 64-oz. Processor Bowl, (2) 16-oz. To-Go Cups & (2) Lids, Black","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.kettle,"COSORI Electric Gooseneck Kettle ","$69.99","COSORI Electric Gooseneck Kettle with 5 Temperature Control Presets, Pour Over Kettle for Coffee & Tea, Hot Water Boiler, 100% Stainless Steel Inner Lid & Bottom, 1200W/0.8L","Appliances"));
             productsArrayList.add(new ProductModel(R.drawable.lamp,"LED Floor Lamp","$115.99","LED Floor Lamp, Height Adjustable Floor Lamps for Living Room, Super Bright Standing Lamp with Timer, Adjustable Colors & Brightness Floor lamp for Bedroom with Remote & Touch Control, Black","Appliances"));
-        }else if ("specials".equals(Id)) {
-
-        }else if ("everything".equals(Id)) {
+        }else if ("popularproducts".equals(Id)) {
 
         }
         return productsArrayList;
@@ -241,18 +200,15 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static  void removeViews(){
         categoryRecycleView.setVisibility(View.GONE);
         frameLayout.setVisibility(View.GONE);
-        specialsTv.setVisibility(View.GONE);
-       specialsBanner.setVisibility(View.GONE);
+
        displayBanner.setVisibility(View.GONE);
        popularProductstv.setVisibility(View.GONE);
        popularProductsRecycleview.setVisibility(View.GONE);
     }
 
     public static  void addViews(){
-
         categoryRecycleView.setVisibility(View.VISIBLE);
-        specialsTv.setVisibility(View.VISIBLE);
-       specialsBanner.setVisibility(View.VISIBLE);
+
        displayBanner.setVisibility(View.VISIBLE);
        popularProductsRecycleview.setVisibility(View.VISIBLE);
        popularProductstv.setVisibility(View.VISIBLE);
@@ -337,10 +293,4 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         loadFragment(itemProductRecyclerViewFragment);
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-       /* user = mAuth.getCurrentUser();*/
-    }
 }

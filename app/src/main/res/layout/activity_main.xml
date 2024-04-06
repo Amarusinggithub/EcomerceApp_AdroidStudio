@@ -33,7 +33,7 @@
             android:elevation="10dp"
             android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="150dp">
 
             <RelativeLayout
                 style="@style/acccentColor"
@@ -53,25 +53,7 @@
             android:layout_marginTop="10dp"
             />
 
-        <TextView
-            android:id="@+id/specalstv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/specials_for_you"
-            android:textAlignment="viewStart"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            style="@style/textColor"
-            android:layout_below="@id/categoriesRecycleView"
-            android:layout_margin="10dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/specialsbanner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/specalstv"
-            style="@style/backgroundColor"
-            />
 
         <TextView
             android:id="@+id/popularproducttv"
@@ -82,7 +64,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             style="@style/textColor"
-            android:layout_below="@id/specialsbanner"
+            android:layout_below="@id/categoriesRecycleView"
             android:layout_margin="10dp" />
 
         <androidx.recyclerview.widget.RecyclerView
