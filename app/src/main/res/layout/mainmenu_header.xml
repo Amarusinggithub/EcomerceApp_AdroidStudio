@@ -14,17 +14,18 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="30sp"
-        android:text="Your Name"
+        android:text="@string/your_name"
 
         />
 
     <TextView
+        android:id="@+id/header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:text="youremail@email.com"
+        android:text="@string/youremail_email_com"
 
         />
 

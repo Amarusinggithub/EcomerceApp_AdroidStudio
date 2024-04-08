@@ -17,11 +17,11 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
-    private final MyOnClickInterface productOnclickListiner;
-    private List<ProductModel> productModelArrayList;
+    private final MyOnClickInterface productOnclickListener;
+    private final List<ProductModel> productModelArrayList;
 
-    public ProductAdapter(MyOnClickInterface productOnclickListiner, List<ProductModel> productModelArrayList) {
-        this.productOnclickListiner = productOnclickListiner;
+    public ProductAdapter(MyOnClickInterface productOnclickListener, List<ProductModel> productModelArrayList) {
+        this.productOnclickListener = productOnclickListener;
         this.productModelArrayList = productModelArrayList;
     }
 
@@ -30,7 +30,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     @Override
     public ProductAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_product_cardview,parent,false);
-        return new MyViewHolder(view,productOnclickListiner);
+        return new MyViewHolder(view, productOnclickListener);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         ImageView productImage;
         TextView productName;
         TextView productPrice;
-        public MyViewHolder(@NonNull View itemView,MyOnClickInterface productOnclickListiner) {
+        public MyViewHolder(@NonNull View itemView,MyOnClickInterface productOnclickListener) {
             super(itemView);
 
             productImage=itemView.findViewById(R.id.productImage);
@@ -59,7 +59,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             itemView.setOnClickListener(v -> {
                 int position=getAdapterPosition();
-                productOnclickListiner.onClicked(position);
+                productOnclickListener.onClicked(position);
             });
         }
     }

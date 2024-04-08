@@ -1,4 +1,14 @@
 <resources>
+
+    <string name="default_web_client_id">239100579519-4fdgi2d339cuor9b0aslcm7p0sba64ei.apps.googleusercontent.com</string>
+
+
+    <string name="facebook_app_id">1234</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+
+
+
     <string name="app_name">SwiftCart</string>
     <string name="categorytitle">Category</string>
     <string name="quantity">0</string>
@@ -27,6 +37,16 @@
     <string name="specials_for_you">Specials For You</string>
     <string name="categories">Categories</string>
     <string name="popular_products">Popular Products</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="dont_have_an_account">Dont Have An Account?</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="enter_password">Enter Password...</string>
+    <string name="password">Password</string>
+    <string name="enter_email">Enter Email...</string>
+    <string name="email">Email</string>
+    <string name="sign_in">Sign In</string>
+    <string name="youremail_email_com">youremail@email.com</string>
+    <string name="your_name">Your Name</string>
 
 
 </resources>

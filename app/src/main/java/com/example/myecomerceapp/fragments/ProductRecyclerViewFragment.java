@@ -53,9 +53,11 @@ public class ProductRecyclerViewFragment extends Fragment implements MyOnClickIn
     public void onClicked(int position) {
         ProductModel product = getProductsData(categoryId).get(position);
         Bundle bundle = new Bundle();
+        bundle.putInt("position",position);
         bundle.putString("productName", product.getProductName());
         bundle.putString("proPrice", product.getProductPrice());
         bundle.putString("productDescription", product.getProductDescription());
+        bundle.putString("position", product.getProductId());
         bundle.putInt("productImage", product.getProductImage());
         ProductViewFragment productViewFragment = new ProductViewFragment();
         productViewFragment.setArguments(bundle);

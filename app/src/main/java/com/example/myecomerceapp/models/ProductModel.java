@@ -1,10 +1,10 @@
 package com.example.myecomerceapp.models;
 
 public class ProductModel {
-    private final int productImage;
-    private final String productName;
-    private final String productPrice;
-    private final String productId;
+    private  int productImage;
+    private  String productName;
+    private  String productPrice;
+    private  String productId;
 
     public final String productDescription;
 
@@ -14,6 +14,22 @@ public class ProductModel {
         this.productPrice = productPrice;
         this.productId = productId;
         this.productDescription = productDescription;
+    }
+
+    public void setProductImage(int productImage) {
+        this.productImage = productImage;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getProductDescription() {

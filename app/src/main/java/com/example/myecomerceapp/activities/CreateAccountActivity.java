@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
@@ -16,11 +17,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myecomerceapp.R;
+import com.example.myecomerceapp.models.UserModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -40,6 +48,15 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     String email;
     String password;
+    UserModel userModel;
+
+    private static final int RC_SIGN_IN = 123;
+
+    private Button googleSignInBtn;
+
+    private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseUser currentUser;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,18 +79,27 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         signInTv.setOnClickListener(v -> startActivity(new Intent(CreateAccountActivity.this,LoginActivity.class)));
 
-        signUpBtn.setOnClickListener(v -> {
+        signUpBtn.setOnClickListener(v -> signUpWithEmail());
+
+    }
+
+    private void signUpWithEmail() {
+
 
             String emailText = emailEt.getEditableText().toString();
             String passwordText = passwordEt.getEditableText().toString();
             String confirmPasswordText = confirmPasswordEt.getEditableText().toString();
+            String firstNameText = firstNameEt.getEditableText().toString();
+            String lastNameText = lastNameEt.getEditableText().toString();
 
             if (emailText.isEmpty() || passwordText.isEmpty()) {
-                // Handle case where email or password is empty
+
+                Toast.makeText(CreateAccountActivity.this, "Email and password are required.", Toast.LENGTH_SHORT).show();
             } else if (!confirmPasswordText.equals(passwordText)) {
-                // Handle case where passwords do not match
+
+                Toast.makeText(CreateAccountActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
             } else if (isValidEmail(emailText)) {
-                // Proceed with creating user account
+
                 email = emailText;
                 try {
                     password = encryptPassword(passwordText);
@@ -81,25 +107,78 @@ public class CreateAccountActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
+                // Create UserModel instance
+                userModel = new UserModel(R.drawable.default_profile_image, email, lastNameText, firstNameText, password);
+
+                // Create user in Firebase Authentication
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 user = mAuth.getCurrentUser();
-                                updateUI(user);
+                                updateUI(user,userModel);
                             } else {
                                 // Handle authentication failure
-                                Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             }
                         });
 
-
             }
 
-
-        });
     }
+
+    private void signInWithGoogle() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign-In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign-In failed, update UI appropriately
+                Toast.makeText(this, "Google sign in failed.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                       currentUser = mAuth.getCurrentUser();
+                        // Extract user information from GoogleSignInAccount
+                        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+                        assert googleSignInAccount != null;
+                        String firstName = googleSignInAccount.getGivenName();
+                        String lastName = googleSignInAccount.getFamilyName();
+                        String email = googleSignInAccount.getEmail();
+
+                         // You can get the profile image URL using googleSignInAccount.getPhotoUrl()
+
+                        // Create UserModel instance
+                         userModel = new UserModel(R.drawable.default_profile_image, email, lastName, firstName,null);
+
+                        // Update UI with the created UserModel
+                        updateUI(currentUser, userModel);
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     public static boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
@@ -117,11 +196,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         return bigInteger.toString(16);
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user,UserModel usermodel) {
         if (user != null) {
-            Toast.makeText(this, "Welcome, " + user.getEmail(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Welcome, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(CreateAccountActivity.this, MainActivity.class);
-            intent.putExtra("currentUser",(Serializable) user);
+            intent.putExtra("usermodel", (Parcelable) usermodel);
             startActivity(intent);
             finish(); // Finish the current activity to prevent returning back to the login screen
         } else {

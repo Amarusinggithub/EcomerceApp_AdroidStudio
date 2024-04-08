@@ -24,14 +24,15 @@ import com.example.myecomerceapp.adapters.CategoryAdapter;
 import com.example.myecomerceapp.fragments.ProductRecyclerViewFragment;
 import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.adapters.BannerAdapter;
 import com.example.myecomerceapp.fragments.AccountFragment;
 import com.example.myecomerceapp.fragments.CartFragment;
 import com.example.myecomerceapp.fragments.SalesFragment;
 import com.example.myecomerceapp.models.CategoryModel;
 import com.example.myecomerceapp.models.ProductModel;
+import com.example.myecomerceapp.models.UserModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import androidx.fragment.app.FragmentManager;
@@ -41,21 +42,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener , MyOnClickInterface {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    UserModel userModel;
+
 
     public static FrameLayout frameLayout;
     public static CardView displayBanner;
     public static RecyclerView categoryRecycleView;
     public static  TextView popularProductstv;
     public static RecyclerView popularProductsRecycleview;
-    public FirebaseUser user;
+    public FirebaseUser currentUser;
 
+    private FirebaseAuth mAuth;
 
     BottomNavigationView bottomNavigationView;
     @Override
@@ -64,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         setContentView(R.layout.activity_main);
 
         //Variables
+        userModel=getIntent().getParcelableExtra("usermodel");
+        mAuth=FirebaseAuth.getInstance();
+        currentUser =mAuth.getCurrentUser();
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView=findViewById(R.id.bottomnav);
         frameLayout=findViewById(R.id.frameLayout);
@@ -192,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             productsArrayList.add(new ProductModel(R.drawable.lamp,"LED Floor Lamp","$115.99","LED Floor Lamp, Height Adjustable Floor Lamps for Living Room, Super Bright Standing Lamp with Timer, Adjustable Colors & Brightness Floor lamp for Bedroom with Remote & Touch Control, Black","Appliances"));
         }else if ("popularproducts".equals(Id)) {
 
+        }else if ("everyproduct".equals(Id)) {
+
         }
         return productsArrayList;
 
@@ -249,17 +257,38 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     private void setupHeader() {
         View header = navigationView.getHeaderView(0);
-        header.findViewById(R.id.header_title).setOnClickListener(view -> Toast.makeText(
+        TextView headerTitle = header.findViewById(R.id.header_title);
+        TextView headerEmail = header.findViewById(R.id.header_email);
+        headerTitle
+                .setOnClickListener(view -> Toast.makeText(
                 MainActivity.this,
                 getString(R.string.title_click),
                 Toast.LENGTH_SHORT).show());
+
+        headerEmail
+                .setOnClickListener(view -> Toast.makeText(
+                        MainActivity.this,
+                        getString(R.string.title_click),
+                        Toast.LENGTH_SHORT).show());
+
+
+        headerEmail.setText(currentUser.getEmail());
+        headerTitle.setText(currentUser.getDisplayName());
+
+
     }
 
+
+
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
-        return true;
+    public void onClicked(int position) {
+        removeViews();
+        categoryRecycleView.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
+        CategoryModel categoryModel= getCategory().get(position);
+        ProductRecyclerViewFragment itemProductRecyclerViewFragment =new ProductRecyclerViewFragment();
+        ProductRecyclerViewFragment.categoryId=categoryModel.getCategoryId();
+        loadFragment(itemProductRecyclerViewFragment);
     }
 
     @Override
@@ -283,14 +312,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
     @Override
-    public void onClicked(int position) {
-        removeViews();
-        categoryRecycleView.setVisibility(View.VISIBLE);
-        frameLayout.setVisibility(View.VISIBLE);
-        CategoryModel categoryModel= getCategory().get(position);
-        ProductRecyclerViewFragment itemProductRecyclerViewFragment =new ProductRecyclerViewFragment();
-        ProductRecyclerViewFragment.categoryId=categoryModel.getCategoryId();
-        loadFragment(itemProductRecyclerViewFragment);
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
-
 }
