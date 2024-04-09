@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             userModel = new UserModel(R.drawable.default_profile_image, email, null, null,password);
 
                             // Update UI with the created UserModel
-                            updateUI(currentUser, userModel);
+                            updateUI(currentUser);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -139,13 +139,13 @@ public class LoginActivity extends AppCompatActivity {
                         userModel = new UserModel(R.drawable.default_profile_image, email, lastName, firstName,null);
 
                         // Update UI with the created UserModel
-                        updateUI(currentUser, userModel);
+                        updateUI(currentUser);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCustomToken:failure", task.getException());
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
-                        updateUI(null,null);
+                        updateUI(null);
                     }
                 });
     }
@@ -181,16 +181,17 @@ public class LoginActivity extends AppCompatActivity {
         // Create UserModel instance
         userModel = new UserModel(R.drawable.default_profile_image, email, lastName, firstName,null);
 
+        currentUser=mAuth.getCurrentUser();
+
         // Update UI with the created UserModel
-        updateUI(currentUser, userModel);
+        updateUI(currentUser);
 
     }
 
-    private void updateUI(FirebaseUser user,UserModel usermodel) {
+    private void updateUI(FirebaseUser user) {
         if (user != null) {
             Toast.makeText(this, "Welcome, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("usermodel", (Parcelable) usermodel);
             startActivity(intent);
             finish(); // Finish the current activity to prevent returning back to the login screen
         } else {
@@ -234,9 +235,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                 // Create UserModel instance
                                 userModel = new UserModel(R.drawable.default_profile_image, email, lastName, firstName,null);
-
                                 // Update UI with the created UserModel
-                                updateUI(task.getResult().getUser(), userModel);
+                                updateUI(task.getResult().getUser());
                                 Toast.makeText(LoginActivity.this, "Firebase authentication successful", Toast.LENGTH_SHORT).show();
                             } else {
                                 // When task is unsuccessful display Toast

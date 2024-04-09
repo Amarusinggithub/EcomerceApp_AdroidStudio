@@ -116,7 +116,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 user = mAuth.getCurrentUser();
-                                updateUI(user,userModel);
+                                updateUI(user);
                             } else {
                                 // Handle authentication failure
                                 Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -170,7 +170,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                          userModel = new UserModel(R.drawable.default_profile_image, email, lastName, firstName,null);
 
                         // Update UI with the created UserModel
-                        updateUI(currentUser, userModel);
+                        updateUI(currentUser);
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -196,11 +196,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         return bigInteger.toString(16);
     }
 
-    private void updateUI(FirebaseUser user,UserModel usermodel) {
+    private void updateUI(FirebaseUser user) {
         if (user != null) {
             Toast.makeText(this, "Welcome, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(CreateAccountActivity.this, MainActivity.class);
-            intent.putExtra("usermodel", (Parcelable) usermodel);
+
             startActivity(intent);
             finish(); // Finish the current activity to prevent returning back to the login screen
         } else {
