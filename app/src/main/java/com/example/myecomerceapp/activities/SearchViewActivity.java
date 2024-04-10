@@ -9,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.ProductModel;
+import com.example.myecomerceapp.models.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchViewActivity extends AppCompatActivity {
     public SearchView searchView;
-    public  List<ProductModel> filtertedList;
+    public  List<Product> filtertedList;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +31,7 @@ public class SearchViewActivity extends AppCompatActivity {
     public  void filter(String newText) {
 
         filtertedList= new ArrayList<>();
-        for(ProductModel item: getProductsData("categoryId")){
+        for(Product item: getProductsData("categoryId")){
             if(item.getProductName().toLowerCase().contains(newText.toLowerCase())){
                 filtertedList.add(item);
             }

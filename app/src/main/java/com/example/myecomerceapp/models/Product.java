@@ -1,19 +1,28 @@
 package com.example.myecomerceapp.models;
 
-public class ProductModel {
+public class Product {
     private  int productImage;
     private  String productName;
     private  String productPrice;
     private  String productId;
+    private  int productQuantity=1;
 
     public final String productDescription;
 
-    public ProductModel(int productImage, String productName, String productPrice, String productDescription, String productId) {
+    public Product(int productImage, String productName, String productPrice, String productDescription, String productId) {
         this.productImage = productImage;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productId = productId;
         this.productDescription = productDescription;
+    }
+
+    public int getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
     }
 
     public void setProductImage(int productImage) {

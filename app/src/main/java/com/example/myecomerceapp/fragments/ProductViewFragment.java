@@ -17,13 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.ProductModel;
+import com.example.myecomerceapp.models.Product;
 
 
 public class ProductViewFragment extends Fragment {
 
     Button addToCart;
-    ProductModel product;
+    Product product;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class ProductViewFragment extends Fragment {
             int productImageResource = args.getInt("productImage");
 
             if(product==null){
-                product=new ProductModel(productImageResource,productName,productPrice,productDescription,productId);
+                product=new Product(productImageResource,productName,productPrice,productDescription,productId);
             }
 
             TextView productNameTextView =  productView.findViewById(R.id.Name);
@@ -59,7 +59,7 @@ public class ProductViewFragment extends Fragment {
 
             addToCart.setOnClickListener(v -> {
                 if(product==null){
-                    product=new ProductModel(productImageResource,productName,productPrice,productDescription,productId);
+                    product=new Product(productImageResource,productName,productPrice,productDescription,productId);
                     productsAddedToCart.add(product);
                 }
 

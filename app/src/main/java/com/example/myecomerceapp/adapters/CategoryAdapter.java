@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.CategoryModel;
+import com.example.myecomerceapp.models.Category;
 
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
     private final MyOnClickInterface myOnClickInterface;
-    private final List<CategoryModel> categoryModelArrayList;
+    private final List<Category> categoryArrayList;
 
-    public CategoryAdapter(MyOnClickInterface myOnClickInterface, List<CategoryModel> categoryModelArrayList) {
+    public CategoryAdapter(MyOnClickInterface myOnClickInterface, List<Category> categoryArrayList) {
         this.myOnClickInterface = myOnClickInterface;
-        this.categoryModelArrayList = categoryModelArrayList;
+        this.categoryArrayList = categoryArrayList;
     }
 
     @NonNull
@@ -34,14 +34,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.MyViewHolder holder, int position) {
-    CategoryModel categoryModel=categoryModelArrayList.get(position);
-    holder.categoryTitle.setText(categoryModel.getCategoryTitle());
-    holder.categoryImage.setBackgroundResource(categoryModel.getCategoryImage());
+    Category category = categoryArrayList.get(position);
+    holder.categoryTitle.setText(category.getCategoryTitle());
+    holder.categoryImage.setBackgroundResource(category.getCategoryImage());
     }
 
     @Override
     public int getItemCount() {
-        return categoryModelArrayList.size();
+        return categoryArrayList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{

@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.ProductModel;
+import com.example.myecomerceapp.models.Product;
 
 import java.util.ArrayList;
 
 
 public class CartFragment extends Fragment {
-public static ArrayList<ProductModel> productsAddedToCart;
+public static ArrayList<Product> productsAddedToCart;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

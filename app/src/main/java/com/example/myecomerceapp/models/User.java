@@ -1,22 +1,16 @@
 package com.example.myecomerceapp.models;
 
-public class UserModel {
+import java.util.Map;
+
+public class User {
 
     int userProfileImage;
     String email;
     String lastName;
     String firstName;
     String password;
+    Map<Product,Integer> products;
 
-
-
-    public UserModel(int userProfileImage, String email, String lastName, String firstName, String password) {
-        this.userProfileImage = userProfileImage;
-        this.email = email;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.password = password;
-    }
 
     public int getUserProfileImage() {
         return userProfileImage;
@@ -56,5 +50,13 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Map<Product, Integer> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Map<Product, Integer> products) {
+        this.products = products;
     }
 }

@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.ProductModel;
+import com.example.myecomerceapp.models.Product;
 
 import java.util.List;
 
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHolder> {
 
-    private final List<ProductModel> productModels;
+    private final List<Product> products;
     private final MyOnClickInterface myOnClickInterface;
 
-    public BannerAdapter(List<ProductModel> productModels, MyOnClickInterface myOnClickInterface) {
-        this.productModels = productModels;
+    public BannerAdapter(List<Product> products, MyOnClickInterface myOnClickInterface) {
+        this.products = products;
         this.myOnClickInterface = myOnClickInterface;
     }
 
@@ -35,14 +35,14 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull BannerAdapter.MyViewHolder holder, int position) {
 
-        ProductModel productModel = productModels.get(position);
-        holder.image.setBackgroundResource(productModel.getProductImage());
-        /*holder.text.setText(productModel.getItemName());*/
+        Product product = products.get(position);
+        holder.image.setBackgroundResource(product.getProductImage());
+        /*holder.text.setText(product.getItemName());*/
     }
 
     @Override
     public int getItemCount() {
-        return productModels.size();
+        return products.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{

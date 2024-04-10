@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.interfaces.MyOnClickInterface;
-import com.example.myecomerceapp.models.ProductModel;
+import com.example.myecomerceapp.models.Product;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
     private final MyOnClickInterface productOnclickListener;
-    private final List<ProductModel> productModelArrayList;
+    private final List<Product> productArrayList;
 
-    public ProductAdapter(MyOnClickInterface productOnclickListener, List<ProductModel> productModelArrayList) {
+    public ProductAdapter(MyOnClickInterface productOnclickListener, List<Product> productArrayList) {
         this.productOnclickListener = productOnclickListener;
-        this.productModelArrayList = productModelArrayList;
+        this.productArrayList = productArrayList;
     }
 
 
@@ -35,7 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, int position) {
-        ProductModel product=productModelArrayList.get(position);
+        Product product= productArrayList.get(position);
         holder.productImage.setImageResource(product.getProductImage());
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getProductPrice());
@@ -43,7 +43,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return productModelArrayList.size();
+        return productArrayList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{

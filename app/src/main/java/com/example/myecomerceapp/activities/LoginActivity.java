@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
@@ -12,22 +11,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.UserModel;
+import com.example.myecomerceapp.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -48,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     GoogleSignInClient googleSignInClient;
     SignInButton googleSignInBtn;
-    UserModel userModel;
+    User user;
     String password;
     String email;
 
@@ -56,6 +52,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
+
+
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -100,10 +99,10 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                            currentUser= mAuth.getCurrentUser();
-                            // Create UserModel instance
-                            userModel = new UserModel(R.drawable.default_profile_image, email, null, null,password);
+                            // Create User instance
+                            user = new User();
 
-                            // Update UI with the created UserModel
+                            // Update UI with the created User
                             updateUI(currentUser);
 
                         } else {
@@ -135,10 +134,10 @@ public class LoginActivity extends AppCompatActivity {
 
                         // You can get the profile image URL using googleSignInAccount.getPhotoUrl()
 
-                        // Create UserModel instance
-                        userModel = new UserModel(R.drawable.default_profile_image, email, lastName, firstName,null);
+                        // Create User instance
+                        user = new User();
 
-                        // Update UI with the created UserModel
+                        // Update UI with the created User
                         updateUI(currentUser);
                     } else {
                         // If sign in fails, display a message to the user.
@@ -178,12 +177,12 @@ public class LoginActivity extends AppCompatActivity {
 
         // You can get the profile image URL using googleSignInAccount.getPhotoUrl()
 
-        // Create UserModel instance
-        userModel = new UserModel(R.drawable.default_profile_image, email, lastName, firstName,null);
+        // Create User instance
+        user = new User();
 
         currentUser=mAuth.getCurrentUser();
 
-        // Update UI with the created UserModel
+        // Update UI with the created User
         updateUI(currentUser);
 
     }
@@ -233,9 +232,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                 // You can get the profile image URL using googleSignInAccount.getPhotoUrl()
 
-                                // Create UserModel instance
-                                userModel = new UserModel(R.drawable.default_profile_image, email, lastName, firstName,null);
-                                // Update UI with the created UserModel
+                                // Create User instance
+                                user = new User();
+                                // Update UI with the created User
                                 updateUI(task.getResult().getUser());
                                 Toast.makeText(LoginActivity.this, "Firebase authentication successful", Toast.LENGTH_SHORT).show();
                             } else {

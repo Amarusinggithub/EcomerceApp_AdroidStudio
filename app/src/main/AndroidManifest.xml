@@ -61,8 +61,7 @@
             android:exported="false">
 
         </activity>
-        <activity android:name=".activities.SplashScreenActivity"
-            android:exported="false"/>
+
         <activity android:name=".activities.SearchViewActivity"
             android:exported="false"/>
     </application>

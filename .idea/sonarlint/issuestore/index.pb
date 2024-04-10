@@ -62,8 +62,6 @@ x
 Happ/src/main/java/com/example/myecomerceapp/activities/MainActivity.java,5\0\509f8601ba55bb04b98ef29a3ab603c66b8aa527
 ~
 Napp/src/main/java/com/example/myecomerceapp/interfaces/MyOnClickInterface.java,d\d\dd9c9c2bfabe81ef688fd058100d8575001acec9
-Ä
-Papp/src/main/java/com/example/myecomerceapp/activities/SplashScreenActivity.java,6\d\6d5fbaf350ee8d438e8aee8d90bf8290423600f4
 ~
 Napp/src/main/java/com/example/myecomerceapp/activities/SearchViewActivity.java,0\b\0b3fc5f83f536533fb42b0f68245fc3f16ceb3ee
 Å
@@ -76,3 +74,9 @@ x
 Happ/src/main/java/com/example/myecomerceapp/adapters/ProductAdapter.java,2\3\232fae711ddd711ca14ad8e0aa26e55b0e5e2899
 Ü
 Vapp/src/main/java/com/example/myecomerceapp/fragments/ProductRecyclerViewFragment.java,f\e\fecf6c575a6733a1256ddd252204b7eecc63d131
+l
+<app/src/main/java/com/example/myecomerceapp/models/User.java,6\f\6f4240077e33164d7c1ad91fdfd5a5adac692270
+o
+?app/src/main/java/com/example/myecomerceapp/models/Product.java,9\e\9ea9cb0a57fb2a923e51c9ba13ee509572ae5cd1
+p
+@app/src/main/java/com/example/myecomerceapp/models/Category.java,b\6\b6a953d9d86c4464f559a7508cc3aca33e684c81

@@ -1,15 +1,15 @@
 package com.example.myecomerceapp.models;
 
-public class CategoryModel {
+public class Category {
     private final String categoryTitle;
     private final int categoryImage;
-    private  String categoryId;
+    private final String categoryId;
 
     public String getCategoryId() {
         return categoryId;
     }
 
-    public CategoryModel(String categoryTitle , int categoryImage, String categoryId) {
+    public Category(String categoryTitle , int categoryImage, String categoryId) {
         this.categoryTitle =categoryTitle;
         this.categoryImage = categoryImage;
         this.categoryId=categoryId;

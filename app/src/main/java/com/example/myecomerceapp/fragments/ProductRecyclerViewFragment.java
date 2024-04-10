@@ -19,9 +19,7 @@ import android.view.ViewGroup;
 import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.ProductAdapter;
-import com.example.myecomerceapp.models.ProductModel;
-
-import java.io.Serializable;
+import com.example.myecomerceapp.models.Product;
 
 public class ProductRecyclerViewFragment extends Fragment implements MyOnClickInterface {
     public static  String categoryId;
@@ -51,7 +49,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyOnClickIn
 
     @Override
     public void onClicked(int position) {
-        ProductModel product = getProductsData(categoryId).get(position);
+        Product product = getProductsData(categoryId).get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("position",position);
         bundle.putString("productName", product.getProductName());
