@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    User user;
+
 
 
     public static FrameLayout frameLayout;
@@ -72,12 +72,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
         assert googleSignInAccount != null;
         String firstName = googleSignInAccount.getGivenName();
-        String lastName = googleSignInAccount.getFamilyName();
         String email = googleSignInAccount.getEmail();
 
 
         //Variables
-        user =getIntent().getParcelableExtra("usermodel");
+       user=new User();
         mAuth=FirebaseAuth.getInstance();
         currentUser =mAuth.getCurrentUser();
         toolbar = findViewById(R.id.toolbar);
@@ -87,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         categoryRecycleView = findViewById(R.id.categoriesRecycleView);
         popularProductsRecycleview=findViewById(R.id.popularproductrecycleview);
         popularProductstv=findViewById(R.id.popularproducttv);
+
+
+
 
       //category recycleView
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -189,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             productsArrayList.add(new Product(R.drawable.xbox_series_x," Xbox Series X ","$439.99","Next Gen Console Bundle - Xbox Series X 1TB + 8K Premium HDMI Cable - 4 feet- 48Gbps Hight Speed HDR for Gaming Console.","Consoles"));
             productsArrayList.add(new Product(R.drawable.ps5,"PlayStation PS5 Console","$659.00","PlayStation 5 console, DualSense Wireless Controller, Base, HDMI Cable, AC power cord, USB cable, God of War Ragnarok full game voucher\n","Consoles"));
             productsArrayList.add(new Product(R.drawable.ps4_pro,"Sony PlayStation 4 Pro","$244.00","Sony PlayStation 4 Pro w/ Accessories, 1TB HDD, CUH-7215B - Jet Black.Enhanced games - PS4 Pro games burst into life with intensely sharp graphics, stunningly vibrant colours, textures and environments and smoother, more stable performance","Consoles"));
-            productsArrayList.add(new Product(R.drawable.ps4,"PlayStation 4","$205.00","ncredible games; Endless entertainment,1 TB hard drive,Blu-ray technology, delivers exceptional video quality.","Consoles"));
+            productsArrayList.add(new Product(R.drawable.ps4,"PlayStation 4","$205.00","incredible games; Endless entertainment,1 TB hard drive,Blu-ray technology, delivers exceptional video quality.","Consoles"));
             productsArrayList.add(new Product(R.drawable.xbox_one_s,"Xbox One S","$224.99","Microsoft - Xbox One S 500GB Console - White - ZQ9-00028 ","Gaming Consoles"));
             productsArrayList.add(new Product(R.drawable.xbox_1,"Xbox One ","$176.00","This item includes the Xbox One console, 1 wireless controller, HDMI cable, and power supply . For more troubleshooting steps please check the manufacturer's webiste","Consoles"));
 

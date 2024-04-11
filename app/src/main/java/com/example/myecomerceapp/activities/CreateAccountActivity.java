@@ -28,8 +28,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    EditText firstNameEt;
-    EditText lastNameEt;
+
     EditText emailEt;
     EditText passwordEt;
     EditText confirmPasswordEt;
@@ -38,7 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     String email;
     String password;
-    User user;
+    public static User user;
 
     private static final int RC_SIGN_IN = 123;
 
@@ -58,8 +57,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
         //Variables
-        firstNameEt =findViewById(R.id.firstnameet);
-        lastNameEt =findViewById(R.id.lastnameet);
+
         emailEt =findViewById(R.id.emailet);
         passwordEt =findViewById(R.id.passwordet);
         confirmPasswordEt =findViewById(R.id.confirmpasswordet);
@@ -79,8 +77,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             String emailText = emailEt.getEditableText().toString();
             String passwordText = passwordEt.getEditableText().toString();
             String confirmPasswordText = confirmPasswordEt.getEditableText().toString();
-            String firstNameText = firstNameEt.getEditableText().toString();
-            String lastNameText = lastNameEt.getEditableText().toString();
+
 
             if (emailText.isEmpty() || passwordText.isEmpty()) {
 

@@ -6,8 +6,8 @@ public class User {
 
     int userProfileImage;
     String email;
-    String lastName;
-    String firstName;
+
+    String userName;
     String password;
     Map<Product,Integer> products;
 
@@ -28,20 +28,14 @@ public class User {
         this.email = email;
     }
 
-    public String getLastName() {
-        return lastName;
+
+
+    public String getUserName() {
+        return userName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {

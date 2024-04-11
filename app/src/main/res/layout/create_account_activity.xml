@@ -19,65 +19,11 @@
         android:layout_marginBottom="15dp"
         />
 
-    <TextView
-        android:id="@+id/firstnametv"
-        android:text="Firstname"
-        android:inputType="textPersonName"
-        android:layout_below="@id/signuptv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
 
-    <EditText
-
-        android:hint="Enter Firstname.."
-        android:id="@+id/firstnameet"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_below="@id/firstnametv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
-
-    <TextView
-        android:id="@+id/lastnametv"
-        android:text="Lastname"
-        android:inputType="textPersonName"
-        android:layout_below="@id/firstnameet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
-
-    <EditText
-
-        android:hint="Enter Lastname..."
-        android:id="@+id/lastnameet"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_below="@id/lastnametv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
 
     <TextView
         android:id="@+id/emailtv"
-        android:layout_below="@id/lastnameet"
+        android:layout_below="@id/signuptv"
         android:textSize="20sp"
         android:textStyle="bold"
         android:text="Email"

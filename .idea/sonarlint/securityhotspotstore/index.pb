@@ -36,8 +36,6 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 Å
 Q.idea/sonarlint/securityhotspotstore/d/2/d2a4383452aad84a18429a5844d31330a012a9e6,7\f\7fcac164c7a46b8fc6411ea93226c884af6044db
-u
-Eapp/src/main/java/com/example/myecomerceapp/models/CategoryModel.java,8\8\8825e54187886bdede5ddf5c6f42dcee7f9ea788
 y
 Iapp/src/main/java/com/example/myecomerceapp/adapters/CategoryAdapter.java,d\4\d40e31c6f2425d86d513351fdf7edc9b328867f1
 w
@@ -54,10 +52,6 @@ Y
 ).idea/modules/app/My_Ecomerce_App.app.iml,8\0\803446debd6a519ce542ab2b53b0b5145e0b6a15
 ^
 ..idea/modules/app/My_Ecomerce_App.app.main.iml,2\9\299a82309344e952b48467b4a24e59e9aa1250aa
-t
-Dapp/src/main/java/com/example/myecomerceapp/models/ProductModel.java,6\8\68d055f240516300b757f061f3cd444f6f47a6bb
-q
-Aapp/src/main/java/com/example/myecomerceapp/models/UserModel.java,3\7\37c25d93f2d09e3f33875e1d304a2bedf16dac6e
 x
 Happ/src/main/java/com/example/myecomerceapp/activities/MainActivity.java,5\0\509f8601ba55bb04b98ef29a3ab603c66b8aa527
 ~

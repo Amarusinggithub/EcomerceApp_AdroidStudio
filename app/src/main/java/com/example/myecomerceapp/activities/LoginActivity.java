@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     GoogleSignInClient googleSignInClient;
     SignInButton googleSignInBtn;
-    User user;
+
     String password;
     String email;
 
@@ -52,9 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-
-
-
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -81,11 +78,11 @@ public class LoginActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_CODE);
         });
 
-        signInBtn.setOnClickListener(v -> signInWithEmalAndPassword());
+        signInBtn.setOnClickListener(v -> signInWithEmailAndPassword());
 
     }
 
-    private void signInWithEmalAndPassword() {
+    private void signInWithEmailAndPassword() {
 
         if (isValidEmail(emailEt.getEditableText().toString())){
              email=emailEt.getEditableText().toString();
@@ -99,8 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                            currentUser= mAuth.getCurrentUser();
-                            // Create User instance
-                            user = new User();
 
                             // Update UI with the created User
                             updateUI(currentUser);
@@ -125,18 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCustomToken:success");
                         currentUser = mAuth.getCurrentUser();
-                        // Extract user information from GoogleSignInAccount
-                        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
-                        assert googleSignInAccount != null;
-                        String firstName = googleSignInAccount.getGivenName();
-                        String lastName = googleSignInAccount.getFamilyName();
-                         email = googleSignInAccount.getEmail();
-
-                        // You can get the profile image URL using googleSignInAccount.getPhotoUrl()
-
-                        // Create User instance
-                        user = new User();
-
                         // Update UI with the created User
                         updateUI(currentUser);
                     } else {
@@ -169,19 +152,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        assert googleSignInAccount != null;
-        String firstName = googleSignInAccount.getGivenName();
-        String lastName = googleSignInAccount.getFamilyName();
-         String email = googleSignInAccount.getEmail();
-
-        // You can get the profile image URL using googleSignInAccount.getPhotoUrl()
-
-        // Create User instance
-        user = new User();
-
         currentUser=mAuth.getCurrentUser();
-
         // Update UI with the created User
         updateUI(currentUser);
 
@@ -224,16 +195,6 @@ public class LoginActivity extends AppCompatActivity {
                         mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, task -> {
                             // Check condition
                             if (task.isSuccessful()) {
-                                GoogleSignInAccount googleSignInAccount1 = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
-                                assert googleSignInAccount1 != null;
-                                String firstName = googleSignInAccount1.getGivenName();
-                                String lastName = googleSignInAccount1.getFamilyName();
-                                String email = googleSignInAccount1.getEmail();
-
-                                // You can get the profile image URL using googleSignInAccount.getPhotoUrl()
-
-                                // Create User instance
-                                user = new User();
                                 // Update UI with the created User
                                 updateUI(task.getResult().getUser());
                                 Toast.makeText(LoginActivity.this, "Firebase authentication successful", Toast.LENGTH_SHORT).show();
