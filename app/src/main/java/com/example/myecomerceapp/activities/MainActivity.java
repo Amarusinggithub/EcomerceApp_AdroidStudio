@@ -39,11 +39,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -54,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener , MyOnClickInterface {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -61,16 +61,15 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     public static User user;
 
-
-
     public static FrameLayout frameLayout;
     public static CardView displayBanner;
     public static RecyclerView categoryRecycleView;
-    public static  TextView popularProductstv;
-    public static RecyclerView popularProductsRecycleview;
-    public FirebaseUser currentUser;
+    public static  TextView popularProductsTv;
+    public static RecyclerView popularProductsRecyclerview;
+    private FirebaseUser currentUser;
 
     private FirebaseAuth mAuth;
+
 
     BottomNavigationView bottomNavigationView;
     private FirebaseDatabase firebaseDatabase;
@@ -81,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         // Extract user information from GoogleSignInAccount
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -101,27 +102,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         frameLayout=findViewById(R.id.frameLayout);
         displayBanner=findViewById(R.id.displayBanner);
         categoryRecycleView = findViewById(R.id.categoriesRecycleView);
-        popularProductsRecycleview=findViewById(R.id.popularproductrecycleview);
-        popularProductstv=findViewById(R.id.popularproducttv);
+        popularProductsRecyclerview =findViewById(R.id.popularproductrecycleview);
+        popularProductsTv =findViewById(R.id.popularproducttv);
 
 
-        userReference.setValue(user);
-
-        parentReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.child("user").getChildren()) {
-                   user= dataSnapshot.getValue(User.class);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        user.setUserName(getIntent().getStringExtra("username"));
+        user.setEmail(getIntent().getStringExtra("email"));
+        user.setEmail(getIntent().getStringExtra("password"));
 
       //category recycleView
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -133,9 +120,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(this);
         linearLayoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
-        popularProductsRecycleview.setLayoutManager(linearLayoutManager1);
+        popularProductsRecyclerview.setLayoutManager(linearLayoutManager1);
         ProductAdapter popularProductAdapter=new ProductAdapter(this,getProductsData("popularproducts"));
-        popularProductsRecycleview.setAdapter(popularProductAdapter);
+        popularProductsRecyclerview.setAdapter(popularProductAdapter);
 
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -165,6 +152,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         setSupportActionBar(toolbar);
         setupDrawer();
+
+
 
     }
 
@@ -273,16 +262,16 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         frameLayout.setVisibility(View.GONE);
 
        displayBanner.setVisibility(View.GONE);
-       popularProductstv.setVisibility(View.GONE);
-       popularProductsRecycleview.setVisibility(View.GONE);
+       popularProductsTv.setVisibility(View.GONE);
+       popularProductsRecyclerview.setVisibility(View.GONE);
     }
 
     public static  void addViews(){
         categoryRecycleView.setVisibility(View.VISIBLE);
 
        displayBanner.setVisibility(View.VISIBLE);
-       popularProductsRecycleview.setVisibility(View.VISIBLE);
-       popularProductstv.setVisibility(View.VISIBLE);
+       popularProductsRecyclerview.setVisibility(View.VISIBLE);
+       popularProductsTv.setVisibility(View.VISIBLE);
 
     }
 

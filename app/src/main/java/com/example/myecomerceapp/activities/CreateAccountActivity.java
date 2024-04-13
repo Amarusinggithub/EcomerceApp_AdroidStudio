@@ -1,6 +1,6 @@
 package com.example.myecomerceapp.activities;
 
-import static com.example.myecomerceapp.activities.MainActivity.user;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,6 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     TextView signInTv;
     Button signUpBtn;
     FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
     String username;
     String email;
     String password;
@@ -48,7 +48,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private Button googleSignInBtn;
 
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseUser currentUser;
+
 
 
     @Override
@@ -69,7 +69,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         signUpBtn=findViewById(R.id.signupbtn);
 
 
-        signInTv.setOnClickListener(v -> startActivity(new Intent(CreateAccountActivity.this,LoginActivity.class)));
+        signInTv.setOnClickListener(v -> startActivity(
+                new Intent(CreateAccountActivity.this,LoginActivity.class)));
         signUpBtn.setOnClickListener(v -> signUpWithEmail());
 
     }
@@ -103,10 +104,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 currentUser = mAuth.getCurrentUser();
-                                user.setEmail(email);
-                                user.setUserName(username);
-                                user.setPassword(password);
-                                updateUI(currentUser);
+                                updateUI(currentUser,username);
                             } else {
                                 // Handle authentication failure
                                 Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -147,7 +145,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                        currentUser = mAuth.getCurrentUser();
-                        updateUI(currentUser);
+                        assert currentUser != null;
+                        updateUI(currentUser,currentUser.getDisplayName());
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -173,15 +172,24 @@ public class CreateAccountActivity extends AppCompatActivity {
         return bigInteger.toString(16);
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI(FirebaseUser user,String username) {
         if (user != null) {
             Toast.makeText(this, "Welcome, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(CreateAccountActivity.this, MainActivity.class);
+
             startActivity(intent);
             finish(); // Finish the current activity to prevent returning back to the login screen
-        } else {
-
+        } else if (username!=null) {
+            Toast.makeText(this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(CreateAccountActivity.this, MainActivity.class);
+            intent.putExtra("username",username);
+            intent.putExtra("email",email);
+            intent.putExtra("password",password);
+            startActivity(intent);
+            finish();
+        }else {
             Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
+
         }
     }
 }
