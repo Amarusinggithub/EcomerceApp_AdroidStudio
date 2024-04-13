@@ -5,6 +5,8 @@ package com.example.myecomerceapp.activities;
 
 
 
+
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myecomerceapp.adapters.CategoryAdapter;
+import com.example.myecomerceapp.adapters.ProductAdapter;
 import com.example.myecomerceapp.fragments.ProductRecyclerViewFragment;
 import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
@@ -36,6 +39,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -51,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     NavigationView navigationView;
     Toolbar toolbar;
 
+    public static User user;
+
 
 
     public static FrameLayout frameLayout;
@@ -63,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private FirebaseAuth mAuth;
 
     BottomNavigationView bottomNavigationView;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference parentReference;
+    private DatabaseReference userReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +89,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         String email = googleSignInAccount.getEmail();
 
 
+
         //Variables
-       user=new User();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        parentReference = firebaseDatabase.getReference("MyDatabase");
+        userReference = parentReference.child("user");
         mAuth=FirebaseAuth.getInstance();
         currentUser =mAuth.getCurrentUser();
         toolbar = findViewById(R.id.toolbar);
@@ -88,6 +105,22 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         popularProductstv=findViewById(R.id.popularproducttv);
 
 
+        userReference.setValue(user);
+
+        parentReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.child("user").getChildren()) {
+                   user= dataSnapshot.getValue(User.class);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
       //category recycleView
@@ -96,6 +129,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         categoryRecycleView.setLayoutManager(linearLayoutManager);
         CategoryAdapter categoryAdapter = new CategoryAdapter(this, getCategory());
         categoryRecycleView.setAdapter(categoryAdapter);
+
+
+        LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(this);
+        linearLayoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
+        popularProductsRecycleview.setLayoutManager(linearLayoutManager1);
+        ProductAdapter popularProductAdapter=new ProductAdapter(this,getProductsData("popularproducts"));
+        popularProductsRecycleview.setAdapter(popularProductAdapter);
 
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -209,7 +249,18 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             productsArrayList.add(new Product(R.drawable.kettle,"COSORI Electric Gooseneck Kettle ","$69.99","COSORI Electric Gooseneck Kettle with 5 Temperature Control Presets, Pour Over Kettle for Coffee & Tea, Hot Water Boiler, 100% Stainless Steel Inner Lid & Bottom, 1200W/0.8L","Appliances"));
             productsArrayList.add(new Product(R.drawable.lamp,"LED Floor Lamp","$115.99","LED Floor Lamp, Height Adjustable Floor Lamps for Living Room, Super Bright Standing Lamp with Timer, Adjustable Colors & Brightness Floor lamp for Bedroom with Remote & Touch Control, Black","Appliances"));
         }else if ("popularproducts".equals(Id)) {
-
+            productsArrayList.add(new Product(R.drawable.leveni_legion_slim_7i,"Lenovo Legion Slim 7i ","$1,499.99","Lenovo Legion Slim 7i Gaming & Entertainment Laptop (Intel i9-13900H 14-Core, 16GB DDR5 5200MHz RAM, 1TB SSD, GeForce RTX 4070, 16.0\" Win 11 Home) with Microsoft 365 Personal, Dockztorm Hub","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.asus_rog_strix_16,"ASUS ROG Strix Scar 16","$2,899.99","ASUS ROG Strix Scar 16 (2024) Gaming Laptop, 16” Nebula HDR 16:10 QHD 240Hz/3ms, 1100 nits, Mini LED Display, GeForce RTX 4080, Intel Core i9-14900HX, 32GB DDR5, 1TB SSD, Windows 11 Pro, G634JZR-XS96","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.asus_tuf_a17,"SUS TUF A17 Gaming Laptop","$1,859.00","ASUS TUF A17 Gaming Laptop - 17.3\" FHD Display, AMD Ryzen 9-7940HS (8-core), NVIDIA GeForce RTX 4070, 32GB DDR5, 1TB SSD, Backlit Keyboard, Wi-Fi 6, Windows 11 Home, with Laptop Stand","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.asus_tuff_a16,"ASUS TUF Gaming A16 Laptop","$979.00","ASUS TUF Gaming A16 Laptop 16.0\" 165 Hz FHD+WVA (8-Core AMD Ryzen 7 7735HS, 16GB DDR5, 1TB PCIe SSD, AMD Radeon RX 7600S 8GB, Backlit KYB, WiFi 6, Win11 Home) with Dockztorm Hub","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.samsung_32_qled_tv,"SAMSUNG 32-Inch QLED 4K Q60C ","$447.99","SAMSUNG 32-Inch Class QLED 4K Q60C Series Quantum HDR, Dual LED, Object Tracking Sound Lite, Q-Symphony, Motion Xcelerator, Gaming Hub, Smart TV with Alexa Built-in (QN32Q60C, 2023 Model),Titan Gray","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.air_fryer," ClearCook Air Fryer","$89.95","Instant Vortex Plus 6QT ClearCook Air Fryer, Clear Windows, Custom Program Options, 6-in-1 Functions, Crisps, Broils, Roasts, Dehydrates, Bakes, Reheats, from the Makers of Instant Pot, Black","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.meta_quest,"Meta Quest 2","$199.00","Meta Quest 2 is the all-in-one system that truly sets you free to explore in VR. Simply put on the headset and enter fully-immersive, imagination-defying worlds. A built-in battery, fast processor and immersive graphics keep your experience smooth and seamless, while 3D positional audio, hand tracking and easy-to-use controllers make virtual worlds feel real.","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.xbox_series_s,"Microsoft Xbox Series S ","$299.00","2021 Microsoft Xbox Series S 512GB Game All-Digital Console, One Xbox Wireless Controller, 1440p Gaming Resolution, 4K Streaming, 3D Sound, WiFi, White","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.ps4_slim,"Sony PlayStation 4 Slim","$223.99","Edition:Slim 1TB The all new lighter and slimmer PlayStation4 system has a 1TB hard drive for all of the greatest games, TV, music and more. Incredible Games You've come to the right place.","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.steam_deck,"Valve Steam Deck","$526.99","Valve Steam Deck 512GB Handheld Gaming Console, 1280 x 800 LCD Display, with Carring case, Tempered Film and Soft Silicone Protective Case","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.asus_ally,"ASUS ROG Ally","$659.99","Any Game, Anywhere. Sink deep into your favourite AAA or indie games and watch the hours melt away with an expansive Full HD 120Hz display and incredibly comfortable ergonomics.","popularproducts"));
+            productsArrayList.add(new Product(R.drawable.smart_fan,"Dreo Smart Tower Fan"," $63.99","Dreo Smart Tower Fan for Bedroom, Standing Fans for Indoors, 90° Oscillating, Quiet 26ft/s Velocity Floor Fan with Remote, 5 Speeds, 8H Timer, Voice Control Bladeless Room Fan, Works with Alexa","popularproducts"));
         }else if ("everyproduct".equals(Id)) {
 
         }

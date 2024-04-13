@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     GoogleSignInClient googleSignInClient;
     SignInButton googleSignInBtn;
-
+    String username;
     String password;
     String email;
 

@@ -1,5 +1,7 @@
 package com.example.myecomerceapp.activities;
 
+import static com.example.myecomerceapp.activities.MainActivity.user;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,15 +31,17 @@ import java.security.NoSuchAlgorithmException;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
+    EditText UserNameEt;
     EditText emailEt;
     EditText passwordEt;
     EditText confirmPasswordEt;
     TextView signInTv;
     Button signUpBtn;
     FirebaseAuth mAuth;
+    String username;
     String email;
     String password;
-    public static User user;
+
 
     private static final int RC_SIGN_IN = 123;
 
@@ -57,7 +61,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
         //Variables
-
+        UserNameEt=findViewById(R.id.usernameet);
         emailEt =findViewById(R.id.emailet);
         passwordEt =findViewById(R.id.passwordet);
         confirmPasswordEt =findViewById(R.id.confirmpasswordet);
@@ -66,14 +70,13 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
         signInTv.setOnClickListener(v -> startActivity(new Intent(CreateAccountActivity.this,LoginActivity.class)));
-
         signUpBtn.setOnClickListener(v -> signUpWithEmail());
 
     }
 
     private void signUpWithEmail() {
 
-
+            username=UserNameEt.getEditableText().toString();
             String emailText = emailEt.getEditableText().toString();
             String passwordText = passwordEt.getEditableText().toString();
             String confirmPasswordText = confirmPasswordEt.getEditableText().toString();
@@ -100,6 +103,9 @@ public class CreateAccountActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 currentUser = mAuth.getCurrentUser();
+                                user.setEmail(email);
+                                user.setUserName(username);
+                                user.setPassword(password);
                                 updateUI(currentUser);
                             } else {
                                 // Handle authentication failure
@@ -155,7 +161,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
     public String encryptPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest= null;
+        MessageDigest messageDigest;
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {

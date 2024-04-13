@@ -22,8 +22,37 @@
 
 
     <TextView
-        android:id="@+id/emailtv"
+        android:id="@+id/usernametv"
         android:layout_below="@id/signuptv"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"/>
+
+    <EditText
+        android:id="@+id/usernameet"
+        android:hint="Enter Username..."
+        android:layout_below="@id/usernametv"
+        android:inputType="textEmailAddress"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"/>
+
+
+
+    <TextView
+        android:id="@+id/emailtv"
+        android:layout_below="@id/usernameet"
         android:textSize="20sp"
         android:textStyle="bold"
         android:text="Email"
