@@ -51,7 +51,7 @@
 
 
     <TextView
-        android:id="@+id/emailtv"
+        android:id="@+id/usernametv"
         android:layout_below="@id/usernameet"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -64,9 +64,9 @@
         android:layout_marginBottom="15dp"/>
 
     <EditText
-        android:id="@+id/emailet"
+        android:id="@+id/usernameet"
         android:hint="Enter Email..."
-        android:layout_below="@id/emailtv"
+        android:layout_below="@id/usernametv"
         android:inputType="textEmailAddress"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -79,7 +79,7 @@
 
     <TextView
         android:id="@+id/passwordtv"
-        android:layout_below="@id/emailet"
+        android:layout_below="@id/usernameet"
         android:textSize="20sp"
         android:textStyle="bold"
         android:text="Password"

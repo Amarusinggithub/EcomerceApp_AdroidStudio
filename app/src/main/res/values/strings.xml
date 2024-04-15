@@ -48,6 +48,8 @@
     <string name="youremail_email_com">youremail@email.com</string>
     <string name="your_name">Your Name</string>
     <string name="see_all">See All</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="username">Username</string>
 
 
 </resources>

@@ -19,16 +19,12 @@
         android:layout_marginBottom="15dp"
         />
 
-
-
-
-
     <TextView
-        android:id="@+id/emailtv"
+        android:id="@+id/usernametv"
         android:layout_below="@id/signintv"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="@string/email"
+        android:text="@string/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -37,9 +33,9 @@
         android:layout_marginBottom="15dp"/>
 
     <EditText
-        android:id="@+id/emailet"
-        android:hint="@string/enter_email"
-        android:layout_below="@id/emailtv"
+        android:id="@+id/usernameet"
+        android:hint="@string/enter_username"
+        android:layout_below="@id/usernametv"
         android:inputType="textEmailAddress"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -52,7 +48,7 @@
 
     <TextView
         android:id="@+id/passwordtv"
-        android:layout_below="@id/emailet"
+        android:layout_below="@id/usernameet"
         android:textSize="20sp"
         android:textStyle="bold"
         android:text="@string/password"
@@ -132,26 +128,6 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="150dp"
         android:layout_marginBottom="15dp"/>
-
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_sign_in"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/donthaveanaccounttv"
-
-        />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/facebook_login_button"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_below="@id/google_sign_in"/>
-
 
 
 </RelativeLayout>

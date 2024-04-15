@@ -10,45 +10,33 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myecomerceapp.R;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+import com.example.myecomerceapp.models.Product;
+import com.example.myecomerceapp.models.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    EditText UserNameEt;
+    EditText userNameEt;
     EditText emailEt;
     EditText passwordEt;
     EditText confirmPasswordEt;
     TextView signInTv;
     Button signUpBtn;
-    FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
+
     String username;
     String email;
     String password;
-
-
-    private static final int RC_SIGN_IN = 123;
-
-    private Button googleSignInBtn;
-
-    private GoogleSignInClient mGoogleSignInClient;
-
 
 
     @Override
@@ -56,13 +44,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+
 
 
         //Variables
-        UserNameEt=findViewById(R.id.usernameet);
-        emailEt =findViewById(R.id.emailet);
+        userNameEt =findViewById(R.id.usernameet);
+        emailEt =findViewById(R.id.usernameet);
         passwordEt =findViewById(R.id.passwordet);
         confirmPasswordEt =findViewById(R.id.confirmpasswordet);
         signInTv =findViewById(R.id.signintv);
@@ -71,94 +58,63 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         signInTv.setOnClickListener(v -> startActivity(
                 new Intent(CreateAccountActivity.this,LoginActivity.class)));
-        signUpBtn.setOnClickListener(v -> signUpWithEmail());
+        signUpBtn.setOnClickListener(v -> signUp());
 
     }
 
-    private void signUpWithEmail() {
+    private void signUp() {
 
-            username=UserNameEt.getEditableText().toString();
-            String emailText = emailEt.getEditableText().toString();
-            String passwordText = passwordEt.getEditableText().toString();
-            String confirmPasswordText = confirmPasswordEt.getEditableText().toString();
+            username= userNameEt.getEditableText().toString();
+        String confirmPassword = confirmPasswordEt.getEditableText().toString();
 
 
-            if (emailText.isEmpty() || passwordText.isEmpty()) {
+            if (emailEt.getEditableText().toString().isEmpty() || passwordEt.getEditableText().toString().isEmpty()) {
 
                 Toast.makeText(CreateAccountActivity.this, "Email and password are required.", Toast.LENGTH_SHORT).show();
-            } else if (!confirmPasswordText.equals(passwordText)) {
+            } else if (!confirmPassword.equals(passwordEt.getEditableText().toString())) {
 
                 Toast.makeText(CreateAccountActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
-            } else if (isValidEmail(emailText)) {
+            } else if (isValidEmail(emailEt.getEditableText().toString())) {
 
-                email = emailText;
+                email = emailEt.getEditableText().toString();
                 try {
-                    password = encryptPassword(passwordText);
+                    password = encryptPassword(passwordEt.getEditableText().toString());
                 } catch (NoSuchAlgorithmException e) {
                     throw new RuntimeException(e);
                 }
 
-                // Create user in Firebase Authentication
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                currentUser = mAuth.getCurrentUser();
-                                updateUI(currentUser,username);
-                            } else {
-                                // Handle authentication failure
-                                Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+
+                User user = setUser();
+                updateUI(user);
 
             }
 
     }
 
-    private void signInWithGoogle() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+    @NonNull
+    private User setUser() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
+        DatabaseReference userReference = parentReference.child("users");
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        User user = new User();
+        HashMap<Product, Integer> products = new HashMap<>();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setProducts(products);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign-In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                // Google Sign-In failed, update UI appropriately
-                Toast.makeText(this, "Google sign in failed.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+        userReference.setValue(user);
+        return user;
 
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                       currentUser = mAuth.getCurrentUser();
-                        assert currentUser != null;
-                        updateUI(currentUser,currentUser.getDisplayName());
-
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(CreateAccountActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
 
     public static boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
+
+
     public String encryptPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest messageDigest;
         try {
@@ -172,24 +128,19 @@ public class CreateAccountActivity extends AppCompatActivity {
         return bigInteger.toString(16);
     }
 
-    private void updateUI(FirebaseUser user,String username) {
-        if (user != null) {
-            Toast.makeText(this, "Welcome, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(CreateAccountActivity.this, MainActivity.class);
 
-            startActivity(intent);
-            finish(); // Finish the current activity to prevent returning back to the login screen
-        } else if (username!=null) {
-            Toast.makeText(this, "Welcome, " + username, Toast.LENGTH_SHORT).show();
+
+  private void updateUI(User user) {
+        if (user!=null) {
+            Toast.makeText(this, "Welcome, " + user.getUsername(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(CreateAccountActivity.this, MainActivity.class);
-            intent.putExtra("username",username);
-            intent.putExtra("email",email);
-            intent.putExtra("password",password);
+            intent.putExtra("username",user.getUsername());
             startActivity(intent);
             finish();
         }else {
-            Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Sign please", Toast.LENGTH_SHORT).show();
 
         }
     }
+
 }
