@@ -91,7 +91,7 @@
     <Button
         android:id="@+id/signinbtn"
         android:layout_below="@id/forgetpasswordtv"
-        android:text="sign up"
+        android:text="sign in"
         android:textAllCaps="true"
         android:background="@drawable/button_style"
         android:textSize="27sp"
