@@ -1,16 +1,15 @@
 package com.example.myecomerceapp.models;
 
-import java.util.Map;
+import java.util.HashMap;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 
 public class User {
     String email;
     String username;
     String password;
-    Map<Product,Integer> products;
+    HashMap<Product,Integer> products;
 
     public String getEmail() {
         return email;
@@ -36,11 +35,11 @@ public class User {
         this.password = password;
     }
 
-    public Map<Product, Integer> getProducts() {
+    public HashMap<Product, Integer> getProducts() {
         return products;
     }
 
-    public void setProducts(Map<Product, Integer> products) {
+    public void setProducts(HashMap<Product, Integer> products) {
         this.products = products;
     }
 }

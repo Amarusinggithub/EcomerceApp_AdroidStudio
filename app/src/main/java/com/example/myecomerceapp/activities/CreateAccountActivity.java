@@ -5,6 +5,7 @@ package com.example.myecomerceapp.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,8 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
 import com.example.myecomerceapp.models.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -44,58 +48,77 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
 
-
-
-
         //Variables
         userNameEt =findViewById(R.id.usernameet);
-        emailEt =findViewById(R.id.usernameet);
+        emailEt =findViewById(R.id.emailet);
         passwordEt =findViewById(R.id.passwordet);
         confirmPasswordEt =findViewById(R.id.confirmpasswordet);
         signInTv =findViewById(R.id.signintv);
         signUpBtn=findViewById(R.id.signupbtn);
 
-
-        signInTv.setOnClickListener(v -> startActivity(
-                new Intent(CreateAccountActivity.this,LoginActivity.class)));
-        signUpBtn.setOnClickListener(v -> signUp());
+        signInTv.setOnClickListener(v -> {
+            startActivity(new Intent(CreateAccountActivity.this,LoginActivity.class));
+            finish();
+        });
+        signUpBtn.setOnClickListener(v -> {
+            try {
+                signUp();
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
 
-    private void signUp() {
-
-            username= userNameEt.getEditableText().toString();
+    private void signUp() throws NoSuchAlgorithmException {
+        username = userNameEt.getEditableText().toString();
         String confirmPassword = confirmPasswordEt.getEditableText().toString();
 
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(passwordEt.getEditableText().toString())||TextUtils.isEmpty(confirmPassword)) {
+            Toast.makeText(CreateAccountActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            if (emailEt.getEditableText().toString().isEmpty() || passwordEt.getEditableText().toString().isEmpty()) {
+        if (!confirmPassword.equals(passwordEt.getEditableText().toString())) {
+            Toast.makeText(CreateAccountActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                Toast.makeText(CreateAccountActivity.this, "Email and password are required.", Toast.LENGTH_SHORT).show();
-            } else if (!confirmPassword.equals(passwordEt.getEditableText().toString())) {
+        if (!isValidEmail(email)) {
+            Toast.makeText(CreateAccountActivity.this, "Invalid email address.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                Toast.makeText(CreateAccountActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
-            } else if (isValidEmail(emailEt.getEditableText().toString())) {
+        password=encryptPassword(passwordEt.getEditableText().toString().trim());
 
-                email = emailEt.getEditableText().toString();
-                try {
-                    password = encryptPassword(passwordEt.getEditableText().toString());
-                } catch (NoSuchAlgorithmException e) {
-                    throw new RuntimeException(e);
+        // Check if username already exists
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("MyDatabase").child("users").child(username);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Toast.makeText(CreateAccountActivity.this, "Username already exists. Please choose a different one.", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    User user = setUser();
+                    updateUI(user);
                 }
-
-
-                User user = setUser();
-                updateUI(user);
-
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(CreateAccountActivity.this, "Error checking username availability.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     @NonNull
     private User setUser() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
-        DatabaseReference userReference = parentReference.child("users");
+        DatabaseReference usersReference = parentReference.child("users");
+
 
         User user = new User();
         HashMap<Product, Integer> products = new HashMap<>();
@@ -103,6 +126,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         user.setEmail(email);
         user.setPassword(password);
         user.setProducts(products);
+        DatabaseReference userReference = usersReference.child(user.getUsername());
 
         userReference.setValue(user);
         return user;
