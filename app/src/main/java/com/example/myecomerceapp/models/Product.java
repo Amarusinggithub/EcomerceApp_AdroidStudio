@@ -3,8 +3,7 @@ package com.example.myecomerceapp.models;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 public class Product {
     private  int productImage;
     private  String productName;
@@ -21,4 +20,47 @@ public class Product {
         this.productDescription = productDescription;
     }
 
+    public int getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(int productImage) {
+        this.productImage = productImage;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public int getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
 }

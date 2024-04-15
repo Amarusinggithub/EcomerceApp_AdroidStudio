@@ -1,14 +1,12 @@
 package com.example.myecomerceapp.models;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+
+
 public class Category {
-    private final String categoryTitle;
-    private final int categoryImage;
-    private final String categoryId;
+    private  String categoryTitle;
+    private  int categoryImage;
+    private  String categoryId;
 
     public Category(String categoryTitle , int categoryImage, String categoryId) {
         this.categoryTitle =categoryTitle;
@@ -16,4 +14,27 @@ public class Category {
         this.categoryId=categoryId;
     }
 
+    public String getCategoryTitle() {
+        return categoryTitle;
+    }
+
+    public void setCategoryTitle(String categoryTitle) {
+        this.categoryTitle = categoryTitle;
+    }
+
+    public int getCategoryImage() {
+        return categoryImage;
+    }
+
+    public void setCategoryImage(int categoryImage) {
+        this.categoryImage = categoryImage;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
 }
