@@ -2,13 +2,6 @@ package com.example.myecomerceapp.activities;
 
 
 
-
-
-
-
-
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -37,8 +31,6 @@ import com.example.myecomerceapp.models.Product;
 import com.example.myecomerceapp.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,8 +47,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener , MyOnClickInterface {
     public static final String LAPTOP = "Laptop";
@@ -66,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static final String APPLIANCES = "Appliances";
     public static final String POPULARPRODUCTS = "popularproducts";
     public static final String EVERYPRODUCT = "everyproduct";
+    private static final String TAG = "MainActivity";
     // Member variables
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -88,39 +80,37 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getUserFromDatabase();
         initializeViews();
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
-        DatabaseReference userReference = parentReference.child("users");
-        Query checkUserInDatabase=userReference.orderByChild("username").equalTo(username);
+    }
 
-        checkUserInDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void getUserFromDatabase() {
+        username=getIntent().getStringExtra("username");
+        // Query database to check for user
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("MyDatabase").child("users");
+        Query checkUser = userRef.orderByChild("username").equalTo(username);
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    user=snapshot.getValue(User.class);
+                if (snapshot.exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getUsername(), username)){
+                            user=userSnapshot.getValue(User.class);
+                        }
 
+                    }
 
+                } else {
+                    Toast.makeText(MainActivity.this, "Username not found. Please try again or create an account.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(MainActivity.this, "Error retrieving user data.", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-        setSupportActionBar(toolbar);
-        setupDrawer();
-        setupCategoryRecyclerView();
-        setupPopularProductsRecyclerView();
-        setupBottomNavigationView();
-
-
-
     }
 
     private void initializeViews() {
@@ -134,7 +124,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         categoryRecycleView = findViewById(R.id.categoriesRecycleView);
         popularProductsRecyclerview = findViewById(R.id.popularproductrecycleview);
         popularProductsTv = findViewById(R.id.popularproducttv);
-        username=getIntent().getStringExtra("username");
+
+
+        setSupportActionBar(toolbar);
+        setupDrawer();
+        setupCategoryRecyclerView();
+        setupPopularProductsRecyclerView();
+        setupBottomNavigationView();
+
     }
 
 
@@ -346,9 +343,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                         getString(R.string.title_click),
                         Toast.LENGTH_SHORT).show());
 
+if(user!=null){
+    headerEmail.setText(user.getEmail());
+    headerTitle.setText(user.getUsername());
+}else {
+    Log.d(TAG,"user is null");
+}
 
-        headerEmail.setText(user.getEmail());
-        headerTitle.setText(user.getUsername());
 
 
     }

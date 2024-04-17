@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
+
 
 public class LoginActivity extends AppCompatActivity {
     TextView signUpTv;
@@ -53,8 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         usernameEt = findViewById(R.id.usernameet);
         passwordEt = findViewById(R.id.passwordet);
         signInBtn = findViewById(R.id.signinbtn);
-
-
 
         signInBtn.setOnClickListener(v -> {
             try {

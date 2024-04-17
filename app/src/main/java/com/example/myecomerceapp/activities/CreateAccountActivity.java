@@ -71,21 +71,22 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void signUp() throws NoSuchAlgorithmException {
-        username = userNameEt.getEditableText().toString();
-        String confirmPassword = confirmPasswordEt.getEditableText().toString();
+        username = userNameEt.getEditableText().toString().trim();
+        String confirmPassword = confirmPasswordEt.getEditableText().toString().trim();
+        email=emailEt.getEditableText().toString().trim();
 
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(passwordEt.getEditableText().toString())||TextUtils.isEmpty(confirmPassword)) {
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(passwordEt.getEditableText().toString().trim())||TextUtils.isEmpty(confirmPassword)) {
             Toast.makeText(CreateAccountActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!confirmPassword.equals(passwordEt.getEditableText().toString())) {
-            Toast.makeText(CreateAccountActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!isValidEmail(email)) {
             Toast.makeText(CreateAccountActivity.this, "Invalid email address.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!confirmPassword.equals(passwordEt.getEditableText().toString().trim())) {
+            Toast.makeText(CreateAccountActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
             return;
         }
 
