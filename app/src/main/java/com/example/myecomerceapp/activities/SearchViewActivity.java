@@ -31,9 +31,9 @@ public class SearchViewActivity extends AppCompatActivity {
     public  void filter(String newText) {
 
         filtertedList= new ArrayList<>();
-        for(Product item: getProductsData("categoryId")){
-            if(item.getProductName().toLowerCase().contains(newText.toLowerCase())){
-                filtertedList.add(item);
+        for(Product product: getProductsData("categoryId")){
+            if(product.getProductName().toLowerCase().contains(newText.toLowerCase())){
+                filtertedList.add(product);
             }
         }
        /* productAdapter.filteredList(filtertedList);*/

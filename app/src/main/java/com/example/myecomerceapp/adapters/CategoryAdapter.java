@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myecomerceapp.interfaces.MyOnClickInterface;
+import com.example.myecomerceapp.interfaces.MyCategoryOnClickListener;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Category;
 
@@ -17,11 +17,11 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
-    private final MyOnClickInterface myOnClickInterface;
+    private final MyCategoryOnClickListener myCategoryOnClickListener;
     private final List<Category> categoryArrayList;
 
-    public CategoryAdapter(MyOnClickInterface myOnClickInterface, List<Category> categoryArrayList) {
-        this.myOnClickInterface = myOnClickInterface;
+    public CategoryAdapter(MyCategoryOnClickListener myCategoryOnClickListener, List<Category> categoryArrayList) {
+        this.myCategoryOnClickListener = myCategoryOnClickListener;
         this.categoryArrayList = categoryArrayList;
     }
 
@@ -29,7 +29,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     @Override
     public CategoryAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View categoryView= LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_categoriy_cardview,parent,false);
-        return new MyViewHolder(categoryView, myOnClickInterface);
+        return new MyViewHolder(categoryView, myCategoryOnClickListener);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView categoryTitle;
         ImageView categoryImage;
-        public MyViewHolder(@NonNull View itemView, MyOnClickInterface myOnClickInterface) {
+        public MyViewHolder(@NonNull View itemView, MyCategoryOnClickListener myCategoryOnClickListener) {
             super(itemView);
             categoryTitle=itemView.findViewById(R.id.categoryTitle);
             categoryImage=itemView.findViewById(R.id.categoryImage);
@@ -55,10 +55,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (myOnClickInterface !=null){
+                    if (myCategoryOnClickListener !=null){
                         int position=getAdapterPosition();
                         if (position!= RecyclerView.NO_POSITION){
-                            myOnClickInterface.onClicked(position);
+                            myCategoryOnClickListener.categoryClicked(position);
                         }
                     }
                 }

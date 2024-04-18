@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +45,8 @@ public class ProductViewFragment extends Fragment {
                 product=new Product(productImageResource,productName,productPrice,productDescription,productId);
             }
 
+
+
             TextView productNameTextView =  productView.findViewById(R.id.Name);
             TextView productPriceTextView =  productView.findViewById(R.id.Price);
             TextView productDescriptionTextView =  productView.findViewById(R.id.Description);
@@ -58,9 +61,11 @@ public class ProductViewFragment extends Fragment {
 
 
             addToCart.setOnClickListener(v -> {
-                if(product==null){
-                    product=new Product(productImageResource,productName,productPrice,productDescription,productId);
-                    productsAddedToCart.add(product);
+                if(product!=null){
+                    productsAddedToCart.put(product,1);
+                    if(productsAddedToCart.containsKey(product)){
+                        Toast.makeText(getContext(), " "+product.getProductName()+" "+"was added to cart.",Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             });
@@ -68,6 +73,5 @@ public class ProductViewFragment extends Fragment {
         }
 
         return productView;
-
-}
+    }
 }

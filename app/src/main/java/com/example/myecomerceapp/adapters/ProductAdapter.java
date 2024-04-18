@@ -10,17 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myecomerceapp.R;
-import com.example.myecomerceapp.interfaces.MyOnClickInterface;
+import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
 
-    private final MyOnClickInterface productOnclickListener;
+    private final MyProductOnClickListener productOnclickListener;
     private final List<Product> productArrayList;
 
-    public ProductAdapter(MyOnClickInterface productOnclickListener, List<Product> productArrayList) {
+    public ProductAdapter(MyProductOnClickListener productOnclickListener, List<Product> productArrayList) {
         this.productOnclickListener = productOnclickListener;
         this.productArrayList = productArrayList;
     }
@@ -50,7 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         ImageView productImage;
         TextView productName;
         TextView productPrice;
-        public MyViewHolder(@NonNull View itemView,MyOnClickInterface productOnclickListener) {
+        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener) {
             super(itemView);
 
             productImage=itemView.findViewById(R.id.productImage);
@@ -59,7 +59,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
             itemView.setOnClickListener(v -> {
                 int position=getAdapterPosition();
-                productOnclickListener.onClicked(position);
+                productOnclickListener.productClicked(position);
             });
         }
     }

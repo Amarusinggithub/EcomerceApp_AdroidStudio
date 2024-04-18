@@ -74,3 +74,11 @@ o
 ?app/src/main/java/com/example/myecomerceapp/models/Product.java,9\e\9ea9cb0a57fb2a923e51c9ba13ee509572ae5cd1
 p
 @app/src/main/java/com/example/myecomerceapp/models/Category.java,b\6\b6a953d9d86c4464f559a7508cc3aca33e684c81
+„
+Tapp/src/main/java/com/example/myecomerceapp/interfaces/myProductOnClickListener.java,6\a\6aa296ef685d638502209187962aef8747d730ce
+„
+Tapp/src/main/java/com/example/myecomerceapp/interfaces/MyProductOnClickListener.java,c\e\cee59d72abefe2b513742627a6a2a099f01d18de
+†
+Vapp/src/main/java/com/example/myecomerceapp/interfaces/MyCategoryOnClickInterface.java,6\6\66ed4358accd676a0b4dff8451896fada2768090
+…
+Uapp/src/main/java/com/example/myecomerceapp/interfaces/MyCategoryOnClickListener.java,c\2\c21d2e2efec8e3598799c2424a05760958fc16a1

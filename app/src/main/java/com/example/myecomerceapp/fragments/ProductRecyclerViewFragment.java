@@ -16,12 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.myecomerceapp.interfaces.MyOnClickInterface;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.ProductAdapter;
+import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
 
-public class ProductRecyclerViewFragment extends Fragment implements MyOnClickInterface {
+public class ProductRecyclerViewFragment extends Fragment implements MyProductOnClickListener {
     public static  String categoryId;
 
     public static  ProductAdapter productAdapter;
@@ -47,8 +47,9 @@ public class ProductRecyclerViewFragment extends Fragment implements MyOnClickIn
         fragmentTransaction.commit();
     }
 
+
     @Override
-    public void onClicked(int position) {
+    public void productClicked(int position) {
         Product product = getProductsData(categoryId).get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("position",position);
@@ -61,5 +62,4 @@ public class ProductRecyclerViewFragment extends Fragment implements MyOnClickIn
         productViewFragment.setArguments(bundle);
         loadFragment(productViewFragment);
     }
-
 }

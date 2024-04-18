@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myecomerceapp.interfaces.MyOnClickInterface;
+import com.example.myecomerceapp.interfaces.MyCategoryOnClickListener;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
 
@@ -18,18 +18,18 @@ import java.util.List;
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHolder> {
 
     private final List<Product> products;
-    private final MyOnClickInterface myOnClickInterface;
+    private final MyCategoryOnClickListener myCategoryOnClickListener;
 
-    public BannerAdapter(List<Product> products, MyOnClickInterface myOnClickInterface) {
+    public BannerAdapter(List<Product> products, MyCategoryOnClickListener myCategoryOnClickListener) {
         this.products = products;
-        this.myOnClickInterface = myOnClickInterface;
+        this.myCategoryOnClickListener = myCategoryOnClickListener;
     }
 
     @NonNull
     @Override
     public BannerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.specials_recycleview,parent,false);
-        return new MyViewHolder(itemView, myOnClickInterface);
+        return new MyViewHolder(itemView, myCategoryOnClickListener);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
         ImageView image;
         TextView text;
 
-        public MyViewHolder(@NonNull View itemView, MyOnClickInterface myOnClickInterface) {
+        public MyViewHolder(@NonNull View itemView, MyCategoryOnClickListener myCategoryOnClickListener) {
             super(itemView);
 
             image=itemView.findViewById(R.id.bannerImage);
@@ -59,10 +59,10 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (myOnClickInterface !=null){
+                    if (myCategoryOnClickListener !=null){
                         int position=getAdapterPosition();
                         if (position!= RecyclerView.NO_POSITION){
-                            myOnClickInterface.onClicked(position);
+                            myCategoryOnClickListener.categoryClicked(position);
                         }
                     }
                 }

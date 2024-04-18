@@ -2,6 +2,8 @@ package com.example.myecomerceapp.activities;
 
 
 
+import static com.example.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,17 +17,20 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myecomerceapp.adapters.CategoryAdapter;
 import com.example.myecomerceapp.adapters.ProductAdapter;
 import com.example.myecomerceapp.fragments.ProductRecyclerViewFragment;
-import com.example.myecomerceapp.interfaces.MyOnClickInterface;
+import com.example.myecomerceapp.fragments.ProductViewFragment;
+import com.example.myecomerceapp.interfaces.MyCategoryOnClickListener;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.fragments.AccountFragment;
 import com.example.myecomerceapp.fragments.CartFragment;
 import com.example.myecomerceapp.fragments.SalesFragment;
+import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Category;
 import com.example.myecomerceapp.models.Product;
 import com.example.myecomerceapp.models.User;
@@ -49,7 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener , MyOnClickInterface {
+public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener , MyCategoryOnClickListener, MyProductOnClickListener {
     public static final String LAPTOP = "Laptop";
     public static final String PHONES = "Phones";
     public static final String GAMES = "Games";
@@ -58,21 +63,16 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static final String POPULARPRODUCTS = "popularproducts";
     public static final String EVERYPRODUCT = "everyproduct";
     private static final String TAG = "MainActivity";
-    // Member variables
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-
     private BottomNavigationView bottomNavigationView;
-
-
-    // Static variables (if absolutely necessary)
     public static FrameLayout frameLayout;
     public static CardView displayBanner;
     public static RecyclerView categoryRecycleView;
-    public static TextView popularProductsTv;
+    public static LinearLayout popularProductsLinearLayout;
     public static RecyclerView popularProductsRecyclerview;
-    User user;
+    public static User user;
     private String username;
 
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     private void getUserFromDatabase() {
         username=getIntent().getStringExtra("username");
-        // Query database to check for user
+
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("MyDatabase").child("users");
         Query checkUser = userRef.orderByChild("username").equalTo(username);
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
     private void initializeViews() {
-
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         toolbar = findViewById(R.id.toolbar);
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         displayBanner = findViewById(R.id.displayBanner);
         categoryRecycleView = findViewById(R.id.categoriesRecycleView);
         popularProductsRecyclerview = findViewById(R.id.popularproductrecycleview);
-        popularProductsTv = findViewById(R.id.popularproducttv);
+        popularProductsLinearLayout = findViewById(R.id.popularproductsLL);
 
 
         setSupportActionBar(toolbar);
@@ -153,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private void setupBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()== R.id.home){
+
                 removeViews();
                 addViews();
 
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         frameLayout.setVisibility(View.GONE);
 
        displayBanner.setVisibility(View.GONE);
-       popularProductsTv.setVisibility(View.GONE);
+       popularProductsLinearLayout.setVisibility(View.GONE);
        popularProductsRecyclerview.setVisibility(View.GONE);
     }
 
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
        displayBanner.setVisibility(View.VISIBLE);
        popularProductsRecyclerview.setVisibility(View.VISIBLE);
-       popularProductsTv.setVisibility(View.VISIBLE);
+       popularProductsLinearLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -355,15 +355,15 @@ if(user!=null){
     }
 
 
-
     @Override
-    public void onClicked(int position) {
+    public void categoryClicked(int position) {
+
         removeViews();
         categoryRecycleView.setVisibility(View.VISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
         Category category = getCategory().get(position);
         ProductRecyclerViewFragment itemProductRecyclerViewFragment =new ProductRecyclerViewFragment();
-        ProductRecyclerViewFragment.categoryId= category.getCategoryId();
+        categoryId= category.getCategoryId();
         loadFragment(itemProductRecyclerViewFragment);
     }
 
@@ -390,5 +390,20 @@ if(user!=null){
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         return false;
+    }
+
+    @Override
+    public void productClicked(int position) {
+        Product product = getProductsData(categoryId).get(position);
+        Bundle bundle = new Bundle();
+        bundle.putInt("position",position);
+        bundle.putString("productName", product.getProductName());
+        bundle.putString("proPrice", product.getProductPrice());
+        bundle.putString("productDescription", product.getProductDescription());
+        bundle.putString("position", product.getProductId());
+        bundle.putInt("productImage", product.getProductImage());
+        ProductViewFragment productViewFragment = new ProductViewFragment();
+        productViewFragment.setArguments(bundle);
+        loadFragment(productViewFragment);
     }
 }
