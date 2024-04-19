@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static final String GAMES = "Games";
     public static final String CONSOLES = "Consoles";
     public static final String APPLIANCES = "Appliances";
-    public static final String POPULARPRODUCTS = "popularproducts";
-    public static final String EVERYPRODUCT = "everyproduct";
+    public static final String POPULAR_PRODUCTS = "popular-products";
+    public static final String EVERY_PRODUCT = "every-Product";
     private static final String TAG = "MainActivity";
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private void setupPopularProductsRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         popularProductsRecyclerview.setLayoutManager(linearLayoutManager);
-        ProductAdapter popularProductAdapter = new ProductAdapter(this, getProductsData(POPULARPRODUCTS));
+        ProductAdapter popularProductAdapter = new ProductAdapter(this, getProductsData(POPULAR_PRODUCTS));
         popularProductsRecyclerview.setAdapter(popularProductAdapter);
     }
 
@@ -177,7 +177,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         });
 
     }
-
 
     public static List<Category> getCategory() {
         List<Category> categoryArrayList = new ArrayList<>();
@@ -259,20 +258,20 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             productsArrayList.add(new Product(R.drawable.blender,"Ninja BL770 Mega Kitchen System"," $159.95","Ninja BL770 Mega Kitchen System, 1500W, 4 Functions for Smoothies, Processing, Dough, Drinks & More, with 72-oz.* Blender Pitcher, 64-oz. Processor Bowl, (2) 16-oz. To-Go Cups & (2) Lids, Black", APPLIANCES));
             productsArrayList.add(new Product(R.drawable.kettle,"COSORI Electric Gooseneck Kettle ","$69.99","COSORI Electric Gooseneck Kettle with 5 Temperature Control Presets, Pour Over Kettle for Coffee & Tea, Hot Water Boiler, 100% Stainless Steel Inner Lid & Bottom, 1200W/0.8L", APPLIANCES));
             productsArrayList.add(new Product(R.drawable.lamp,"LED Floor Lamp","$115.99","LED Floor Lamp, Height Adjustable Floor Lamps for Living Room, Super Bright Standing Lamp with Timer, Adjustable Colors & Brightness Floor lamp for Bedroom with Remote & Touch Control, Black", APPLIANCES));
-        }else if (POPULARPRODUCTS.equals(id)) {
-            productsArrayList.add(new Product(R.drawable.leveni_legion_slim_7i,"Lenovo Legion Slim 7i ","$1,499.99","Lenovo Legion Slim 7i Gaming & Entertainment Laptop (Intel i9-13900H 14-Core, 16GB DDR5 5200MHz RAM, 1TB SSD, GeForce RTX 4070, 16.0\" Win 11 Home) with Microsoft 365 Personal, Dockztorm Hub", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.asus_rog_strix_16,"ASUS ROG Strix Scar 16","$2,899.99","ASUS ROG Strix Scar 16 (2024) Gaming Laptop, 16” Nebula HDR 16:10 QHD 240Hz/3ms, 1100 nits, Mini LED Display, GeForce RTX 4080, Intel Core i9-14900HX, 32GB DDR5, 1TB SSD, Windows 11 Pro, G634JZR-XS96", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.asus_tuf_a17,"SUS TUF A17 Gaming Laptop","$1,859.00","ASUS TUF A17 Gaming Laptop - 17.3\" FHD Display, AMD Ryzen 9-7940HS (8-core), NVIDIA GeForce RTX 4070, 32GB DDR5, 1TB SSD, Backlit Keyboard, Wi-Fi 6, Windows 11 Home, with Laptop Stand", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.asus_tuff_a16,"ASUS TUF Gaming A16 Laptop","$979.00","ASUS TUF Gaming A16 Laptop 16.0\" 165 Hz FHD+WVA (8-Core AMD Ryzen 7 7735HS, 16GB DDR5, 1TB PCIe SSD, AMD Radeon RX 7600S 8GB, Backlit KYB, WiFi 6, Win11 Home) with Dockztorm Hub", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.samsung_32_qled_tv,"SAMSUNG 32-Inch QLED 4K Q60C ","$447.99","SAMSUNG 32-Inch Class QLED 4K Q60C Series Quantum HDR, Dual LED, Object Tracking Sound Lite, Q-Symphony, Motion Xcelerator, Gaming Hub, Smart TV with Alexa Built-in (QN32Q60C, 2023 Model),Titan Gray", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.air_fryer," ClearCook Air Fryer","$89.95","Instant Vortex Plus 6QT ClearCook Air Fryer, Clear Windows, Custom Program Options, 6-in-1 Functions, Crisps, Broils, Roasts, Dehydrates, Bakes, Reheats, from the Makers of Instant Pot, Black", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.meta_quest,"Meta Quest 2","$199.00","Meta Quest 2 is the all-in-one system that truly sets you free to explore in VR. Simply put on the headset and enter fully-immersive, imagination-defying worlds. A built-in battery, fast processor and immersive graphics keep your experience smooth and seamless, while 3D positional audio, hand tracking and easy-to-use controllers make virtual worlds feel real.", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.xbox_series_s,"Microsoft Xbox Series S ","$299.00","2021 Microsoft Xbox Series S 512GB Game All-Digital Console, One Xbox Wireless Controller, 1440p Gaming Resolution, 4K Streaming, 3D Sound, WiFi, White", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.ps4_slim,"Sony PlayStation 4 Slim","$223.99","Edition:Slim 1TB The all new lighter and slimmer PlayStation4 system has a 1TB hard drive for all of the greatest games, TV, music and more. Incredible Games You've come to the right place.", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.steam_deck,"Valve Steam Deck","$526.99","Valve Steam Deck 512GB Handheld Gaming Console, 1280 x 800 LCD Display, with Carring case, Tempered Film and Soft Silicone Protective Case", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.asus_ally,"ASUS ROG Ally","$659.99","Any Game, Anywhere. Sink deep into your favourite AAA or indie games and watch the hours melt away with an expansive Full HD 120Hz display and incredibly comfortable ergonomics.", POPULARPRODUCTS));
-            productsArrayList.add(new Product(R.drawable.smart_fan,"Dreo Smart Tower Fan"," $63.99","Dreo Smart Tower Fan for Bedroom, Standing Fans for Indoors, 90° Oscillating, Quiet 26ft/s Velocity Floor Fan with Remote, 5 Speeds, 8H Timer, Voice Control Bladeless Room Fan, Works with Alexa", POPULARPRODUCTS));
-        }else if (EVERYPRODUCT.equals(id)) {
+        }else if (POPULAR_PRODUCTS.equals(id)) {
+            productsArrayList.add(new Product(R.drawable.leveni_legion_slim_7i,"Lenovo Legion Slim 7i ","$1,499.99","Lenovo Legion Slim 7i Gaming & Entertainment Laptop (Intel i9-13900H 14-Core, 16GB DDR5 5200MHz RAM, 1TB SSD, GeForce RTX 4070, 16.0\" Win 11 Home) with Microsoft 365 Personal, Dockztorm Hub", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.asus_rog_strix_16,"ASUS ROG Strix Scar 16","$2,899.99","ASUS ROG Strix Scar 16 (2024) Gaming Laptop, 16” Nebula HDR 16:10 QHD 240Hz/3ms, 1100 nits, Mini LED Display, GeForce RTX 4080, Intel Core i9-14900HX, 32GB DDR5, 1TB SSD, Windows 11 Pro, G634JZR-XS96", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.asus_tuf_a17,"SUS TUF A17 Gaming Laptop","$1,859.00","ASUS TUF A17 Gaming Laptop - 17.3\" FHD Display, AMD Ryzen 9-7940HS (8-core), NVIDIA GeForce RTX 4070, 32GB DDR5, 1TB SSD, Backlit Keyboard, Wi-Fi 6, Windows 11 Home, with Laptop Stand", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.asus_tuff_a16,"ASUS TUF Gaming A16 Laptop","$979.00","ASUS TUF Gaming A16 Laptop 16.0\" 165 Hz FHD+WVA (8-Core AMD Ryzen 7 7735HS, 16GB DDR5, 1TB PCIe SSD, AMD Radeon RX 7600S 8GB, Backlit KYB, WiFi 6, Win11 Home) with Dockztorm Hub", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.samsung_32_qled_tv,"SAMSUNG 32-Inch QLED 4K Q60C ","$447.99","SAMSUNG 32-Inch Class QLED 4K Q60C Series Quantum HDR, Dual LED, Object Tracking Sound Lite, Q-Symphony, Motion Xcelerator, Gaming Hub, Smart TV with Alexa Built-in (QN32Q60C, 2023 Model),Titan Gray", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.air_fryer," ClearCook Air Fryer","$89.95","Instant Vortex Plus 6QT ClearCook Air Fryer, Clear Windows, Custom Program Options, 6-in-1 Functions, Crisps, Broils, Roasts, Dehydrates, Bakes, Reheats, from the Makers of Instant Pot, Black", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.meta_quest,"Meta Quest 2","$199.00","Meta Quest 2 is the all-in-one system that truly sets you free to explore in VR. Simply put on the headset and enter fully-immersive, imagination-defying worlds. A built-in battery, fast processor and immersive graphics keep your experience smooth and seamless, while 3D positional audio, hand tracking and easy-to-use controllers make virtual worlds feel real.", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.xbox_series_s,"Microsoft Xbox Series S ","$299.00","2021 Microsoft Xbox Series S 512GB Game All-Digital Console, One Xbox Wireless Controller, 1440p Gaming Resolution, 4K Streaming, 3D Sound, WiFi, White", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.ps4_slim,"Sony PlayStation 4 Slim","$223.99","Edition:Slim 1TB The all new lighter and slimmer PlayStation4 system has a 1TB hard drive for all of the greatest games, TV, music and more. Incredible Games You've come to the right place.", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.steam_deck,"Valve Steam Deck","$526.99","Valve Steam Deck 512GB Handheld Gaming Console, 1280 x 800 LCD Display, with Carring case, Tempered Film and Soft Silicone Protective Case", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.asus_ally,"ASUS ROG Ally","$659.99","Any Game, Anywhere. Sink deep into your favourite AAA or indie games and watch the hours melt away with an expansive Full HD 120Hz display and incredibly comfortable ergonomics.", POPULAR_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.smart_fan,"Dreo Smart Tower Fan"," $63.99","Dreo Smart Tower Fan for Bedroom, Standing Fans for Indoors, 90° Oscillating, Quiet 26ft/s Velocity Floor Fan with Remote, 5 Speeds, 8H Timer, Voice Control Bladeless Room Fan, Works with Alexa", POPULAR_PRODUCTS));
+        }else if (EVERY_PRODUCT.equals(id)) {
 
         }
         return productsArrayList;

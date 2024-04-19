@@ -55,8 +55,6 @@ Y
 x
 Happ/src/main/java/com/example/myecomerceapp/activities/MainActivity.java,5\0\509f8601ba55bb04b98ef29a3ab603c66b8aa527
 ~
-Napp/src/main/java/com/example/myecomerceapp/interfaces/MyOnClickInterface.java,d\d\dd9c9c2bfabe81ef688fd058100d8575001acec9
-~
 Napp/src/main/java/com/example/myecomerceapp/activities/SearchViewActivity.java,0\b\0b3fc5f83f536533fb42b0f68245fc3f16ceb3ee
 Å
 Qapp/src/main/java/com/example/myecomerceapp/activities/CreateAccountActivity.java,2\8\282eabaf91519ef77a35943f1c03c79801512fc9
@@ -78,7 +76,7 @@ p
 Tapp/src/main/java/com/example/myecomerceapp/interfaces/myProductOnClickListener.java,6\a\6aa296ef685d638502209187962aef8747d730ce
 Ñ
 Tapp/src/main/java/com/example/myecomerceapp/interfaces/MyProductOnClickListener.java,c\e\cee59d72abefe2b513742627a6a2a099f01d18de
-Ü
-Vapp/src/main/java/com/example/myecomerceapp/interfaces/MyCategoryOnClickInterface.java,6\6\66ed4358accd676a0b4dff8451896fada2768090
 Ö
 Uapp/src/main/java/com/example/myecomerceapp/interfaces/MyCategoryOnClickListener.java,c\2\c21d2e2efec8e3598799c2424a05760958fc16a1
+u
+Eapp/src/main/java/com/example/myecomerceapp/adapters/CartAdapter.java,d\0\d014b23c5962ee860178c146c701a031e87704c6
