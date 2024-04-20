@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static RecyclerView categoryRecycleView;
     public static LinearLayout popularProductsLinearLayout;
     public static RecyclerView popularProductsRecyclerview;
-    public static User user;
+    public  static User user;
     private String username;
 
 
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getUsername(), username)){
                             user=userSnapshot.getValue(User.class);
+                            return;
                         }
 
                     }
@@ -347,6 +348,7 @@ if(user!=null){
     headerTitle.setText(user.getUsername());
 }else {
     Log.d(TAG,"user is null");
+    Toast.makeText(MainActivity.this,"user is null",Toast.LENGTH_SHORT).show();
 }
 
 

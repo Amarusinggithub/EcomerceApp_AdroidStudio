@@ -3,6 +3,7 @@ package com.example.myecomerceapp.activities;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -102,7 +103,13 @@ public class CreateAccountActivity extends AppCompatActivity {
                 } else {
 
                     User user = setUser();
+                    SharedPreferences preferences=getSharedPreferences("user_details",MODE_PRIVATE);
+                    SharedPreferences.Editor editor=preferences.edit();
+                    editor.putString("username",user.getUsername());
+                    editor.putString("password",user.getPassword());
+                    editor.apply();
                     updateUI(user);
+
                 }
             }
 

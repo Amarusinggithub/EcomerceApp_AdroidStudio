@@ -1,9 +1,7 @@
 package com.example.myecomerceapp.activities;
 
-import static android.content.ContentValues.TAG;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,66 +23,64 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
 public class LoginActivity extends AppCompatActivity {
-    TextView signUpTv;
 
-    EditText passwordEt;
-    Button signInBtn;
-    EditText usernameEt;
-    private String username;
-    private User user;
-    private String password;
+    private static final String TAG = "LoginActivity";
+    private static final String USER_DETAILS_PREF = "user_details";
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
 
+    private TextView signUpTv;
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+    private Button signInBtn;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        //Variables
         signUpTv = findViewById(R.id.signuptv);
-        usernameEt = findViewById(R.id.usernameet);
-        passwordEt = findViewById(R.id.passwordet);
+        usernameEditText = findViewById(R.id.usernameet);
+        passwordEditText = findViewById(R.id.passwordet);
         signInBtn = findViewById(R.id.signinbtn);
 
-        signInBtn.setOnClickListener(v -> {
-            try {
-                signIn();
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        signUpTv.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
-            finish();
-        });
+        signInBtn.setOnClickListener(v -> signIn());
+        signUpTv.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class)));
     }
 
-    private void signIn() throws NoSuchAlgorithmException {
-         username = usernameEt.getText().toString().trim();
-         password = encryptPassword(passwordEt.getText().toString().trim());
+    private void signIn() {
+        String username = usernameEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String finalPassword;
 
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
             Toast.makeText(LoginActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Query database to check for user
+        try {
+            finalPassword = encryptPassword(password);
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "Encryption failed", e);
+            Toast.makeText(LoginActivity.this, "An error occurred, please try again later.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("MyDatabase").child("users");
-        Query checkUser = userRef.orderByChild("username").equalTo(username);
+        Query checkUser = userRef.orderByChild(USERNAME).equalTo(username);
+
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                         user = userSnapshot.getValue(User.class);
-                        if (user != null && user.getPassword().equals(password)) {
+                        User user = userSnapshot.getValue(User.class);
+                        if (user != null && user.getPassword().equals(finalPassword)) {
+                            saveUserDetails(username, finalPassword);
                             updateUI(user);
                             return;
                         }
@@ -102,44 +98,79 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
-    public String encryptPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest;
-        try {
-            messageDigest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            throw new NoSuchAlgorithmException(e);
-        }
-        byte[] digest = messageDigest.digest(password.getBytes());
-
-        BigInteger bigInteger = new BigInteger(1, digest);
-        return bigInteger.toString(16);
+    private void saveUserDetails(String username, String password) {
+        SharedPreferences preferences = getSharedPreferences(USER_DETAILS_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(USERNAME, username);
+        editor.putString(PASSWORD, password);
+        editor.apply();
     }
 
+    private String encryptPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+        byte[] digest = messageDigest.digest(password.getBytes());
+        return new java.math.BigInteger(1, digest).toString(16);
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        updateUI(user);
-
-    }
-
-    private void updateUI(User user) {
-        if (user!=null) {
-            Toast.makeText(this, "Welcome, " + user.getUsername(), Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("username",user.getUsername());
-            startActivity(intent);
-            finish();
-        }else {
-            Toast.makeText(this, "Please Sign please", Toast.LENGTH_SHORT).show();
-            Log.d(TAG,"User is null");
+        String username = getUsernameFromPreferences();
+        if (!TextUtils.isEmpty(username)) {
+            checkUserInDatabase(username);
+        } else {
+            Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "No user signed in");
         }
     }
 
+    private void checkUserInDatabase(String username) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("MyDatabase").child("users");
+        Query checkUser = userRef.orderByChild(USERNAME).equalTo(username);
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    handleUserSnapshot(snapshot, username);
+                } else {
+                    handleUserNotFound();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(LoginActivity.this, "Error retrieving user data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void handleUserSnapshot(DataSnapshot snapshot, String username) {
+        for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+            User user = userSnapshot.getValue(User.class);
+            if (user != null && user.getUsername().equals(username)) {
+                updateUI(user);
+                return;
+            }
+        }
+    }
+
+    private void handleUserNotFound() {
+        Toast.makeText(LoginActivity.this, "Username not found. Please try again or create an account.", Toast.LENGTH_SHORT).show();
+    }
+
+
+    private String getUsernameFromPreferences() {
+        SharedPreferences preferences = getSharedPreferences(USER_DETAILS_PREF, MODE_PRIVATE);
+        return preferences.getString(USERNAME, "");
+    }
+
+    private void updateUI(User user) {
+        if (user != null) {
+            Toast.makeText(this, "Welcome, " + user.getUsername(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra(USERNAME, user.getUsername());
+            startActivity(intent);
+            finish();
+        }
+    }
 }
