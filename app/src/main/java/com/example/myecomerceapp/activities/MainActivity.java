@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
             }else if (item.getItemId()== R.id.cart) {
                 loadFragment(new CartFragment());
-                categoryRecycleView.setVisibility(View.GONE);
                 removeViews();
 
             }
@@ -282,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static  void removeViews(){
         categoryRecycleView.setVisibility(View.GONE);
         frameLayout.setVisibility(View.GONE);
-
        displayBanner.setVisibility(View.GONE);
        popularProductsLinearLayout.setVisibility(View.GONE);
        popularProductsRecyclerview.setVisibility(View.GONE);

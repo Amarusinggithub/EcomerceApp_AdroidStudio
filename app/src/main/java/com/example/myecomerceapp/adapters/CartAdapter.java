@@ -3,6 +3,8 @@ package com.example.myecomerceapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +14,7 @@ import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
 
@@ -33,7 +36,26 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.MyViewHolder holder, int position) {
+        // Get all products from the HashMap
+        Set<Product> products =cartProducts.keySet();
 
+        // Iterate over the set of products to find the product at the specified position
+        Product product=null;
+        int currentPosition = 0;
+        for (Product p : products) {
+            if (currentPosition == position) {
+                product = p;
+                break;
+            }
+            currentPosition++;
+        }
+
+        if (product!=null){
+            holder.name.setText(product.getProductName());
+            holder.quantity.setText(product.getProductQuantity());
+            holder.price.setText(product.getProductPrice());
+
+        }
     }
 
     @Override
@@ -42,10 +64,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
+        ImageView image;
+        TextView name,price,quantity;
 
         public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener) {
             super(itemView);
+            image=itemView.findViewById(R.id.productImage);
+            name=itemView.findViewById(R.id.productName);
+            price=itemView.findViewById(R.id.productPrice);
+            quantity=itemView.findViewById(R.id.productQuantity);
+
 
 
             itemView.setOnClickListener(v -> {
