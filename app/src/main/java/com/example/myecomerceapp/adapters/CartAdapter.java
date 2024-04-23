@@ -13,16 +13,16 @@ import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
 
-import java.util.HashMap;
-import java.util.Set;
+import java.util.ArrayList;
+
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
 
-    private final HashMap<Product,Integer> cartProducts;
+    private final ArrayList<Product> cartProducts;
 
     private final MyProductOnClickListener productOnclickListener;
 
-    public CartAdapter(HashMap<Product, Integer> cartProducts, MyProductOnClickListener productOnclickListener) {
+    public CartAdapter(ArrayList<Product> cartProducts, MyProductOnClickListener productOnclickListener) {
         this.cartProducts = cartProducts;
         this.productOnclickListener = productOnclickListener;
     }
@@ -37,18 +37,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.MyViewHolder holder, int position) {
         // Get all products from the HashMap
-        Set<Product> products =cartProducts.keySet();
+        Product product =cartProducts.get(position);
 
-        // Iterate over the set of products to find the product at the specified position
-        Product product=null;
-        int currentPosition = 0;
-        for (Product p : products) {
-            if (currentPosition == position) {
-                product = p;
-                break;
-            }
-            currentPosition++;
-        }
 
         if (product!=null){
             holder.name.setText(product.getProductName());

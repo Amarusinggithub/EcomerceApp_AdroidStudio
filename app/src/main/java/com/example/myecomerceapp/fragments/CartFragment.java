@@ -1,39 +1,60 @@
 package com.example.myecomerceapp.fragments;
 
-import static com.example.myecomerceapp.activities.MainActivity.user;
-import static com.example.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;
+
+
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.CartAdapter;
-import com.example.myecomerceapp.adapters.ProductAdapter;
+
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
+import com.example.myecomerceapp.models.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.Set;
 
 
 public class CartFragment extends Fragment implements MyProductOnClickListener {
     RecyclerView recyclerView;
-    public static HashMap<Product,Integer> productsAddedToCart;
+    public static ArrayList<Product> productsAddedToCart;
+    String username;
+    private User user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        productsAddedToCart=user.getProducts();
+        Bundle bundle=getArguments();
+        if(bundle!=null){
+            username=bundle.getString("username");
+            getUserFromDatabase();
+        }
+
+
+        if(user!=null){
+            productsAddedToCart=user.getProducts();
+        }
+
         // Inflate the layout for this fragment
         View cartView = inflater.inflate(R.layout.fragment_cart, container, false);
         recyclerView=cartView.findViewById(R.id.recyclerview);
@@ -47,19 +68,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
     @Override
     public void productClicked(int position) {
         // Get all products from the HashMap
-        Set<Product> products = productsAddedToCart.keySet();
-
-        // Iterate over the set of products to find the product at the specified position
-        Product product = null;
-        int currentPosition = 0;
-        for (Product p : products) {
-            if (currentPosition == position) {
-                product = p;
-                break;
-            }
-            currentPosition++;
-        }
-
+        Product product=productsAddedToCart.get(position);
         if (product != null) {
             Bundle bundle = new Bundle();
             bundle.putInt("position", position);
@@ -72,6 +81,8 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
             productViewFragment.setArguments(bundle);
             loadFragment(productViewFragment);
 
+        }else {
+            Log.d("CartFragment","The product is null");
         }
     }
 
@@ -83,5 +94,35 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
         fragmentTransaction.commit();
     }
 
+    private void getUserFromDatabase() {
+
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
+        DatabaseReference usersReference = parentReference.child("users");
+        Query checkUser = usersReference.orderByChild("username").equalTo(username);
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getEmail(), username)){
+                            user=userSnapshot.getValue(User.class);
+                            return;
+                        }
+
+                    }
+
+                } else {
+                    Toast.makeText(getContext(), "Email not found. Please try again or create an account.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Error retrieving user data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

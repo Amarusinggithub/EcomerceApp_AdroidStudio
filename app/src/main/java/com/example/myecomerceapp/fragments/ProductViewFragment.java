@@ -5,6 +5,7 @@ import static com.example.myecomerceapp.activities.MainActivity.removeViews;
 import static com.example.myecomerceapp.fragments.CartFragment.productsAddedToCart;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,8 @@ public class ProductViewFragment extends Fragment {
 
             if(product==null){
                 product=new Product(productImageResource,productName,productPrice,productDescription,productId);
+            }else {
+                Log.d("ProductVIewFragment","The product is null");
             }
 
 
@@ -62,10 +65,15 @@ public class ProductViewFragment extends Fragment {
 
             addToCart.setOnClickListener(v -> {
                 if(product!=null){
-                    productsAddedToCart.put(product,1);
-                    if(productsAddedToCart.containsKey(product)){
+                    productsAddedToCart.add(product);
+                    if(!productsAddedToCart.contains(product)){
                         Toast.makeText(getContext(), " "+product.getProductName()+" "+"was added to cart.",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getContext(), " THis product is already in your cart",Toast.LENGTH_SHORT).show();
+
                     }
+                }else {
+                    Log.d("ProductVIewFragment","The product is null");
                 }
 
             });

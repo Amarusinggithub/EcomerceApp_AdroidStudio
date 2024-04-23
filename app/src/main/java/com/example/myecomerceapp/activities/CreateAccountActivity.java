@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
 import com.example.myecomerceapp.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -43,6 +47,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     String email;
     String password;
 
+    private FirebaseAuth mAuth;
+    private  User user;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +57,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         setContentView(R.layout.create_account_activity);
 
         //Variables
+        mAuth = FirebaseAuth.getInstance();
         userNameEt =findViewById(R.id.usernameet);
         emailEt =findViewById(R.id.emailet);
         passwordEt =findViewById(R.id.passwordet);
@@ -93,43 +101,36 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         password=encryptPassword(passwordEt.getEditableText().toString().trim());
 
-        // Check if username already exists
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("MyDatabase").child("users").child(username);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Toast.makeText(CreateAccountActivity.this, "Username already exists. Please choose a different one.", Toast.LENGTH_SHORT).show();
-                } else {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(CreateAccountActivity.this, "Registration successful.",
+                                Toast.LENGTH_SHORT).show();
+                        setUser();
+                        updateUI(mAuth.getCurrentUser());
+                        // Redirect to login activity or any other activity
+                    } else {
+                        // If registration fails, display a message to the user.
+                        Toast.makeText(CreateAccountActivity.this, "Registration failed. " + Objects.requireNonNull(task.getException()).getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                    User user = setUser();
-                    SharedPreferences preferences=getSharedPreferences("user_details",MODE_PRIVATE);
-                    SharedPreferences.Editor editor=preferences.edit();
-                    editor.putString("username",user.getUsername());
-                    editor.putString("password",user.getPassword());
-                    editor.apply();
-                    updateUI(user);
 
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(CreateAccountActivity.this, "Error checking username availability.", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
     @NonNull
-    private User setUser() {
+    private void setUser() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
         DatabaseReference usersReference = parentReference.child("users");
 
 
-        User user = new User();
-        HashMap<Product, Integer> products = new HashMap<>();
+         user = new User();
+        ArrayList<Product> products = new ArrayList<>();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
@@ -137,7 +138,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         DatabaseReference userReference = usersReference.child(user.getUsername());
 
         userReference.setValue(user);
-        return user;
+
 
     }
 
@@ -162,15 +163,16 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
 
-  private void updateUI(User user) {
+  private void updateUI(FirebaseUser user) {
         if (user!=null) {
-            Toast.makeText(this, "Welcome, " + user.getUsername(), Toast.LENGTH_SHORT).show();
             Intent intent=new Intent(CreateAccountActivity.this, MainActivity.class);
-            intent.putExtra("username",user.getUsername());
+            intent.putExtra("username",user.getEmail());
             startActivity(intent);
             finish();
         }else {
-            Toast.makeText(this, "Please Sign please", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Signup ", Toast.LENGTH_SHORT).show();
+
+                Log.d("CreateAccountActivity","The user object is null");
 
         }
     }

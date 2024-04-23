@@ -1,6 +1,7 @@
 package com.example.myecomerceapp.models;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+
 
 
 
@@ -9,7 +10,7 @@ public class User {
     String email;
     String username;
     String password;
-    HashMap<Product,Integer> products;
+    ArrayList<Product> products;
 
     public String getEmail() {
         return email;
@@ -35,11 +36,11 @@ public class User {
         this.password = password;
     }
 
-    public HashMap<Product, Integer> getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(HashMap<Product, Integer> products) {
+    public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
 }

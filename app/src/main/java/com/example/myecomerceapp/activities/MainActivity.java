@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +51,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -70,40 +72,49 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static FrameLayout frameLayout;
     public static CardView displayBanner;
     public static RecyclerView categoryRecycleView;
-    public static LinearLayout popularProductsLinearLayout;
+    private static LinearLayout popularProductsLinearLayout;
     public static RecyclerView popularProductsRecyclerview;
-    public  static User user;
-    private String username;
+    private User user;
+    private String email;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getUserFromDatabase();
+       getUserFromDatabase();
         initializeViews();
 
     }
 
     private void getUserFromDatabase() {
-        username=getIntent().getStringExtra("username");
+        email =getIntent().getStringExtra("email");
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("MyDatabase").child("users");
-        Query checkUser = userRef.orderByChild("username").equalTo(username);
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
+        DatabaseReference usersReference = parentReference.child("users");
+        Query checkUser = usersReference.orderByChild("email").equalTo(email);
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getUsername(), username)){
+                        if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getEmail(), email)){
                             user=userSnapshot.getValue(User.class);
+                            if (user!=null){
+                                Bundle bundle=new Bundle();
+                                bundle.putString("username",user.getUsername());
+                                return;
+                            }else{
+                                Log.d(TAG,"user is null");
+                            }
                             return;
                         }
 
                     }
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Username not found. Please try again or create an account.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Email not found. Please try again or create an account.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -112,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 Toast.makeText(MainActivity.this, "Error retrieving user data.", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     private void initializeViews() {
