@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                             if (user!=null){
                                 Bundle bundle=new Bundle();
                                 bundle.putString("username",user.getUsername());
+                                setupHeader(user);
                                 return;
                             }else{
                                 Log.d(TAG,"user is null");
@@ -188,6 +189,109 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             return true;
         });
 
+    }
+
+
+
+    public static  void removeViews(){
+        categoryRecycleView.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.GONE);
+       displayBanner.setVisibility(View.GONE);
+       popularProductsLinearLayout.setVisibility(View.GONE);
+       popularProductsRecyclerview.setVisibility(View.GONE);
+    }
+
+    public static  void addViews(){
+        categoryRecycleView.setVisibility(View.VISIBLE);
+
+       displayBanner.setVisibility(View.VISIBLE);
+       popularProductsRecyclerview.setVisibility(View.VISIBLE);
+       popularProductsLinearLayout.setVisibility(View.VISIBLE);
+
+    }
+
+
+    private void setupDrawer() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        drawerLayout.addDrawerListener(this);
+
+        setupNavigationView();
+    }
+    private void setupNavigationView() {
+        navigationView.setNavigationItemSelectedListener(this);
+        setDefaultMenuItem();
+        /*setupHeader();*/
+    }
+
+    private void setDefaultMenuItem() {
+        MenuItem menuItem = navigationView.getMenu().getItem(0);
+        onNavigationItemSelected(menuItem);
+        menuItem.setChecked(true);
+    }
+
+    private void setupHeader(User user) {
+        View header = navigationView.getHeaderView(0);
+        TextView headerTitle = header.findViewById(R.id.header_title);
+        TextView headerEmail = header.findViewById(R.id.header_email);
+        headerTitle
+                .setOnClickListener(view -> Toast.makeText(
+                MainActivity.this,
+                getString(R.string.title_click),
+                Toast.LENGTH_SHORT).show());
+
+        headerEmail
+                .setOnClickListener(view -> Toast.makeText(
+                        MainActivity.this,
+                        getString(R.string.title_click),
+                        Toast.LENGTH_SHORT).show());
+
+if(user!=null){
+    headerEmail.setText(user.getEmail());
+    headerTitle.setText(user.getUsername());
+}else {
+    Log.d(TAG,"user is null");
+    Toast.makeText(MainActivity.this,"user is null",Toast.LENGTH_SHORT).show();
+}
+    }
+
+    private  void loadFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
+    }
+
+
+
+
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 
     public static List<Category> getCategory() {
@@ -290,85 +394,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     }
 
-    public static  void removeViews(){
-        categoryRecycleView.setVisibility(View.GONE);
-        frameLayout.setVisibility(View.GONE);
-       displayBanner.setVisibility(View.GONE);
-       popularProductsLinearLayout.setVisibility(View.GONE);
-       popularProductsRecyclerview.setVisibility(View.GONE);
-    }
-
-    public static  void addViews(){
-        categoryRecycleView.setVisibility(View.VISIBLE);
-
-       displayBanner.setVisibility(View.VISIBLE);
-       popularProductsRecyclerview.setVisibility(View.VISIBLE);
-       popularProductsLinearLayout.setVisibility(View.VISIBLE);
-
-    }
-
-    private  void loadFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        fragmentTransaction.commit();
-    }
-
-    private void setupDrawer() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        drawerLayout.addDrawerListener(this);
-
-        setupNavigationView();
-    }
-    private void setupNavigationView() {
-        navigationView.setNavigationItemSelectedListener(this);
-        setDefaultMenuItem();
-        setupHeader();
-    }
-
-    private void setDefaultMenuItem() {
-        MenuItem menuItem = navigationView.getMenu().getItem(0);
-        onNavigationItemSelected(menuItem);
-        menuItem.setChecked(true);
-    }
-
-    private void setupHeader() {
-        View header = navigationView.getHeaderView(0);
-        TextView headerTitle = header.findViewById(R.id.header_title);
-        TextView headerEmail = header.findViewById(R.id.header_email);
-        headerTitle
-                .setOnClickListener(view -> Toast.makeText(
-                MainActivity.this,
-                getString(R.string.title_click),
-                Toast.LENGTH_SHORT).show());
-
-        headerEmail
-                .setOnClickListener(view -> Toast.makeText(
-                        MainActivity.this,
-                        getString(R.string.title_click),
-                        Toast.LENGTH_SHORT).show());
-
-if(user!=null){
-    headerEmail.setText(user.getEmail());
-    headerTitle.setText(user.getUsername());
-}else {
-    Log.d(TAG,"user is null");
-    Toast.makeText(MainActivity.this,"user is null",Toast.LENGTH_SHORT).show();
-}
-
-
-
-    }
-
-
     @Override
     public void categoryClicked(int position) {
-
         removeViews();
         categoryRecycleView.setVisibility(View.VISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
@@ -378,30 +405,6 @@ if(user!=null){
         loadFragment(itemProductRecyclerViewFragment);
     }
 
-    @Override
-    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-    }
-
-    @Override
-    public void onDrawerOpened(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerClosed(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
 
     @Override
     public void productClicked(int position) {
