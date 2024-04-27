@@ -103,7 +103,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                         setUser();
                         updateUI(mAuth.getCurrentUser());
-                        // Redirect to login activity or any other activity
+                        // Redirect to log in activity or any other activity
                     } else {
                         // If registration fails, display a message to the user.
                         Toast.makeText(CreateAccountActivity.this, "Registration failed. " + Objects.requireNonNull(task.getException()).getMessage(),

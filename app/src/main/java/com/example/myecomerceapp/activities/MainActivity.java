@@ -7,6 +7,7 @@ import static com.example.myecomerceapp.fragments.ProductRecyclerViewFragment.ca
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -50,7 +51,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private NavigationView navigationView;
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
+    private static SearchView searchView;
     public static FrameLayout frameLayout;
     public static CardView displayBanner;
     public static RecyclerView categoryRecycleView;
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        getUserFromDatabase();
-        initializeViews();
+
 
     }
 
@@ -103,7 +105,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                             if (user!=null){
                                 Bundle bundle=new Bundle();
                                 bundle.putString("username",user.getUsername());
-                                setupHeader(user);
+                                initializeViews();
+
                                 return;
                             }else{
                                 Log.d(TAG,"user is null");
@@ -145,8 +148,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         setupBottomNavigationView();
 
     }
-
-
 
     private void setupCategoryRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private void setupNavigationView() {
         navigationView.setNavigationItemSelectedListener(this);
         setDefaultMenuItem();
-        /*setupHeader();*/
+        setupHeader();
     }
 
     private void setDefaultMenuItem() {
@@ -233,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         menuItem.setChecked(true);
     }
 
-    private void setupHeader(User user) {
+    private void setupHeader() {
         View header = navigationView.getHeaderView(0);
         TextView headerTitle = header.findViewById(R.id.header_title);
         TextView headerEmail = header.findViewById(R.id.header_email);
