@@ -25,7 +25,6 @@
             android:id="@+id/searchview"
             android:layout_below="@id/toolbar"
             android:background="@drawable/custom_searchview"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
