@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         navigationView = findViewById(R.id.navigation_view);
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottomnav);
+        searchView=findViewById(R.id.searchview);
         frameLayout = findViewById(R.id.frameLayout);
         displayBanner = findViewById(R.id.displayBanner);
         categoryRecycleView = findViewById(R.id.categoriesRecycleView);
@@ -194,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
 
     public static  void removeViews(){
+        searchView.setVisibility(View.GONE);
         categoryRecycleView.setVisibility(View.GONE);
         frameLayout.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     public static  void addViews(){
         categoryRecycleView.setVisibility(View.VISIBLE);
-
+        searchView.setVisibility(View.VISIBLE);
        displayBanner.setVisibility(View.VISIBLE);
        popularProductsRecyclerview.setVisibility(View.VISIBLE);
        popularProductsLinearLayout.setVisibility(View.VISIBLE);
