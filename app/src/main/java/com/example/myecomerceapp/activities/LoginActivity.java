@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+
         signUpTv = findViewById(R.id.signuptv);
         usernameEditText = findViewById(R.id.usernameet);
         passwordEditText = findViewById(R.id.passwordet);
@@ -89,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("MyDatabase").child("users");
-        Query checkUser = userRef.orderByChild(EMAIL).equalTo(username);
+        Query checkUser = userRef.orderByChild("username").equalTo(username);
 
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -128,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Authentication successful.",
                                 Toast.LENGTH_SHORT).show();
                         // Redirect to dashboard or any other activity
+                        currentUser = mAuth.getCurrentUser();
                         updateUI(currentUser);
                     } else {
                         // If sign in fails, display a message to the user.

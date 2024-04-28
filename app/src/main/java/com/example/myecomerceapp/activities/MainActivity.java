@@ -268,32 +268,37 @@ if(user!=null){
         fragmentTransaction.commit();
     }
 
-
-
-
     @Override
-    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
+    public void categoryClicked(int position) {
+        removeViews();
+        categoryRecycleView.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
+        Category category = getCategory().get(position);
+        ProductRecyclerViewFragment itemProductRecyclerViewFragment =new ProductRecyclerViewFragment();
+        categoryId= category.getCategoryId();
+        loadFragment(itemProductRecyclerViewFragment);
     }
 
-    @Override
-    public void onDrawerOpened(@NonNull View drawerView) {
-
-    }
 
     @Override
-    public void onDrawerClosed(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+    public void productClicked(int position) {
+        Product product;
+        if(!getProductsData(categoryId).isEmpty()){
+           product = getProductsData(categoryId).get(position);
+        }else{
+            product = getProductsData(POPULAR_PRODUCTS).get(position);
+        }
+       product = getProductsData(categoryId).get(position);
+        Bundle bundle = new Bundle();
+        bundle.putInt("position",position);
+        bundle.putString("productName", product.getProductName());
+        bundle.putString("proPrice", product.getProductPrice());
+        bundle.putString("productDescription", product.getProductDescription());
+        bundle.putString("position", product.getProductId());
+        bundle.putInt("productImage", product.getProductImage());
+        ProductViewFragment productViewFragment = new ProductViewFragment();
+        productViewFragment.setArguments(bundle);
+        loadFragment(productViewFragment);
     }
 
     public static List<Category> getCategory() {
@@ -397,29 +402,27 @@ if(user!=null){
     }
 
     @Override
-    public void categoryClicked(int position) {
-        removeViews();
-        categoryRecycleView.setVisibility(View.VISIBLE);
-        frameLayout.setVisibility(View.VISIBLE);
-        Category category = getCategory().get(position);
-        ProductRecyclerViewFragment itemProductRecyclerViewFragment =new ProductRecyclerViewFragment();
-        categoryId= category.getCategoryId();
-        loadFragment(itemProductRecyclerViewFragment);
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
 
     @Override
-    public void productClicked(int position) {
-        Product product = getProductsData(categoryId).get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
-        bundle.putString("productName", product.getProductName());
-        bundle.putString("proPrice", product.getProductPrice());
-        bundle.putString("productDescription", product.getProductDescription());
-        bundle.putString("position", product.getProductId());
-        bundle.putInt("productImage", product.getProductImage());
-        ProductViewFragment productViewFragment = new ProductViewFragment();
-        productViewFragment.setArguments(bundle);
-        loadFragment(productViewFragment);
+    public void onDrawerOpened(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }

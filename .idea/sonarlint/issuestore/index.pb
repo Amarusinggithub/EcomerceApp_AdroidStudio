@@ -54,8 +54,6 @@ Y
 ..idea/modules/app/My_Ecomerce_App.app.main.iml,2\9\299a82309344e952b48467b4a24e59e9aa1250aa
 x
 Happ/src/main/java/com/example/myecomerceapp/activities/MainActivity.java,5\0\509f8601ba55bb04b98ef29a3ab603c66b8aa527
-~
-Napp/src/main/java/com/example/myecomerceapp/activities/SearchViewActivity.java,0\b\0b3fc5f83f536533fb42b0f68245fc3f16ceb3ee
 Å
 Qapp/src/main/java/com/example/myecomerceapp/activities/CreateAccountActivity.java,2\8\282eabaf91519ef77a35943f1c03c79801512fc9
 y
@@ -80,7 +78,3 @@ Tapp/src/main/java/com/example/myecomerceapp/interfaces/MyProductOnClickListener
 Uapp/src/main/java/com/example/myecomerceapp/interfaces/MyCategoryOnClickListener.java,c\2\c21d2e2efec8e3598799c2424a05760958fc16a1
 u
 Eapp/src/main/java/com/example/myecomerceapp/adapters/CartAdapter.java,d\0\d014b23c5962ee860178c146c701a031e87704c6
-u
-Eapp/src/main/java/com/amar/myecomerceapp/activities/MainActivity.java,5\c\5c2a36dc62246e50341cda1699e81d942f1dc9b9
-~
-Napp/src/main/java/com/amar/myecomerceapp/activities/CreateAccountActivity.java,b\f\bf66c4c8d5b4ad5aac9eb750084e748fcd954bd1

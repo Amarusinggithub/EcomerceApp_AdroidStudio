@@ -160,7 +160,7 @@ public class CreateAccountActivity extends AppCompatActivity {
   private void updateUI(FirebaseUser user) {
         if (user!=null) {
             Intent intent=new Intent(CreateAccountActivity.this, MainActivity.class);
-            intent.putExtra("username",user.getEmail());
+            intent.putExtra("email",user.getEmail());
             startActivity(intent);
             finish();
         }else {
