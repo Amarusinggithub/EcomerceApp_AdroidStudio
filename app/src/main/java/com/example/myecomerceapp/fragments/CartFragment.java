@@ -3,6 +3,8 @@ package com.example.myecomerceapp.fragments;
 
 
 
+import static com.example.myecomerceapp.activities.MainActivity.username;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,9 +38,10 @@ import java.util.Objects;
 
 
 public class CartFragment extends Fragment implements MyProductOnClickListener {
+    private static final String TAG = "MainActivity";
     RecyclerView recyclerView;
     public static ArrayList<Product> productsAddedToCart;
-    String username;
+
     private User user;
 
     @Override
@@ -46,13 +49,10 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
                              Bundle savedInstanceState) {
         Bundle bundle=getArguments();
         if(bundle!=null){
-            username=bundle.getString("username");
+
             getUserFromDatabase();
-        }
-
-
-        if(user!=null){
-            productsAddedToCart=user.getProducts();
+        }else{
+            Log.d(TAG,"CartFragment bundle is null");
         }
 
         // Inflate the layout for this fragment
@@ -108,13 +108,16 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getEmail(), username)){
                             user=userSnapshot.getValue(User.class);
+                            if(user!=null){
+                                productsAddedToCart=user.getProductsUserBought();
+                            }
                             return;
                         }
 
                     }
 
                 } else {
-                    Toast.makeText(getContext(), "Email not found. Please try again or create an account.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Username not found", Toast.LENGTH_SHORT).show();
                 }
             }
 

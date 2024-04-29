@@ -2,6 +2,7 @@ package com.example.myecomerceapp.fragments;
 
 import static com.example.myecomerceapp.activities.MainActivity.frameLayout;
 import static com.example.myecomerceapp.activities.MainActivity.removeViews;
+import static com.example.myecomerceapp.activities.MainActivity.username;
 import static com.example.myecomerceapp.fragments.CartFragment.productsAddedToCart;
 
 import android.os.Bundle;
@@ -20,12 +21,24 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
+import com.example.myecomerceapp.models.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 
 public class ProductViewFragment extends Fragment {
 
     Button addToCart;
     Product product;
+    private User user;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +49,8 @@ public class ProductViewFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             // Extract data from the Bundle
+
+            getUserFromDatabase();
             String productId=args.getString("position");
             String productName = args.getString("productName");
             String productPrice = args.getString("productPrice");
@@ -81,5 +96,38 @@ public class ProductViewFragment extends Fragment {
         }
 
         return productView;
+    }
+    private void getUserFromDatabase() {
+
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
+        DatabaseReference usersReference = parentReference.child("users");
+        Query checkUser = usersReference.orderByChild("username").equalTo(username);
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getEmail(), username)){
+                            user=userSnapshot.getValue(User.class);
+                            if(user!=null){
+                                productsAddedToCart=user.getProductsUserBought();
+                            }
+                            return;
+                        }
+
+                    }
+
+                } else {
+                    Toast.makeText(getContext(), "Username not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Error retrieving user data.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

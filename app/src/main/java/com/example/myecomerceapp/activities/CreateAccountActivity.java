@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,7 +41,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     String password;
 
     private FirebaseAuth mAuth;
-    private  User user;
 
 
     @Override
@@ -116,19 +114,20 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
 
-    @NonNull
     private void setUser() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
         DatabaseReference usersReference = parentReference.child("users");
 
 
-         user = new User();
-        ArrayList<Product> products = new ArrayList<>();
+        User user = new User();
+        ArrayList<Product> productsUserBought=new ArrayList<>();
+        ArrayList<Product> productsUserAddedToCart=new ArrayList<>();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
-        user.setProducts(products);
+        user.setProductsUserBought(productsUserBought);
+        user.setProductsUserAddedToCart(productsUserAddedToCart);
         DatabaseReference userReference = usersReference.child(user.getUsername());
 
         userReference.setValue(user);

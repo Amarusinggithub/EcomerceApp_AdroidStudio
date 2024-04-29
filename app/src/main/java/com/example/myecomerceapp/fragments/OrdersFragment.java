@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.example.myecomerceapp.R;
 
 
-public class SalesFragment extends Fragment {
+public class OrdersFragment extends Fragment {
 
 
 
@@ -19,6 +19,6 @@ public class SalesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sales, container, false);
+        return inflater.inflate(R.layout.fragment_orders, container, false);
     }
 }

@@ -100,10 +100,8 @@
 
                 </LinearLayout>
 
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/popularproductrecycleview"
+                <FrameLayout
+                    android:id="@+id/popularproductframelayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/popularproductsLL"
@@ -130,9 +128,6 @@
             />
 
     </RelativeLayout>
-
-
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"

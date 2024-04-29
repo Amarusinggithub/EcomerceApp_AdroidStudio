@@ -23,14 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myecomerceapp.adapters.CategoryAdapter;
-import com.example.myecomerceapp.adapters.ProductAdapter;
+import com.example.myecomerceapp.fragments.PopularProductsRecyclerViewFragment;
 import com.example.myecomerceapp.fragments.ProductRecyclerViewFragment;
 import com.example.myecomerceapp.fragments.ProductViewFragment;
 import com.example.myecomerceapp.interfaces.MyCategoryOnClickListener;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.fragments.AccountFragment;
 import com.example.myecomerceapp.fragments.CartFragment;
-import com.example.myecomerceapp.fragments.SalesFragment;
+import com.example.myecomerceapp.fragments.OrdersFragment;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Category;
 import com.example.myecomerceapp.models.Product;
@@ -74,9 +74,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static CardView displayBanner;
     public static RecyclerView categoryRecycleView;
     private static LinearLayout popularProductsLinearLayout;
-    public static RecyclerView popularProductsRecyclerview;
     private User user;
     private String email;
+    public static String username;
+
+    public static FrameLayout popularProductsFrameLayout;
 
 
     @Override
@@ -103,11 +105,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                         if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getEmail(), email)){
                             user=userSnapshot.getValue(User.class);
                             if (user!=null){
-                                Bundle bundle=new Bundle();
-                                bundle.putString("username",user.getUsername());
+                                username=user.getUsername();
                                 initializeViews();
-
-                                return;
                             }else{
                                 Log.d(TAG,"user is null");
                             }
@@ -130,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
     private void initializeViews() {
+        popularProductsFrameLayout=findViewById(R.id.popularproductframelayout);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         toolbar = findViewById(R.id.toolbar);
@@ -138,15 +138,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         frameLayout = findViewById(R.id.frameLayout);
         displayBanner = findViewById(R.id.displayBanner);
         categoryRecycleView = findViewById(R.id.categoriesRecycleView);
-        popularProductsRecyclerview = findViewById(R.id.popularproductrecycleview);
         popularProductsLinearLayout = findViewById(R.id.popularproductsLL);
 
 
         setSupportActionBar(toolbar);
         setupDrawer();
         setupCategoryRecyclerView();
-        setupPopularProductsRecyclerView();
         setupBottomNavigationView();
+        loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
 
     }
 
@@ -157,12 +156,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         categoryRecycleView.setAdapter(categoryAdapter);
     }
 
-    private void setupPopularProductsRecyclerView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        popularProductsRecyclerview.setLayoutManager(linearLayoutManager);
-        ProductAdapter popularProductAdapter = new ProductAdapter(this, getProductsData(POPULAR_PRODUCTS));
-        popularProductsRecyclerview.setAdapter(popularProductAdapter);
-    }
+
 
     private void setupBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -172,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 addViews();
 
             }
-            else if (item.getItemId()== R.id.sales) {
-                loadFragment(new SalesFragment());
+            else if (item.getItemId()== R.id.orders) {
+                loadFragment(new OrdersFragment());
                 categoryRecycleView.setVisibility(View.GONE);
                 removeViews();
 
@@ -200,15 +194,15 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         frameLayout.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
        popularProductsLinearLayout.setVisibility(View.GONE);
-       popularProductsRecyclerview.setVisibility(View.GONE);
+        popularProductsFrameLayout.setVisibility(View.GONE);
     }
 
     public static  void addViews(){
         categoryRecycleView.setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
        displayBanner.setVisibility(View.VISIBLE);
-       popularProductsRecyclerview.setVisibility(View.VISIBLE);
        popularProductsLinearLayout.setVisibility(View.VISIBLE);
+        popularProductsFrameLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -261,7 +255,16 @@ if(user!=null){
 }
     }
 
-    private  void loadFragment(Fragment fragment) {
+
+
+
+    public void loadPopularProductsFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.add(R.id.popularproductframelayout,fragment);
+        fragmentTransaction.commit();
+    }
+    public void loadFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
@@ -274,21 +277,15 @@ if(user!=null){
         categoryRecycleView.setVisibility(View.VISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
         Category category = getCategory().get(position);
-        ProductRecyclerViewFragment itemProductRecyclerViewFragment =new ProductRecyclerViewFragment();
+        ProductRecyclerViewFragment productRecyclerViewFragment =new ProductRecyclerViewFragment();
         categoryId= category.getCategoryId();
-        loadFragment(itemProductRecyclerViewFragment);
+        loadFragment(productRecyclerViewFragment);
     }
 
 
     @Override
     public void productClicked(int position) {
-        Product product;
-        if(!getProductsData(categoryId).isEmpty()){
-           product = getProductsData(categoryId).get(position);
-        }else{
-            product = getProductsData(POPULAR_PRODUCTS).get(position);
-        }
-       product = getProductsData(categoryId).get(position);
+      Product product = getProductsData(categoryId).get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("position",position);
         bundle.putString("productName", product.getProductName());

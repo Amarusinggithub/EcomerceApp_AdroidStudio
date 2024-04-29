@@ -78,3 +78,7 @@ Tapp/src/main/java/com/example/myecomerceapp/interfaces/MyProductOnClickListener
 Uapp/src/main/java/com/example/myecomerceapp/interfaces/MyCategoryOnClickListener.java,c\2\c21d2e2efec8e3598799c2424a05760958fc16a1
 u
 Eapp/src/main/java/com/example/myecomerceapp/adapters/CartAdapter.java,d\0\d014b23c5962ee860178c146c701a031e87704c6
+Ž
+^app/src/main/java/com/example/myecomerceapp/fragments/PopularProductsRecyclerViewFragment.java,9\4\9414deb7ac266d60e890a66506e631b8cf322683
+y
+Iapp/src/main/java/com/example/myecomerceapp/fragments/OrdersFragment.java,c\5\c50541cc4c40bbe8dbf3d267f1357ccf85226003

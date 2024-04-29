@@ -10,7 +10,8 @@ public class User {
     String email;
     String username;
     String password;
-    ArrayList<Product> products;
+    ArrayList<Product> productsUserBought;
+    ArrayList<Product> productsUserAddedToCart;
 
     public String getEmail() {
         return email;
@@ -36,11 +37,19 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
+    public ArrayList<Product> getProductsUserBought() {
+        return productsUserBought;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
+    public void setProductsUserBought(ArrayList<Product> productsUserBought) {
+        this.productsUserBought = productsUserBought;
+    }
+
+    public ArrayList<Product> getProductsUserAddedToCart() {
+        return productsUserAddedToCart;
+    }
+
+    public void setProductsUserAddedToCart(ArrayList<Product> productsUserAddedToCart) {
+        this.productsUserAddedToCart = productsUserAddedToCart;
     }
 }

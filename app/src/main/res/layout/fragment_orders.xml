@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/backgroundColor"
-    tools:context=".fragments.ProductRecyclerViewFragment">
+    tools:context=".fragments.OrdersFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        style="@style/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="1"
-        style="@style/backgroundColor"
-        />
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>
