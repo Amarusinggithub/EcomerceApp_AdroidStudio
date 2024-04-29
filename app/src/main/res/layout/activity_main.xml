@@ -96,7 +96,7 @@
                         android:layout_width="0dp"  android:layout_height="wrap_content"
                         android:text="@string/popular_products"
                         android:textAlignment="viewStart"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         style="@style/textColor"
                         android:layout_weight="2"  />
@@ -106,7 +106,8 @@
                         android:layout_width="0dp"  android:layout_height="wrap_content"
                         android:text="@string/see_all"
                         android:textAlignment="viewEnd"
-                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
                         style="@style/textColor"
                         android:layout_weight="1"  />
 
