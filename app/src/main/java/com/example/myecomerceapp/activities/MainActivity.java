@@ -56,7 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener , MyCategoryOnClickListener, MyProductOnClickListener {
+public class MainActivity extends AppCompatActivity implements  MyCategoryOnClickListener, MyProductOnClickListener {
     public static final String LAPTOP = "Laptop";
     public static final String PHONES = "Phones";
     public static final String GAMES = "Games";
@@ -65,9 +65,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static final String POPULAR_PRODUCTS = "popular-products";
     public static final String EVERY_PRODUCT = "every-Product";
     private static final String TAG = "MainActivity";
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
+
     private BottomNavigationView bottomNavigationView;
     private static SearchView searchView;
     public static FrameLayout frameLayout;
@@ -130,9 +128,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     private void initializeViews() {
         popularProductsFrameLayout=findViewById(R.id.popularproductframelayout);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
-        toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottomnav);
         searchView=findViewById(R.id.searchview);
         frameLayout = findViewById(R.id.frameLayout);
@@ -141,8 +136,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         popularProductsLinearLayout = findViewById(R.id.popularproductsLL);
 
 
-        setSupportActionBar(toolbar);
-        setupDrawer();
+
         setupCategoryRecyclerView();
         setupBottomNavigationView();
         loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
@@ -205,58 +199,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         popularProductsFrameLayout.setVisibility(View.VISIBLE);
 
     }
-
-
-    private void setupDrawer() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        drawerLayout.addDrawerListener(this);
-
-        setupNavigationView();
-    }
-    private void setupNavigationView() {
-        navigationView.setNavigationItemSelectedListener(this);
-        setDefaultMenuItem();
-        setupHeader();
-    }
-
-    private void setDefaultMenuItem() {
-        MenuItem menuItem = navigationView.getMenu().getItem(0);
-        onNavigationItemSelected(menuItem);
-        menuItem.setChecked(true);
-    }
-
-    private void setupHeader() {
-        View header = navigationView.getHeaderView(0);
-        TextView headerTitle = header.findViewById(R.id.header_title);
-        TextView headerEmail = header.findViewById(R.id.header_email);
-        headerTitle
-                .setOnClickListener(view -> Toast.makeText(
-                MainActivity.this,
-                getString(R.string.title_click),
-                Toast.LENGTH_SHORT).show());
-
-        headerEmail
-                .setOnClickListener(view -> Toast.makeText(
-                        MainActivity.this,
-                        getString(R.string.title_click),
-                        Toast.LENGTH_SHORT).show());
-
-if(user!=null){
-    headerEmail.setText(user.getEmail());
-    headerTitle.setText(user.getUsername());
-}else {
-    Log.d(TAG,"user is null");
-    Toast.makeText(MainActivity.this,"user is null",Toast.LENGTH_SHORT).show();
-}
-    }
-
-
-
 
     public void loadPopularProductsFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
@@ -398,28 +340,5 @@ if(user!=null){
 
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
 
-    @Override
-    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-    }
-
-    @Override
-    public void onDrawerOpened(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerClosed(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
 }
