@@ -5,21 +5,21 @@ package com.example.myecomerceapp.activities;
 import static com.example.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.cardview.widget.CardView;
-import androidx.drawerlayout.widget.DrawerLayout;
+
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import com.example.myecomerceapp.adapters.CategoryAdapter;
@@ -36,7 +36,7 @@ import com.example.myecomerceapp.models.Category;
 import com.example.myecomerceapp.models.Product;
 import com.example.myecomerceapp.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
+
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,7 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener , MyCategoryOnClickListener, MyProductOnClickListener {
+public class MainActivity extends AppCompatActivity implements  MyCategoryOnClickListener, MyProductOnClickListener {
     public static final String LAPTOP = "Laptop";
     public static final String PHONES = "Phones";
     public static final String GAMES = "Games";
@@ -65,9 +65,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public static final String POPULAR_PRODUCTS = "popular-products";
     public static final String EVERY_PRODUCT = "every-Product";
     private static final String TAG = "MainActivity";
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
+
     private BottomNavigationView bottomNavigationView;
     private static SearchView searchView;
     public static FrameLayout frameLayout;
@@ -77,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private User user;
     private String email;
     public static String username;
-    static CardView serachCardView;
 
     public static FrameLayout popularProductsFrameLayout;
 
@@ -131,10 +128,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     private void initializeViews() {
         popularProductsFrameLayout=findViewById(R.id.popularproductframelayout);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
-        serachCardView=findViewById(R.id.searchviewCD);
-        toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottomnav);
         searchView=findViewById(R.id.searchview);
         frameLayout = findViewById(R.id.frameLayout);
@@ -143,12 +136,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         popularProductsLinearLayout = findViewById(R.id.popularproductsLL);
 
 
-        setSupportActionBar(toolbar);
-        setupDrawer();
+
         setupCategoryRecyclerView();
         setupBottomNavigationView();
         loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
-
 
     }
 
@@ -164,25 +155,24 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private void setupBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()== R.id.home){
+
                 removeViews();
                 addViews();
 
             }
             else if (item.getItemId()== R.id.orders) {
-                removeViews();
-                frameLayout.setVisibility(View.VISIBLE);
                 loadFragment(new OrdersFragment());
-
+                categoryRecycleView.setVisibility(View.GONE);
+                removeViews();
 
             } else if (item.getItemId()== R.id.account) {
-                removeViews();
-                frameLayout.setVisibility(View.VISIBLE);
                 loadFragment(new AccountFragment());
+                categoryRecycleView.setVisibility(View.GONE);
+                removeViews();
 
             }else if (item.getItemId()== R.id.cart) {
-                removeViews();
-                frameLayout.setVisibility(View.VISIBLE);
                 loadFragment(new CartFragment());
+                removeViews();
 
             }
             return true;
@@ -194,16 +184,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     public static  void removeViews(){
         searchView.setVisibility(View.GONE);
-        serachCardView.setVisibility(View.GONE);
         categoryRecycleView.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
        popularProductsLinearLayout.setVisibility(View.GONE);
         popularProductsFrameLayout.setVisibility(View.GONE);
-        frameLayout.setVisibility(View.GONE);
     }
 
     public static  void addViews(){
-        serachCardView.setVisibility(View.VISIBLE);
         categoryRecycleView.setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
        displayBanner.setVisibility(View.VISIBLE);
@@ -211,58 +199,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         popularProductsFrameLayout.setVisibility(View.VISIBLE);
 
     }
-
-
-    private void setupDrawer() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        drawerLayout.addDrawerListener(this);
-
-        setupNavigationView();
-    }
-    private void setupNavigationView() {
-        navigationView.setNavigationItemSelectedListener(this);
-        setDefaultMenuItem();
-        setupHeader();
-    }
-
-    private void setDefaultMenuItem() {
-        MenuItem menuItem = navigationView.getMenu().getItem(0);
-        onNavigationItemSelected(menuItem);
-        menuItem.setChecked(true);
-    }
-
-    private void setupHeader() {
-        View header = navigationView.getHeaderView(0);
-        TextView headerTitle = header.findViewById(R.id.header_title);
-        TextView headerEmail = header.findViewById(R.id.header_email);
-        headerTitle
-                .setOnClickListener(view -> Toast.makeText(
-                MainActivity.this,
-                getString(R.string.title_click),
-                Toast.LENGTH_SHORT).show());
-
-        headerEmail
-                .setOnClickListener(view -> Toast.makeText(
-                        MainActivity.this,
-                        getString(R.string.title_click),
-                        Toast.LENGTH_SHORT).show());
-
-if(user!=null){
-    headerEmail.setText(user.getEmail());
-    headerTitle.setText(user.getUsername());
-}else {
-    Log.d(TAG,"user is null");
-    Toast.makeText(MainActivity.this,"user is null",Toast.LENGTH_SHORT).show();
-}
-    }
-
-
-
 
     public void loadPopularProductsFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
@@ -404,28 +340,5 @@ if(user!=null){
 
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
 
-    @Override
-    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-    }
-
-    @Override
-    public void onDrawerOpened(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerClosed(@NonNull View drawerView) {
-
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
 }
