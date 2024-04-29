@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="500dp"
-        android:layout_height="140dp"
-        app:cardCornerRadius="10dp">
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="10dp"
+    style="@style/backgroundColor"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="10dp"
+            style="@style/backgroundColor"
             >
 
             <ImageView
                 android:id="@+id/productImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_launcher_background"/>
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_launcher_background"
+                android:contentDescription="TODO" />
             
             <TextView
                 android:id="@+id/productName"
-               
+               android:layout_toEndOf="@id/productImage"
                 android:text="Product Name"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -33,14 +34,17 @@
             <TextView
                 android:id="@+id/productPrice"
                 android:text="Product Price"
+                android:layout_toEndOf="@id/productImage"
+                android:layout_below="@id/productName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <LinearLayout
-
+                style="@style/backgroundColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_alignParentEnd="true">
                 <Button
                     android:id="@+id/plusBtn"
                     android:background="@drawable/button_style"
@@ -49,6 +53,7 @@
                 <TextView
                     android:id="@+id/productQuantity"
                     android:text="1"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -63,4 +68,3 @@
     </androidx.cardview.widget.CardView>
 
 
-</LinearLayout>

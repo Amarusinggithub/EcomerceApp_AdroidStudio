@@ -40,8 +40,6 @@ y
 Iapp/src/main/java/com/example/myecomerceapp/adapters/CategoryAdapter.java,d\4\d40e31c6f2425d86d513351fdf7edc9b328867f1
 w
 Gapp/src/main/java/com/example/myecomerceapp/adapters/BannerAdapter.java,3\c\3c577e425e3188edb2bd15a5113c184031d35703
-x
-Happ/src/main/java/com/example/myecomerceapp/fragments/SalesFragment.java,3\c\3cc9203299b09290ce2a35c3497bc2cecb0e6f2e
 w
 Gapp/src/main/java/com/example/myecomerceapp/fragments/CartFragment.java,6\9\696e7573f17f35e406e18f452c54c27315ef56b5
 z
