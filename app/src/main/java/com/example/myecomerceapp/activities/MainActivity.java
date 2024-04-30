@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private User user;
     private String email;
     public static String username;
+    static CardView serachCardView;
 
     public static FrameLayout popularProductsFrameLayout;
 
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         popularProductsFrameLayout=findViewById(R.id.popularproductframelayout);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        serachCardView=findViewById(R.id.searchviewCD);
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottomnav);
         searchView=findViewById(R.id.searchview);
@@ -146,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         setupCategoryRecyclerView();
         setupBottomNavigationView();
         loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
+
 
     }
 
@@ -190,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     public static  void removeViews(){
         searchView.setVisibility(View.GONE);
+        serachCardView.setVisibility(View.GONE);
         categoryRecycleView.setVisibility(View.GONE);
         frameLayout.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
@@ -198,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
     public static  void addViews(){
+        serachCardView.setVisibility(View.VISIBLE);
         categoryRecycleView.setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
        displayBanner.setVisibility(View.VISIBLE);

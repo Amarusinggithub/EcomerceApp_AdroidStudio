@@ -47,6 +47,7 @@
     <string name="cart">Cart</string>
     <string name="orders">Orders</string>
     <string name="account">Account</string>
+    <string name="search_product">Search product...</string>
 
 
 </resources>

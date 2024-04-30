@@ -19,23 +19,35 @@
             android:id="@+id/toolbar"
             android:background="?attr/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="10dp"/>
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchview"
+        <androidx.cardview.widget.CardView
+            app:cardBackgroundColor="@color/my_light_secondary_color"
+            android:id="@+id/searchviewCD"
             android:layout_below="@id/toolbar"
-            android:background="@drawable/custom_searchview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="7dp"
-            android:layout_marginStart="7dp"
-            />
+            android:layout_height="70dp"
+            app:cardElevation="10dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="15dp"
+
+            >
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchview"
+                android:background="@drawable/custom_searchview"
+                android:hint="@string/search_product"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="6dp"
+                />
+        </androidx.cardview.widget.CardView>
+
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/searchview">
+            android:layout_below="@id/searchviewCD">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
