@@ -47,21 +47,18 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater  inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View cartView = inflater.inflate(R.layout.fragment_cart, container, false);
+        CartAdapter cartAdapter= new CartAdapter(productsAddedToCart,this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         Bundle bundle=getArguments();
         if(bundle!=null){
 
-            getUserFromDatabase();
+            getUserFromDatabase(cartView,linearLayoutManager,cartAdapter);
         }else{
             Log.d(TAG,"CartFragment bundle is null");
         }
 
-        // Inflate the layout for this fragment
-        View cartView = inflater.inflate(R.layout.fragment_cart, container, false);
-        recyclerView=cartView.findViewById(R.id.recyclerview);
-        CartAdapter cartAdapter= new CartAdapter(productsAddedToCart,this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(cartAdapter);
         return cartView;
     }
 
@@ -94,7 +91,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
         fragmentTransaction.commit();
     }
 
-    private void getUserFromDatabase() {
+    private void getUserFromDatabase(View view,LinearLayoutManager linearLayoutManager,CartAdapter cartAdapter) {
 
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -110,6 +107,14 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
                             user=userSnapshot.getValue(User.class);
                             if(user!=null){
                                 productsAddedToCart=user.getProductsUserBought();
+                                if(!productsAddedToCart.isEmpty()){
+                                    recyclerView=view.findViewById(R.id.recyclerview);
+                                    recyclerView.setLayoutManager(linearLayoutManager);
+                                    recyclerView.setAdapter(cartAdapter);
+                                }else {
+                                    Toast.makeText(getContext(),"cart is empty",Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                             return;
                         }
