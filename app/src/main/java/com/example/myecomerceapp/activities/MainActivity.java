@@ -155,24 +155,25 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     private void setupBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()== R.id.home){
-
                 removeViews();
                 addViews();
 
             }
             else if (item.getItemId()== R.id.orders) {
-                loadFragment(new OrdersFragment());
-                categoryRecycleView.setVisibility(View.GONE);
                 removeViews();
+                frameLayout.setVisibility(View.VISIBLE);
+                loadFragment(new OrdersFragment());
+
 
             } else if (item.getItemId()== R.id.account) {
-                loadFragment(new AccountFragment());
-                categoryRecycleView.setVisibility(View.GONE);
                 removeViews();
+                frameLayout.setVisibility(View.VISIBLE);
+                loadFragment(new AccountFragment());
 
             }else if (item.getItemId()== R.id.cart) {
-                loadFragment(new CartFragment());
                 removeViews();
+                frameLayout.setVisibility(View.VISIBLE);
+                loadFragment(new CartFragment());
 
             }
             return true;
