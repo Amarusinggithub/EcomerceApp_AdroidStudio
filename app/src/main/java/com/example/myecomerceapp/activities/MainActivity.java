@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     public static CardView displayBanner;
     public static RecyclerView categoryRecycleView;
     private static LinearLayout popularProductsLinearLayout;
+    static CardView serachCardView;
     private User user;
     private String email;
     public static String username;
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
 
     private void initializeViews() {
         popularProductsFrameLayout=findViewById(R.id.popularproductframelayout);
+        serachCardView=findViewById(R.id.searchviewCD);
         bottomNavigationView = findViewById(R.id.bottomnav);
         searchView=findViewById(R.id.searchview);
         frameLayout = findViewById(R.id.frameLayout);
@@ -185,14 +187,17 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
 
     public static  void removeViews(){
         searchView.setVisibility(View.GONE);
+        serachCardView.setVisibility(View.GONE);
         categoryRecycleView.setVisibility(View.GONE);
-        frameLayout.setVisibility(View.GONE);
+
        displayBanner.setVisibility(View.GONE);
        popularProductsLinearLayout.setVisibility(View.GONE);
         popularProductsFrameLayout.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.GONE);
     }
 
     public static  void addViews(){
+        serachCardView.setVisibility(View.VISIBLE);
         categoryRecycleView.setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
        displayBanner.setVisibility(View.VISIBLE);
