@@ -47,7 +47,7 @@
     <string name="cart">Cart</string>
     <string name="orders">Orders</string>
     <string name="account">Account</string>
-    <string name="search_product">Search product...</string>
+    <string name="search_product">Search product…</string>
     <string name="account_fragment">account fragment</string>
     <string name="orders_fragment">orders fragment</string>
 
