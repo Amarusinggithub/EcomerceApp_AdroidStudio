@@ -183,13 +183,10 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
 
     }
 
-
-
     public static  void removeViews(){
         searchView.setVisibility(View.GONE);
         serachCardView.setVisibility(View.GONE);
         categoryRecycleView.setVisibility(View.GONE);
-
        displayBanner.setVisibility(View.GONE);
        popularProductsLinearLayout.setVisibility(View.GONE);
         popularProductsFrameLayout.setVisibility(View.GONE);

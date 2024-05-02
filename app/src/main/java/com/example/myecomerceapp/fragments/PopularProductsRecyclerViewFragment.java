@@ -1,6 +1,7 @@
 package com.example.myecomerceapp.fragments;
 
 import static com.example.myecomerceapp.activities.MainActivity.POPULAR_PRODUCTS;
+import static com.example.myecomerceapp.activities.MainActivity.frameLayout;
 import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.example.myecomerceapp.activities.MainActivity.removeViews;
 import static com.example.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;

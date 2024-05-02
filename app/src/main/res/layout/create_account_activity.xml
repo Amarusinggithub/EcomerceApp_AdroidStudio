@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/backgroundColor">
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/view_corner_radius"
+        />
 
     <TextView
         android:id="@+id/signuptv"
@@ -11,169 +18,220 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textColor="@color/white"
         android:textSize="30sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="15dp"
         />
 
 
-
-    <TextView
-        android:id="@+id/usernametv"
-        android:layout_below="@id/signuptv"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="Username"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_height="650dp"
+        app:cardCornerRadius="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="170dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="30dp"
+            android:background="@color/white"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
 
-    <EditText
-        android:id="@+id/usernameet"
-        android:hint="Enter Username..."
-        android:layout_below="@id/usernametv"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
+            <TextView
+                android:id="@+id/usernametv"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="Username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"/>
+
+            <EditText
+                android:id="@+id/usernameet"
+                android:hint="Enter Username..."
+                android:drawableStart="@drawable/username"
+                android:layout_below="@id/usernametv"
+                android:padding="10dp"
+                android:background="@drawable/edit_text_ui"
+                android:drawablePadding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#9C9B9B"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"/>
 
 
 
-    <TextView
-        android:id="@+id/emailtv"
-        android:layout_below="@id/usernameet"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="Email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
+            <TextView
+                android:id="@+id/emailtv"
+                android:layout_below="@id/usernameet"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="Email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"/>
 
-    <EditText
-        android:id="@+id/emailet"
-        android:hint="Enter Email..."
-        android:layout_below="@id/emailtv"
-        android:inputType="textEmailAddress"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
+            <EditText
+                android:id="@+id/emailet"
+                android:hint="Enter Email..."
+                android:drawableStart="@drawable/email"
+                android:layout_below="@id/emailtv"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:textColor="@color/black"
+                android:textColorHint="#9C9B9B"
+                android:drawablePadding="10dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edit_text_ui"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"/>
 
-    <TextView
-        android:id="@+id/passwordtv"
-        android:layout_below="@id/emailet"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="Password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
+            <TextView
+                android:id="@+id/passwordtv"
+                android:layout_below="@id/emailet"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"/>
 
-    <EditText
-        android:id="@+id/passwordet"
-        android:layout_below="@id/passwordtv"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:inputType="textPassword"
-        android:hint="Enter Password..."
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
+            <EditText
+                android:id="@+id/passwordet"
+                android:layout_below="@id/passwordtv"
+                android:drawableStart="@drawable/lock"
+                android:drawableEnd="@drawable/see_password"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text_ui"
+                android:textStyle="bold"
+                android:inputType="textPassword"
+                android:drawablePadding="10dp"
+                android:textColor="@color/black"
+                android:hint="Enter Password..."
+                android:textColorHint="#9C9B9B"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"/>
 
-    <TextView
-        android:id="@+id/confirmpasswordtv"
-        android:layout_below="@id/passwordet"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="Confirm Password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"/>
+            <TextView
+                android:id="@+id/confirmpasswordtv"
+                android:layout_below="@id/passwordet"
 
-    <EditText
-        android:id="@+id/confirmpasswordet"
-        android:layout_below="@id/confirmpasswordtv"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:inputType="textPassword"
-        android:hint="Confirm Password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        tools:ignore="HardcodedText" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="Confirm Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"/>
 
-    <Button
-        android:id="@+id/signupbtn"
-        android:layout_below="@id/confirmpasswordet"
-        android:text="sign up"
-        android:textAllCaps="true"
-        android:background="@drawable/button_style"
-        android:textSize="27sp"
-        android:textStyle="bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        tools:ignore="HardcodedText" />
+            <EditText
+                android:id="@+id/confirmpasswordet"
+                android:layout_below="@id/confirmpasswordtv"
+                android:textSize="18sp"
+                android:drawableStart="@drawable/lock"
+                android:drawableEnd="@drawable/see_password"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:inputType="textPassword"
+                android:drawablePadding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="#9C9B9B"
+                android:hint="Confirm Password"
+                android:layout_width="match_parent"
+                android:background="@drawable/edit_text_ui"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/alreadyhaveanaccounttv"
-        android:layout_below="@id/signupbtn"
-        android:text="Already Have An Account?"
-        android:textSize="14sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="15dp"
-        tools:ignore="HardcodedText" />
+            <Button
+                android:id="@+id/signupbtn"
+                android:layout_below="@id/confirmpasswordet"
+                android:text="sign up"
+                android:textAllCaps="true"
+                android:background="@drawable/button_style"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/signintv"
-        android:text="SignIn"
-        android:layout_below="@id/signupbtn"
-        android:layout_toEndOf="@id/alreadyhaveanaccounttv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="15dp"
-        tools:ignore="HardcodedText" />
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/alreadyhaveanaccounttv"
+                android:layout_below="@id/signupbtn"
+                android:text="Already Have An Account?"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/signintv"
+                android:text="SignIn"
+                android:layout_below="@id/signupbtn"
+                android:layout_toEndOf="@id/alreadyhaveanaccounttv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="15dp"
+                tools:ignore="HardcodedText" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
 
 
 </RelativeLayout>

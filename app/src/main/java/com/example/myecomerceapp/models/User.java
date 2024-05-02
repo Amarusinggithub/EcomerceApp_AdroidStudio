@@ -3,15 +3,12 @@ package com.example.myecomerceapp.models;
 import java.util.ArrayList;
 
 
-
-
-
 public class User {
     String email;
     String username;
     String password;
-    ArrayList<Product> productsUserBought;
-    ArrayList<Product> productsUserAddedToCart;
+    ArrayList<Product> productsUserBought= new ArrayList<>();
+    ArrayList<Product> productsUserAddedToCart= new ArrayList<>();
 
     public String getEmail() {
         return email;
