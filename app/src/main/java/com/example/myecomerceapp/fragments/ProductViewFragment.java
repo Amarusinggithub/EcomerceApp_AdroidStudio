@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
 import com.example.myecomerceapp.models.User;
@@ -73,7 +74,10 @@ public class ProductViewFragment extends Fragment {
             productNameTextView.setText(productName);
             productPriceTextView.setText(productPrice);
             productDescriptionTextView.setText(productDescription);
-            productImageView.setBackgroundResource(productImageResource);
+            Glide.with(this)
+                    .load(product.getProductImage())
+                    .fitCenter()
+                    .into(productImageView);
             removeViews();
             frameLayout.setVisibility(View.VISIBLE);
 

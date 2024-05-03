@@ -1,5 +1,6 @@
 package com.example.myecomerceapp.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
@@ -19,10 +21,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     private final MyProductOnClickListener productOnclickListener;
     private final List<Product> productArrayList;
+    private final Context context;
 
-    public ProductAdapter(MyProductOnClickListener productOnclickListener, List<Product> productArrayList) {
+    public ProductAdapter(MyProductOnClickListener productOnclickListener, List<Product> productArrayList, Context context) {
         this.productOnclickListener = productOnclickListener;
         this.productArrayList = productArrayList;
+        this.context = context;
     }
 
 
@@ -36,7 +40,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, int position) {
         Product product= productArrayList.get(position);
-        holder.productImage.setImageResource(product.getProductImage());
+        Glide.with(context)
+                .load(product.getProductImage())
+                .into(holder.productImage);
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getProductPrice());
     }

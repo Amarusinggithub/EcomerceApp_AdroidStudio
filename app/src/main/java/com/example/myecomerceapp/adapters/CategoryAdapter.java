@@ -1,5 +1,6 @@
 package com.example.myecomerceapp.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.interfaces.MyCategoryOnClickListener;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Category;
@@ -20,9 +22,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     private final MyCategoryOnClickListener myCategoryOnClickListener;
     private final List<Category> categoryArrayList;
 
-    public CategoryAdapter(MyCategoryOnClickListener myCategoryOnClickListener, List<Category> categoryArrayList) {
+    private final Context context;
+
+    public CategoryAdapter(MyCategoryOnClickListener myCategoryOnClickListener, List<Category> categoryArrayList, Context context) {
         this.myCategoryOnClickListener = myCategoryOnClickListener;
         this.categoryArrayList = categoryArrayList;
+        this.context = context;
     }
 
     @NonNull
@@ -36,7 +41,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public void onBindViewHolder(@NonNull CategoryAdapter.MyViewHolder holder, int position) {
     Category category = categoryArrayList.get(position);
     holder.categoryTitle.setText(category.getCategoryTitle());
-    holder.categoryImage.setBackgroundResource(category.getCategoryImage());
+        Glide.with(context)
+                .load(category.getCategoryImage())
+                .into(holder.categoryImage);
     }
 
     @Override
@@ -52,14 +59,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             categoryTitle=itemView.findViewById(R.id.categoryTitle);
             categoryImage=itemView.findViewById(R.id.categoryImage);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (myCategoryOnClickListener !=null){
-                        int position=getAdapterPosition();
-                        if (position!= RecyclerView.NO_POSITION){
-                            myCategoryOnClickListener.categoryClicked(position);
-                        }
+            itemView.setOnClickListener(v -> {
+                if (myCategoryOnClickListener !=null){
+                    int position=getAdapterPosition();
+                    if (position!= RecyclerView.NO_POSITION){
+                        myCategoryOnClickListener.categoryClicked(position);
                     }
                 }
             });

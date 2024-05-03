@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     private void setupCategoryRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         categoryRecycleView.setLayoutManager(linearLayoutManager);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this, getCategory());
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this, getCategory(),this);
         categoryRecycleView.setAdapter(categoryAdapter);
     }
 

@@ -34,7 +34,7 @@ public class PopularProductsRecyclerViewFragment extends Fragment implements MyP
         popularProductsRecyclerview=view.findViewById(R.id.popularproductrecyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         popularProductsRecyclerview.setLayoutManager(linearLayoutManager);
-        ProductAdapter popularProductAdapter = new ProductAdapter(this, getProductsData(POPULAR_PRODUCTS));
+        ProductAdapter popularProductAdapter = new ProductAdapter(this, getProductsData(POPULAR_PRODUCTS),getContext());
         popularProductsRecyclerview.setAdapter(popularProductAdapter);
         return view;
     }

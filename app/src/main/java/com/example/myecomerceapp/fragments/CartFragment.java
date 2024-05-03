@@ -49,7 +49,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View cartView = inflater.inflate(R.layout.fragment_cart, container, false);
-        CartAdapter cartAdapter= new CartAdapter(productsAddedToCart,this);
+        CartAdapter cartAdapter= new CartAdapter(productsAddedToCart,this,getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         Bundle bundle=getArguments();
         if(bundle!=null){

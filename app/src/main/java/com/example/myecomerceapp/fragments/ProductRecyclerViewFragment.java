@@ -30,7 +30,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_products_recyclerview, container, false);
         RecyclerView productRecyclerView =view.findViewById( R.id.recyclerview);
-        ProductAdapter productAdapter = new ProductAdapter(this, getProductsData(categoryId));
+        ProductAdapter productAdapter = new ProductAdapter(this, getProductsData(categoryId),getContext());
         GridLayoutManager layoutManager=new GridLayoutManager(getContext(),2);
         productRecyclerView.setLayoutManager(layoutManager);
         productRecyclerView.setAdapter(productAdapter);
