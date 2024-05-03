@@ -14,7 +14,6 @@
     <androidx.cardview.widget.CardView
         app:cardBackgroundColor="@color/my_light_secondary_color"
         android:id="@+id/searchviewCD"
-
         android:layout_width="match_parent"
         android:layout_height="70dp"
         app:cardElevation="10dp"

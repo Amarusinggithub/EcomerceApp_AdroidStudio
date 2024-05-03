@@ -36,7 +36,7 @@ public class ProductViewFragment extends Fragment {
 
     Button addToCart;
     Product product;
-    private User user;
+     User user;
 
 
     @Nullable
@@ -48,9 +48,9 @@ public class ProductViewFragment extends Fragment {
         addToCart=(productView).findViewById(R.id.addtocartbtn);
         Bundle args = getArguments();
         if (args != null) {
-            // Extract data from the Bundle
 
             getUserFromDatabase();
+            // Extract data from the Bundle
             String productId=args.getString("position");
             String productName = args.getString("productName");
             String productPrice = args.getString("productPrice");

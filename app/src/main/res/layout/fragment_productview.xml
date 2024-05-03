@@ -6,104 +6,113 @@
 <androidx.cardview.widget.CardView
     android:id="@+id/cardview"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="450dp"
     >
     <ImageView
         android:layout_marginBottom="10dp"
         android:id="@+id/Image"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="270dp"
+        android:layout_height="270dp"
         android:scaleType="fitCenter"
         android:background="@drawable/a54_samsung"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="90dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginStart="70dp"
+
         />
 </androidx.cardview.widget.CardView>
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/nameandsum"
+    android:orientation="vertical"
+    android:id="@+id/nameandpriceanddescription"
     android:layout_below="@id/cardview"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="15dp"
+    android:layout_marginTop="15dp"
     >
+
+    <TextView
+        android:id="@+id/Price"
+        android:textAlignment="textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:textStyle="normal|bold"
+        android:text="$1000.99"
+        android:textColor="@color/my_light_accent_color"
+        android:textSize="20sp"
+        android:ems="10"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/Name"
         style="@style/backgroundColor"
-        android:textSize="15sp"
-        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textStyle="bold|normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rgegrmegoinergenregn"
-        android:layout_marginStart="10dp"
+        android:text="Samsung Galaxy A15"
+        android:layout_marginBottom="10dp"
         />
 
     <TextView
-        android:id="@+id/Price"
-
-        android:padding="5dp"
-        android:text="$1000.99"
-        android:textSize="15sp"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
+        android:id="@+id/Description"
+        style="@style/backgroundColor"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:background="@drawable/button_style"
-        />
-
+        android:ellipsize="end"
+        android:lineSpacingExtra="3sp"
+        android:lines="4"
+        android:text="The Hype 4 performs as portable studio monitors, and recalls back on the original meaning of in-ear monitors. From its wide soundstage to excellent stereo imaging and layering capabilities, the Hype 4 provides technical discernment that rivals even the best of studio monitors and monitoring headphones. The sub-bass-boosted neutral tuning signature is meant to deliver the exact tonality that the music was originally mixed on. The Hype 4 focuses on one thing - being as accurate and precise as it can. So, musicians, studio engineers, and audiophiles who want the real deal, the Hype 4 is the IEM for you."
+        android:textAlignment="inherit"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"
+       />
 </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/nameandpriceanddescription"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        >
 
-            <TextView
-                android:id="@+id/Description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/backgroundColor"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="80dp"
-                android:layout_below="@id/nameandsum"/>
+        <Button
+            android:text="@string/buy"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_style"
+            android:elevation="15dp"
+            android:id="@+id/buyBtn"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
 
-            <Button
-                android:layout_toEndOf="@id/addtocartbtn"
-                android:layout_below="@id/Description"
-                android:text="@string/buy"
-                android:textAlignment="center"
-                style="@style/Widget.Material3.Button.Icon"
-                android:textSize="20sp"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/button_style"
-                android:elevation="15dp"
-                android:id="@+id/buyBtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
-                />
+            />
 
-            <Button
+        <Button
+            android:text="@string/add_to_cart"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_style"
+            android:elevation="15dp"
+            android:id="@+id/addtocartbtn"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
 
-                android:text="@string/add_to_cart"
-                android:textAlignment="center"
-                android:layout_below="@id/Description"
-                android:textSize="20sp"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/button_style"
-                android:elevation="15dp"
-                android:id="@+id/addtocartbtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
+            />
 
-                />
-
-
-
+    </LinearLayout>
 </RelativeLayout>

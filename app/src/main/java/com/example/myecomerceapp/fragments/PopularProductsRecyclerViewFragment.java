@@ -47,7 +47,7 @@ public class PopularProductsRecyclerViewFragment extends Fragment implements MyP
         Bundle bundle = new Bundle();
         bundle.putInt("position",position);
         bundle.putString("productName", product.getProductName());
-        bundle.putString("proPrice", product.getProductPrice());
+        bundle.putString("productPrice", product.getProductPrice());
         bundle.putString("productDescription", product.getProductDescription());
         bundle.putString("position", product.getProductId());
         bundle.putInt("productImage", product.getProductImage());
