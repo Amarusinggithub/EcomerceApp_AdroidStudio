@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class ProductViewFragment extends Fragment {
     Button addToCart;
     Product product;
      User user;
+     ImageView favoriteBtn;
+
 
 
     @Nullable
@@ -47,6 +50,12 @@ public class ProductViewFragment extends Fragment {
 
         View productView=inflater.inflate(R.layout.fragment_productview, container, false);
         addToCart=(productView).findViewById(R.id.addtocartbtn);
+        favoriteBtn=(productView).findViewById(R.id.favoritebtn);
+
+        Glide.with(this)
+                .load(R.drawable.unfavorite)
+                .fitCenter()
+                .into(favoriteBtn);
         Bundle args = getArguments();
         if (args != null) {
 
@@ -80,6 +89,11 @@ public class ProductViewFragment extends Fragment {
                     .into(productImageView);
             removeViews();
             frameLayout.setVisibility(View.VISIBLE);
+
+            favoriteBtn.setOnClickListener(v -> Glide.with(requireContext())
+                    .load(R.drawable.favorite)
+                    .fitCenter()
+                    .into(favoriteBtn));
 
 
             addToCart.setOnClickListener(v -> {
