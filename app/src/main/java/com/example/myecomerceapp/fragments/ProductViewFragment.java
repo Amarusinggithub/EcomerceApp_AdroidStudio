@@ -2,7 +2,6 @@ package com.example.myecomerceapp.fragments;
 
 import static com.example.myecomerceapp.activities.MainActivity.frameLayout;
 import static com.example.myecomerceapp.activities.MainActivity.removeViews;
-import static com.example.myecomerceapp.activities.MainActivity.username;
 import static com.example.myecomerceapp.fragments.CartFragment.productsAddedToCart;
 
 import android.os.Bundle;
@@ -22,21 +21,14 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
-import com.example.myecomerceapp.models.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
+
 
 
 public class ProductViewFragment extends Fragment {
     Button addToCart;
     Product product;
-     User user;
+
      ImageView favoriteBtn;
     ImageView shareBtn;
     ImageView backBtn;

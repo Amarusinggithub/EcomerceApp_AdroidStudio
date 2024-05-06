@@ -3,7 +3,8 @@ package com.example.myecomerceapp.fragments;
 
 
 
-import static com.example.myecomerceapp.activities.MainActivity.username;
+import static com.example.myecomerceapp.activities.MainActivity.user;
+
 
 import android.os.Bundle;
 
@@ -18,53 +19,113 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+
+import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.CartAdapter;
 
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
-import com.example.myecomerceapp.models.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+
 
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 
 public class CartFragment extends Fragment implements MyProductOnClickListener {
     private static final String TAG = "MainActivity";
-    RecyclerView recyclerView;
     public static ArrayList<Product> productsAddedToCart;
-
-    private User user;
+    ImageView favoriteIcon;
+    RecyclerView recyclerView;
+    LinearLayoutManager linearLayoutManager;
+    CartAdapter cartAdapter;
+    Button checkOutBtn;
+    ImageView emptyCartImage;
+    TextView totalText;
+    TextView totalNumber;
+    View line;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater  inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View cartView = inflater.inflate(R.layout.fragment_cart, container, false);
-        CartAdapter cartAdapter= new CartAdapter(productsAddedToCart,this,getContext());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        Bundle bundle=getArguments();
-        if(bundle!=null){
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        initializeViewElements(view);
+        return view;
+    }
 
-            getUserFromDatabase(cartView,linearLayoutManager,cartAdapter);
+    private void initializeViewElements(View view) {
+        productsAddedToCart=user.getProductsUserAddedToCart();
+        checkOutBtn= view.findViewById(R.id.checkoutbtn);
+        recyclerView= view.findViewById(R.id.recyclerview);
+        emptyCartImage= view.findViewById(R.id.cartisemptyimage);
+        totalText= view.findViewById(R.id.totaltext);
+        totalNumber= view.findViewById(R.id.totalnumber);
+        favoriteIcon= view.findViewById(R.id.favorites);
+        line= view.findViewById(R.id.line);
+        setupFavoriteIcon();
+
+        if (!productsAddedToCart.isEmpty()){
+            setUpCartRecyclerView();
         }else{
-            Log.d(TAG,"CartFragment bundle is null");
+            setupCartEmptyView();
         }
+    }
 
-        return cartView;
+    private void setupCartEmptyView() {
+        emptyCartImage.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        checkOutBtn.setVisibility(View.GONE);
+        totalText.setVisibility(View.GONE);
+        totalNumber.setVisibility(View.GONE);
+        line.setVisibility(View.GONE);
+    }
+
+    private void setupFavoriteIcon() {
+        Glide.with(this)
+                .load(R.drawable.favoriteicon2)
+                .fitCenter()
+                .into(favoriteIcon);
+        favoriteIcon.setOnClickListener(v -> {
+
+        });
+    }
+
+    private void setupCheckOutBtn() {
+        checkOutBtn.setOnClickListener(v -> {
+
+        });
+    }
+
+    private void setUpCartRecyclerView() {
+        emptyCartImage.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        checkOutBtn.setVisibility(View.VISIBLE);
+        totalText.setVisibility(View.VISIBLE);
+        totalNumber.setVisibility(View.VISIBLE);
+        line.setVisibility(View.VISIBLE);
+        cartAdapter= new CartAdapter(productsAddedToCart,this,getContext());
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(cartAdapter);
+        setupCheckOutBtn();
+        totalNumber.setText(calculateTotal());
+    }
+
+    private int calculateTotal() {
+        int total = 0;
+        for (Product product : productsAddedToCart) {
+            total += Integer.parseInt(product.getProductPrice());
+        }
+       return total;
     }
 
     @Override
     public void productClicked(int position) {
-        // Get all products from the HashMap
         Product product=productsAddedToCart.get(position);
         if (product != null) {
             Bundle bundle = new Bundle();
@@ -79,58 +140,16 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
             loadFragment(productViewFragment);
 
         }else {
-            Log.d("CartFragment","The product is null");
+            Log.d(TAG,"The product is null");
         }
     }
 
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment); // R.id.fragment_container is the id of the FrameLayout in your activity's layout XML where you want to replace the fragment
-        fragmentTransaction.addToBackStack("ProductDetailsTransaction"); // This allows the user to navigate back to the previous fragment when pressing the back button
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.addToBackStack("cartFragment");
         fragmentTransaction.commit();
-    }
-
-    private void getUserFromDatabase(View view,LinearLayoutManager linearLayoutManager,CartAdapter cartAdapter) {
-
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
-        DatabaseReference usersReference = parentReference.child("users");
-        Query checkUser = usersReference.orderByChild("username").equalTo(username);
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getEmail(), username)){
-                            user=userSnapshot.getValue(User.class);
-                            if(user!=null){
-                                productsAddedToCart=user.getProductsUserBought();
-                                if(!productsAddedToCart.isEmpty()){
-                                    recyclerView=view.findViewById(R.id.recyclerview);
-                                    recyclerView.setLayoutManager(linearLayoutManager);
-                                    recyclerView.setAdapter(cartAdapter);
-                                }else {
-                                    Toast.makeText(getContext(),"cart is empty",Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                            return;
-                        }
-
-                    }
-
-                } else {
-                    Toast.makeText(getContext(), "Username not found", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Error retrieving user data.", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }

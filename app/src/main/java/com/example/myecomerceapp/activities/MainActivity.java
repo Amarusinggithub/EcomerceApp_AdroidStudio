@@ -18,11 +18,13 @@ import android.util.Log;
 
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.adapters.CategoryAdapter;
 import com.example.myecomerceapp.fragments.PickedForYouFragment;
 import com.example.myecomerceapp.fragments.PopularProductsRecyclerViewFragment;
@@ -68,11 +70,13 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     public static final String EVERY_PRODUCT = "every-Product";
     private static final String TAG = "MainActivity";
 
+    public static ImageView cashbackImage;
+    public static ImageView favoriteIcon;
+
     public static ScrollView scrollView;
 
     public static final String PICKED_FOR_YOU_PRODUCTS="picked for you products";
 
-   public static CardView SerachCardView;
     public  static FrameLayout pickedForYouFrameLayout;
     public static LinearLayout pickedForYouLinearLayout;
 
@@ -82,12 +86,15 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     public static CardView displayBanner;
     public static RecyclerView categoryRecycleView;
     private static LinearLayout popularProductsLinearLayout;
-    static CardView serachCardView;
-    private User user;
+
+    public static User user;
     private String email;
-    public static String username;
+    public  String username;
+
+    public static CardView favoritesCd;
 
     public static FrameLayout popularProductsFrameLayout;
+
 
 
     @Override
@@ -138,9 +145,11 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     }
 
     private void initializeViews() {
+        favoritesCd=findViewById(R.id.favoritecd);
+        cashbackImage=findViewById(R.id.cashbackimage);
+        favoriteIcon =findViewById(R.id.favorites);
         scrollView=findViewById(R.id.scrollview);
         popularProductsFrameLayout=findViewById(R.id.popularproductframelayout);
-        serachCardView=findViewById(R.id.searchviewCD);
         bottomNavigationView = findViewById(R.id.bottomnav);
         searchView=findViewById(R.id.searchview);
         frameLayout = findViewById(R.id.frameLayout);
@@ -149,10 +158,18 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
         popularProductsLinearLayout = findViewById(R.id.popularproductsLL);
         pickedForYouFrameLayout=findViewById(R.id.pickedforyouproductframelayout);
         pickedForYouLinearLayout=findViewById(R.id.pickedforyouproductsLL);
-        serachCardView=findViewById(R.id.searchviewCD);
 
 
 
+        Glide.with(this)
+                .load(R.drawable.cashback)
+                .fitCenter()
+                .into(cashbackImage);
+
+        Glide.with(this)
+                .load(R.drawable.favoriteicon2)
+                .fitCenter()
+                .into(favoriteIcon);
         setupCategoryRecyclerView();
         setupBottomNavigationView();
         loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
@@ -198,13 +215,13 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
 
     }
 
+
     public static  void removeViews(){
+        favoritesCd.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
-        serachCardView.setVisibility(View.GONE);serachCardView.setVisibility(View.GONE);
         searchView.setVisibility(View.GONE);
         pickedForYouFrameLayout.setVisibility(View.GONE);
         pickedForYouLinearLayout.setVisibility(View.GONE);
-        serachCardView.setVisibility(View.GONE);
         categoryRecycleView.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
        popularProductsLinearLayout.setVisibility(View.GONE);
@@ -213,15 +230,16 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     }
 
     public static  void addViews(){
+        favoritesCd.setVisibility(View.VISIBLE);
         scrollView.setVisibility(View.VISIBLE);
-        pickedForYouLinearLayout.setVisibility(View.VISIBLE);
-        pickedForYouFrameLayout.setVisibility(View.VISIBLE);
-        serachCardView.setVisibility(View.VISIBLE);
-        categoryRecycleView.setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
-       displayBanner.setVisibility(View.VISIBLE);
-       popularProductsLinearLayout.setVisibility(View.VISIBLE);
+        pickedForYouFrameLayout.setVisibility(View.VISIBLE);
+        pickedForYouLinearLayout.setVisibility(View.VISIBLE);
+        categoryRecycleView.setVisibility(View.VISIBLE);
+        displayBanner.setVisibility(View.VISIBLE);
+        popularProductsLinearLayout.setVisibility(View.VISIBLE);
         popularProductsFrameLayout.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -240,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     public void loadFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.addToBackStack("Mainactivity");
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
@@ -254,10 +273,6 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     @Override
     public void categoryClicked(int position) {
         removeViews();
-        categoryRecycleView.setVisibility(View.VISIBLE);
-        serachCardView.setVisibility(View.VISIBLE);
-        searchView.setVisibility(View.VISIBLE);
-        scrollView.setVisibility(View.VISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
         Category category = getCategory().get(position);
         ProductRecyclerViewFragment productRecyclerViewFragment =new ProductRecyclerViewFragment();

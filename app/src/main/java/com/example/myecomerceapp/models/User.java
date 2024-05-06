@@ -7,7 +7,7 @@ public class User {
     String email;
     String username;
     String password;
-    ArrayList<Product> productsUserBought= new ArrayList<>();
+    ArrayList<Product> productsUserOrdered = new ArrayList<>();
     ArrayList<Product> productsUserAddedToCart= new ArrayList<>();
 
     public String getEmail() {
@@ -34,12 +34,12 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<Product> getProductsUserBought() {
-        return productsUserBought;
+    public ArrayList<Product> getProductsUserOrdered() {
+        return productsUserOrdered;
     }
 
-    public void setProductsUserBought(ArrayList<Product> productsUserBought) {
-        this.productsUserBought = productsUserBought;
+    public void setProductsUserOrdered(ArrayList<Product> productsUserOrdered) {
+        this.productsUserOrdered = productsUserOrdered;
     }
 
     public ArrayList<Product> getProductsUserAddedToCart() {

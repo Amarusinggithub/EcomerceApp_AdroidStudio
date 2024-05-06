@@ -126,7 +126,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
-        user.setProductsUserBought(productsUserBought);
+        user.setProductsUserOrdered(productsUserBought);
         user.setProductsUserAddedToCart(productsUserAddedToCart);
         DatabaseReference userReference = usersReference.child(user.getUsername());
 

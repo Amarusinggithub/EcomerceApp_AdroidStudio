@@ -7,9 +7,48 @@
     style="@style/backgroundColor"
     tools:context=".activities.MainActivity">
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@drawable/view"/>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchview"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_searchview"
+            android:hint="@string/search_product" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/favoritecd"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        android:layout_toEndOf="@id/searchview">
+
+        <ImageView
+            android:id="@+id/favorites"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="12dp"
+            />
+
+    </androidx.cardview.widget.CardView>
+
     <ScrollView
         android:id="@+id/scrollview"
+        android:layout_below="@id/searchview"
         android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomnav">
 
@@ -19,29 +58,9 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/searchviewCD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/my_light_secondary_color"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="10dp">
-
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/searchview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/custom_searchview"
-                    android:hint="@string/search_product" />
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
                 android:id="@+id/displayBanner"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@id/searchviewCD"
+                android:layout_height="130dp"
                 android:layout_margin="7dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="7dp"
@@ -52,7 +71,37 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/acccentColor" />
+                    android:padding="10dp"
+                    style="@style/acccentColor" >
+
+                    <TextView
+                        android:id="@+id/summersupprise"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/a_summer_suprise"
+                        android:textColor="@color/white"
+                        android:textStyle="normal|bold"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/cashback"
+                        android:layout_below="@id/summersupprise"
+                        android:text="@string/cashback_20"
+                        android:textColor="@color/white"
+                        android:textStyle="normal|bold"
+                        android:textSize="35sp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:id="@+id/cashbackimage"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_toEndOf="@id/cashback"/>
+                </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
 
@@ -137,7 +186,6 @@
 
             </LinearLayout>
 
-
             <FrameLayout
                 android:id="@+id/pickedforyouproductframelayout"
                 android:layout_width="match_parent"
@@ -148,7 +196,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <!-- FrameLayout -->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
@@ -157,7 +204,6 @@
         android:layout_below="@id/scrollview"
         android:visibility="gone" />
 
-    <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomnav"
         android:layout_width="match_parent"

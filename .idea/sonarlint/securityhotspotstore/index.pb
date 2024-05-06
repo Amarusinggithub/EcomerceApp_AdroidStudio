@@ -80,3 +80,5 @@ y
 Iapp/src/main/java/com/example/myecomerceapp/fragments/OrdersFragment.java,c\5\c50541cc4c40bbe8dbf3d267f1357ccf85226003
 
 Oapp/src/main/java/com/example/myecomerceapp/fragments/PickedForYouFragment.java,a\e\ae8369394d8f6867aae9f940210236443d2c806d
+|
+Lapp/src/main/java/com/example/myecomerceapp/fragments/FavoritesFragment.java,a\e\ae249d3133cdc66bd9dadd7a53a57c5476403f37

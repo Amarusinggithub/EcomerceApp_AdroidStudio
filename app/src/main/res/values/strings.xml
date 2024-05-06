@@ -43,6 +43,11 @@
     <string name="account_fragment">account fragment</string>
     <string name="orders_fragment">orders fragment</string>
     <string name="picked_for_you">Picked For You</string>
+    <string name="cashback_20">Cashback 20%</string>
+    <string name="a_summer_suprise">A summer Suprise</string>
+    <string name="check_out">Check Out</string>
+    <string name="search_cart">Search Cart...</string>
+    <string name="total">Total</string>
 
 
 </resources>
