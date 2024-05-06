@@ -9,7 +9,10 @@ public class Product {
     private  String productPrice;
     private  String productId;
     private  int productQuantity=1;
-    public final String productDescription;
+    public  String productDescription;
+
+    private Boolean isInCart=false;
+    private Boolean isFavorite =false;
 
     public Product(int productImage, String productName, String productPrice, String productDescription, String productId) {
         this.productImage = productImage;
@@ -61,5 +64,25 @@ public class Product {
 
     public String getProductDescription() {
         return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public Boolean getInCart() {
+        return isInCart;
+    }
+
+    public void setInCart(Boolean inCart) {
+        isInCart = inCart;
+    }
+
+    public Boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }

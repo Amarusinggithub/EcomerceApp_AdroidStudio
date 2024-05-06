@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,31 +34,28 @@ import java.util.Objects;
 
 
 public class ProductViewFragment extends Fragment {
-
     Button addToCart;
     Product product;
      User user;
      ImageView favoriteBtn;
-
-
-
+    ImageView shareBtn;
+    ImageView backBtn;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        removeViews();
+        frameLayout.setVisibility(View.VISIBLE);
 
         View productView=inflater.inflate(R.layout.fragment_productview, container, false);
         addToCart=(productView).findViewById(R.id.addtocartbtn);
         favoriteBtn=(productView).findViewById(R.id.favoritebtn);
+        shareBtn=(productView).findViewById(R.id.sharebtn);
+        backBtn=(productView).findViewById(R.id.backbtn);
 
-        Glide.with(this)
-                .load(R.drawable.unfavorite)
-                .fitCenter()
-                .into(favoriteBtn);
         Bundle args = getArguments();
         if (args != null) {
 
-            getUserFromDatabase();
+
             // Extract data from the Bundle
             String productId=args.getString("position");
             String productName = args.getString("productName");
@@ -67,13 +63,38 @@ public class ProductViewFragment extends Fragment {
             String productDescription = args.getString("productDescription");
             int productImageResource = args.getInt("productImage");
 
+            Glide.with(requireContext())
+                    .load(R.drawable.share)
+                    .fitCenter()
+                    .into(shareBtn);
+
+            Glide.with(requireContext())
+                    .load(R.drawable.back)
+                    .fitCenter()
+                    .into(backBtn);
+
             if(product==null){
                 product=new Product(productImageResource,productName,productPrice,productDescription,productId);
+
+
+                if (Boolean.TRUE.equals(product.getIsFavorite())) {
+                    Glide.with(requireContext())
+                            .load(R.drawable.favorite)
+                            .fitCenter()
+                            .into(favoriteBtn);
+
+
+                } else {
+
+                    Glide.with(this)
+                            .load(R.drawable.unfavorite)
+                            .fitCenter()
+                            .into(favoriteBtn);
+                }
+
             }else {
                 Log.d("ProductVIewFragment","The product is null");
             }
-
-
 
             TextView productNameTextView =  productView.findViewById(R.id.Name);
             TextView productPriceTextView =  productView.findViewById(R.id.Price);
@@ -87,13 +108,28 @@ public class ProductViewFragment extends Fragment {
                     .load(product.getProductImage())
                     .fitCenter()
                     .into(productImageView);
-            removeViews();
-            frameLayout.setVisibility(View.VISIBLE);
 
-            favoriteBtn.setOnClickListener(v -> Glide.with(requireContext())
-                    .load(R.drawable.favorite)
-                    .fitCenter()
-                    .into(favoriteBtn));
+
+            favoriteBtn.setOnClickListener(v -> {
+                if (Boolean.FALSE.equals(product.getIsFavorite())) {
+
+                    Glide.with(requireContext())
+                            .load(R.drawable.favorite)
+                            .fitCenter()
+                            .into(favoriteBtn);
+
+                    product.setIsFavorite(true);
+                } else if (Boolean.TRUE.equals(product.getIsFavorite())) {
+
+                    Glide.with(this)
+                            .load(R.drawable.unfavorite)
+                            .fitCenter()
+                            .into(favoriteBtn);
+
+                    product.setIsFavorite(false);
+
+                }
+            });
 
 
             addToCart.setOnClickListener(v -> {
@@ -115,37 +151,7 @@ public class ProductViewFragment extends Fragment {
 
         return productView;
     }
-    private void getUserFromDatabase() {
 
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
-        DatabaseReference usersReference = parentReference.child("users");
-        Query checkUser = usersReference.orderByChild("username").equalTo(username);
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        if(Objects.equals(Objects.requireNonNull(userSnapshot.getValue(User.class)).getEmail(), username)){
-                            user=userSnapshot.getValue(User.class);
-                            if(user!=null){
-                                productsAddedToCart=user.getProductsUserBought();
-                            }
-                            return;
-                        }
 
-                    }
-
-                } else {
-                    Toast.makeText(getContext(), "Username not found", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Error retrieving user data.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

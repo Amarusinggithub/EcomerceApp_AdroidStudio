@@ -42,6 +42,7 @@
     <string name="search_product">Search product…</string>
     <string name="account_fragment">account fragment</string>
     <string name="orders_fragment">orders fragment</string>
+    <string name="picked_for_you">Picked For You</string>
 
 
 </resources>

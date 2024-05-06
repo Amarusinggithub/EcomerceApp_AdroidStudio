@@ -128,7 +128,7 @@
                 android:layout_below="@id/forgetpasswordtv"
                 android:text="@string/sign_in"
                 android:textAllCaps="true"
-                android:background="@drawable/button_style"
+                android:background="@drawable/primary_button_style"
                 android:textSize="27sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"

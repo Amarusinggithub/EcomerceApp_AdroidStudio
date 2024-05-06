@@ -20,9 +20,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.myecomerceapp.adapters.CategoryAdapter;
+import com.example.myecomerceapp.fragments.PickedForYouFragment;
 import com.example.myecomerceapp.fragments.PopularProductsRecyclerViewFragment;
 import com.example.myecomerceapp.fragments.ProductRecyclerViewFragment;
 import com.example.myecomerceapp.fragments.ProductViewFragment;
@@ -66,7 +68,13 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     public static final String EVERY_PRODUCT = "every-Product";
     private static final String TAG = "MainActivity";
 
-    CardView SerachCardView;
+    public static ScrollView scrollView;
+
+    public static final String PICKED_FOR_YOU_PRODUCTS="picked for you products";
+
+   public static CardView SerachCardView;
+    public  static FrameLayout pickedForYouFrameLayout;
+    public static LinearLayout pickedForYouLinearLayout;
 
     private BottomNavigationView bottomNavigationView;
     private static SearchView searchView;
@@ -130,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     }
 
     private void initializeViews() {
+        scrollView=findViewById(R.id.scrollview);
         popularProductsFrameLayout=findViewById(R.id.popularproductframelayout);
         serachCardView=findViewById(R.id.searchviewCD);
         bottomNavigationView = findViewById(R.id.bottomnav);
@@ -138,12 +147,16 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
         displayBanner = findViewById(R.id.displayBanner);
         categoryRecycleView = findViewById(R.id.categoriesRecycleView);
         popularProductsLinearLayout = findViewById(R.id.popularproductsLL);
+        pickedForYouFrameLayout=findViewById(R.id.pickedforyouproductframelayout);
+        pickedForYouLinearLayout=findViewById(R.id.pickedforyouproductsLL);
+        serachCardView=findViewById(R.id.searchviewCD);
 
 
 
         setupCategoryRecyclerView();
         setupBottomNavigationView();
         loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
+        loadPickedForYouProductsFragment(new PickedForYouFragment());
 
     }
 
@@ -186,7 +199,11 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     }
 
     public static  void removeViews(){
+        scrollView.setVisibility(View.GONE);
+        serachCardView.setVisibility(View.GONE);serachCardView.setVisibility(View.GONE);
         searchView.setVisibility(View.GONE);
+        pickedForYouFrameLayout.setVisibility(View.GONE);
+        pickedForYouLinearLayout.setVisibility(View.GONE);
         serachCardView.setVisibility(View.GONE);
         categoryRecycleView.setVisibility(View.GONE);
        displayBanner.setVisibility(View.GONE);
@@ -196,6 +213,9 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     }
 
     public static  void addViews(){
+        scrollView.setVisibility(View.VISIBLE);
+        pickedForYouLinearLayout.setVisibility(View.VISIBLE);
+        pickedForYouFrameLayout.setVisibility(View.VISIBLE);
         serachCardView.setVisibility(View.VISIBLE);
         categoryRecycleView.setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
@@ -209,6 +229,12 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.popularproductframelayout,fragment);
+        fragmentTransaction.commit();
+    }
+    public void loadPickedForYouProductsFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.add(R.id.pickedforyouproductframelayout,fragment);
         fragmentTransaction.commit();
     }
     public void loadFragment(Fragment fragment) {
@@ -229,7 +255,9 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     public void categoryClicked(int position) {
         removeViews();
         categoryRecycleView.setVisibility(View.VISIBLE);
+        serachCardView.setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.VISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
         Category category = getCategory().get(position);
         ProductRecyclerViewFragment productRecyclerViewFragment =new ProductRecyclerViewFragment();
@@ -346,7 +374,16 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
             productsArrayList.add(new Product(R.drawable.steam_deck,"Valve Steam Deck","$526.99","Valve Steam Deck 512GB Handheld Gaming Console, 1280 x 800 LCD Display, with Carring case, Tempered Film and Soft Silicone Protective Case", POPULAR_PRODUCTS));
             productsArrayList.add(new Product(R.drawable.asus_ally,"ASUS ROG Ally","$659.99","Any Game, Anywhere. Sink deep into your favourite AAA or indie games and watch the hours melt away with an expansive Full HD 120Hz display and incredibly comfortable ergonomics.", POPULAR_PRODUCTS));
             productsArrayList.add(new Product(R.drawable.smart_fan,"Smart Tower Fan"," $63.99","Dreo Smart Tower Fan for Bedroom, Standing Fans for Indoors, 90° Oscillating, Quiet 26ft/s Velocity Floor Fan with Remote, 5 Speeds, 8H Timer, Voice Control Bladeless Room Fan, Works with Alexa", POPULAR_PRODUCTS));
-        }else if (EVERY_PRODUCT.equals(id)) {
+        }else if (PICKED_FOR_YOU_PRODUCTS.equals(id)) {
+            productsArrayList.add(new Product(R.drawable.nfs_unbound_game,"Need for Speed Unbound Palace","$79.99","The world is your canvas in Need for Speed Unbound. Prove you have what it takes to win The Grand, Lakeshore’s ultimate street racing challenge. Across four intense weeks of racing, earn enough cash to enter weekly qualifiers, beat the competition, and make your mark on the street racing scene while outdriving and outsmarting the cops.", PICKED_FOR_YOU_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.xbox_series_x,"Xbox Series X","$439.99","Next Gen Console Bundle - Xbox Series X 1TB + 8K Premium HDMI Cable - 4 feet- 48Gbps Hight Speed HDR for Gaming Console.", PICKED_FOR_YOU_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.s24plus,"SAMSUNG Galaxy S24+","$969.99 ","SAMSUNG Galaxy S24+ Plus Cell Phone, 512GB AI Smartphone, Unlocked Android, 50MP Camera, Fastest Processor, Long Battery Life, US Version, 2024, Onyx Black", PICKED_FOR_YOU_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.oneplus_12,"OnePlus 12","$899.99","OnePlus 12,16GB RAM+512GB,Dual-SIM,Unlocked Android Smartphone,Supports 50W Wireless Charging,Latest Mobile Processor,Advanced Hasselblad Camera,5400 mAh Battery,2024,Flowy Emerald", PICKED_FOR_YOU_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.leveni_legion_slim_7i,"Lenovo Legion 7i","$1,499.99","Lenovo Legion Slim 7i Gaming & Entertainment Laptop (Intel i9-13900H 14-Core, 16GB DDR5 5200MHz RAM, 1TB SSD, GeForce RTX 4070, 16.0\" Win 11 Home) with Microsoft 365 Personal, Dockztorm Hub", PICKED_FOR_YOU_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.pixel_8,"Google Pixel 8","$499.00 ","Smartphone with Advanced Pixel Camera, 24-Hour Battery, and Powerful Security - Obsidian - 128 GB", PICKED_FOR_YOU_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.a54_samsung,"SAMSUNG Galaxy A54","$449.99","SAMSUNG Galaxy A54 5G A Series Cell Phone, Unlocked Android Smartphone, 128GB, 6.4” Fluid Display Screen, Pro Grade Camera, Long Battery Life, Refined Design, US Version, 2023, Awesome Black", PICKED_FOR_YOU_PRODUCTS));
+            productsArrayList.add(new Product(R.drawable.redmi_note13_pro,"Redmi Note 13 PRO","$310.96","Xiaomi Redmi Note 13 PRO 5G + 4G LTE (256GB + 8GB) 6.67, 200MP Triple (Tmobile Mint Tello & Global) Global Bands Unlocked + (Fast Car Dual Charger Bundle) (Midnight Black (Global ROM))", PICKED_FOR_YOU_PRODUCTS));
+        } else if (EVERY_PRODUCT.equals(id)) {
 
         }
         return productsArrayList;

@@ -78,3 +78,5 @@ Eapp/src/main/java/com/example/myecomerceapp/adapters/CartAdapter.java,d\0\d014
 ^app/src/main/java/com/example/myecomerceapp/fragments/PopularProductsRecyclerViewFragment.java,9\4\9414deb7ac266d60e890a66506e631b8cf322683
 y
 Iapp/src/main/java/com/example/myecomerceapp/fragments/OrdersFragment.java,c\5\c50541cc4c40bbe8dbf3d267f1357ccf85226003
+
+Oapp/src/main/java/com/example/myecomerceapp/fragments/PickedForYouFragment.java,a\e\ae8369394d8f6867aae9f940210236443d2c806d
