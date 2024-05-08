@@ -82,3 +82,7 @@ Iapp/src/main/java/com/example/myecomerceapp/fragments/OrdersFragment.java,c\5\
 Oapp/src/main/java/com/example/myecomerceapp/fragments/PickedForYouFragment.java,a\e\ae8369394d8f6867aae9f940210236443d2c806d
 |
 Lapp/src/main/java/com/example/myecomerceapp/fragments/FavoritesFragment.java,a\e\ae249d3133cdc66bd9dadd7a53a57c5476403f37
+u
+Eapp/src/main/java/com/example/myecomerceapp/adapters/OrderAdater.java,4\2\426bfdcf9d43c2ffe03623c120e0ebc75c80f1b1
+v
+Fapp/src/main/java/com/example/myecomerceapp/adapters/OrderAdapter.java,e\2\e2965622c2e638c02557421655e198878c86896b

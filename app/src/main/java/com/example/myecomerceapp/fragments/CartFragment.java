@@ -3,7 +3,8 @@ package com.example.myecomerceapp.fragments;
 
 
 
-import static com.example.myecomerceapp.activities.MainActivity.user;
+import static com.example.myecomerceapp.activities.MainActivity.productsAddedToCart;
+
 
 
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,21 +34,22 @@ import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
 
 
-import java.util.ArrayList;
-
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 public class CartFragment extends Fragment implements MyProductOnClickListener {
     private static final String TAG = "MainActivity";
-    public static ArrayList<Product> productsAddedToCart;
-    ImageView favoriteIcon;
+
+
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     CartAdapter cartAdapter;
     Button checkOutBtn;
     ImageView emptyCartImage;
     TextView totalText;
-    TextView totalNumber;
+    ImageView backBtn;
+    public static TextView totalNumber;
     View line;
 
     @Override
@@ -59,21 +62,34 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
     }
 
     private void initializeViewElements(View view) {
-        productsAddedToCart=user.getProductsUserAddedToCart();
+        backBtn=view.findViewById(R.id.backbtn);
         checkOutBtn= view.findViewById(R.id.checkoutbtn);
         recyclerView= view.findViewById(R.id.recyclerview);
         emptyCartImage= view.findViewById(R.id.cartisemptyimage);
         totalText= view.findViewById(R.id.totaltext);
         totalNumber= view.findViewById(R.id.totalnumber);
-        favoriteIcon= view.findViewById(R.id.favorites);
         line= view.findViewById(R.id.line);
-        setupFavoriteIcon();
+
 
         if (!productsAddedToCart.isEmpty()){
             setUpCartRecyclerView();
         }else{
             setupCartEmptyView();
         }
+
+
+        setupBackButton();
+    }
+
+    private void setupBackButton() {
+        Glide.with(this)
+                .load(R.drawable.whiteback)
+                .fitCenter()
+                .into(backBtn);
+
+        backBtn.setOnClickListener(v -> {
+
+        });
     }
 
     private void setupCartEmptyView() {
@@ -83,17 +99,13 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
         totalText.setVisibility(View.GONE);
         totalNumber.setVisibility(View.GONE);
         line.setVisibility(View.GONE);
-    }
-
-    private void setupFavoriteIcon() {
         Glide.with(this)
-                .load(R.drawable.favoriteicon2)
+                .load(R.drawable.emptycart)
                 .fitCenter()
-                .into(favoriteIcon);
-        favoriteIcon.setOnClickListener(v -> {
-
-        });
+                .into(emptyCartImage);
     }
+
+
 
     private void setupCheckOutBtn() {
         checkOutBtn.setOnClickListener(v -> {
@@ -113,16 +125,37 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(cartAdapter);
         setupCheckOutBtn();
-        totalNumber.setText(calculateTotal());
+
+        totalNumber.setText( calculateTotalFormatted());
     }
 
     private int calculateTotal() {
         int total = 0;
         for (Product product : productsAddedToCart) {
-            total += Integer.parseInt(product.getProductPrice());
+            String[] priceParts = product.getProductPrice().split("\\$");
+            String priceWithoutDollarSign = priceParts[1].replaceAll("[^\\d.]", "");
+            double price = Double.parseDouble(priceWithoutDollarSign);
+            int quantity = product.getProductQuantity();
+            total += (int) (price * quantity * 100);
         }
-       return total;
+        return total;
     }
+
+
+    private String formatTotal(int total) {
+
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+
+        double amount = total / 100.0;
+
+        return format.format(amount);
+    }
+
+    private String calculateTotalFormatted() {
+        int total = calculateTotal();
+        return formatTotal(total);
+    }
+
 
     @Override
     public void productClicked(int position) {

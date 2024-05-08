@@ -16,36 +16,26 @@
        android:layout_height="75dp"
        android:background="@drawable/view"/>
 
-   <androidx.appcompat.widget.SearchView
-       android:id="@+id/searchview"
-       android:layout_width="290dp"
-       android:layout_height="50dp"
-       android:layout_marginStart="8dp"
-       android:layout_marginTop="10dp"
-       android:layout_marginBottom="10dp"
-       android:background="@drawable/custom_searchview"
-       android:hint="@string/search_product" />
+   <TextView
+       android:id="@+id/mycart"
+       android:text="@string/my_cart"
+       android:textColor="@color/white"
+       android:textSize="30sp"
+       android:layout_marginTop="20dp"
+       android:layout_marginStart="140dp"
+       android:textStyle="bold|normal"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"/>
 
-   <androidx.cardview.widget.CardView
-       android:id="@+id/favoritecd"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_marginTop="10dp"
-       android:layout_marginEnd="10dp"
-       android:layout_marginStart="10dp"
-       android:layout_marginBottom="10dp"
-       app:cardBackgroundColor="@color/white"
-       app:cardCornerRadius="15dp"
-       android:layout_toEndOf="@id/searchview">
+   <ImageView
+       android:id="@+id/backbtn"
+       android:layout_width="30dp"
+       android:layout_height="30dp"
+       android:layout_marginTop="20dp"
+       android:layout_marginStart="20dp"
+       />
 
-      <ImageView
-          android:id="@+id/favorites"
-          android:layout_width="25dp"
-          android:layout_height="25dp"
-          android:layout_margin="12dp"
-          />
 
-   </androidx.cardview.widget.CardView>
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/recyclerview"
@@ -60,9 +50,11 @@
    <ImageView
        android:id="@+id/cartisemptyimage"
        android:layout_below="@id/view"
+       android:layout_marginTop="200dp"
+       android:layout_marginStart="40dp"
        android:visibility="gone"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+       android:layout_width="300dp"
+       android:layout_height="300dp"/>
 
    <View
        android:id="@+id/line"

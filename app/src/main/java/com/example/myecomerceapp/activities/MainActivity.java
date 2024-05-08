@@ -70,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     public static final String EVERY_PRODUCT = "every-Product";
     private static final String TAG = "MainActivity";
 
+    public static ArrayList<Product> productsAddedToCart;
+    public static ArrayList<Product> productsUserOrdered;
+    public static ArrayList<Product> productsFavorited;
+
     public static ImageView cashbackImage;
     public static ImageView favoriteIcon;
 
@@ -174,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
         setupBottomNavigationView();
         loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
         loadPickedForYouProductsFragment(new PickedForYouFragment());
+        productsAddedToCart=user.getProductsUserAddedToCart();
+        productsUserOrdered=user.getProductsUserOrdered();
+        productsFavorited=user.getProductsFavorited();
 
     }
 

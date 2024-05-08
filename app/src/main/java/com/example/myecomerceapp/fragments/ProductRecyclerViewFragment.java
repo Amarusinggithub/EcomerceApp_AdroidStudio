@@ -33,8 +33,8 @@ import com.example.myecomerceapp.models.Product;
 
 public class ProductRecyclerViewFragment extends Fragment implements MyProductOnClickListener, MyCategoryOnClickListener {
     public static  String categoryId;
-    public RecyclerView categoryRecycleView;
-    private ImageView favoriteIcon;
+    RecyclerView categoryRecycleView;
+     ImageView favoriteIcon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

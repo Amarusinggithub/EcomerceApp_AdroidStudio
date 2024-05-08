@@ -19,50 +19,70 @@
                 android:id="@+id/productImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/ic_launcher_background"
                 android:contentDescription="TODO" />
             
             <TextView
                 android:id="@+id/productName"
                android:layout_toEndOf="@id/productImage"
-                android:text="Product Name"
-                android:textStyle="bold"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="50dp"
+                android:text="Samsung Galaxy A15"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold|normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/productPrice"
-                android:text="Product Price"
+                android:textStyle="normal|bold"
+                android:layout_marginStart="10dp"
+                android:text="$1000.99"
+                android:textColor="@color/my_light_accent_color"
+                android:textSize="16sp"
                 android:layout_toEndOf="@id/productImage"
                 android:layout_below="@id/productName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <LinearLayout
-                style="@style/backgroundColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_alignParentEnd="true">
                 <Button
                     android:id="@+id/plusBtn"
-                    android:background="@drawable/primary_button_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_toEndOf="@id/productName"
+                    android:background="@drawable/cart_product_view_plus_btn"
+                    android:text="+"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+
                 <TextView
                     android:id="@+id/productQuantity"
-                    android:text="1"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_toEndOf="@id/productName"
+                    android:layout_below="@id/plusBtn"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold|normal"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
 
                 <Button
                     android:id="@+id/minusBtn"
-                    android:background="@drawable/primary_button_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+                    android:text="-"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    android:layout_toEndOf="@id/productName"
+                    android:layout_below="@id/productQuantity"
+                    android:background="@drawable/cart_product_view_minus_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

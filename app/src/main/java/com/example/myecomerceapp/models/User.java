@@ -10,6 +10,8 @@ public class User {
     ArrayList<Product> productsUserOrdered = new ArrayList<>();
     ArrayList<Product> productsUserAddedToCart= new ArrayList<>();
 
+    ArrayList<Product> productsFavorited = new ArrayList<>();
+
     public String getEmail() {
         return email;
     }
@@ -48,5 +50,13 @@ public class User {
 
     public void setProductsUserAddedToCart(ArrayList<Product> productsUserAddedToCart) {
         this.productsUserAddedToCart = productsUserAddedToCart;
+    }
+
+    public ArrayList<Product> getProductsFavorited() {
+        return productsFavorited;
+    }
+
+    public void setProductsFavorited(ArrayList<Product> productsFavorited) {
+        this.productsFavorited = productsFavorited;
     }
 }
