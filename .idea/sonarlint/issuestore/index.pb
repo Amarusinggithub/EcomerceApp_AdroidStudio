@@ -82,7 +82,11 @@ Iapp/src/main/java/com/example/myecomerceapp/fragments/OrdersFragment.java,c\5\
 Oapp/src/main/java/com/example/myecomerceapp/fragments/PickedForYouFragment.java,a\e\ae8369394d8f6867aae9f940210236443d2c806d
 |
 Lapp/src/main/java/com/example/myecomerceapp/fragments/FavoritesFragment.java,a\e\ae249d3133cdc66bd9dadd7a53a57c5476403f37
-u
-Eapp/src/main/java/com/example/myecomerceapp/adapters/OrderAdater.java,4\2\426bfdcf9d43c2ffe03623c120e0ebc75c80f1b1
 v
 Fapp/src/main/java/com/example/myecomerceapp/adapters/OrderAdapter.java,e\2\e2965622c2e638c02557421655e198878c86896b
+x
+Happ/src/main/java/com/example/myecomerceapp/fragments/SalesFragment.java,3\c\3cc9203299b09290ce2a35c3497bc2cecb0e6f2e
+‚
+Rapp/src/main/java/com/example/myecomerceapp/interfaces/MyOrderOnClickListener.java,5\a\5a1da91999aaeee7e4c32af45822c2d5f84e2c37
+w
+Gapp/src/main/java/com/example/myecomerceapp/fragments/HomeFragment.java,f\9\f93cafda17a7045dc588c746d818741afcb5a4a6

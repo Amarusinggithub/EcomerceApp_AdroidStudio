@@ -1,6 +1,7 @@
 package com.example.myecomerceapp.fragments;
 
 import static com.example.myecomerceapp.activities.MainActivity.productsAddedToCart;
+import static com.example.myecomerceapp.activities.MainActivity.productsUserOrdered;
 
 import android.os.Bundle;
 
@@ -16,10 +17,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.OrderAdapter;
-import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
+import com.example.myecomerceapp.interfaces.MyOrderOnClickListener;
 
 
-public class OrdersFragment extends Fragment implements MyProductOnClickListener {
+
+public class OrdersFragment extends Fragment implements MyOrderOnClickListener {
 
     private OrderAdapter orderAdapter;
     private RecyclerView recyclerView;
@@ -42,14 +44,11 @@ public class OrdersFragment extends Fragment implements MyProductOnClickListener
         recyclerView= view.findViewById(R.id.recyclerview);
         emptyOrderImage= view.findViewById(R.id.orderisemptyimage);
 
-
         if (!productsAddedToCart.isEmpty()){
             setUpOrderRecyclerView();
         }else{
             setupOrderEmptyView();
         }
-
-
         setupBackButton();
     }
 
@@ -78,15 +77,16 @@ public class OrdersFragment extends Fragment implements MyProductOnClickListener
     private void setUpOrderRecyclerView() {
         emptyOrderImage.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
-        orderAdapter= new OrderAdapter(productsAddedToCart,this,getContext());
+        orderAdapter= new OrderAdapter(productsUserOrdered,this,getContext());
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(orderAdapter);
 
     }
 
+
     @Override
-    public void productClicked(int position) {
+    public void orderClicked(int position) {
 
     }
 }

@@ -5,12 +5,9 @@
     android:layout_height="match_parent"
     style="@style/backgroundColor"
     tools:context=".fragments.AccountFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/account_fragment"
-        style="@style/backgroundColor"/>
+        android:layout_height="match_parent">
 
+    </RelativeLayout>
 </FrameLayout>

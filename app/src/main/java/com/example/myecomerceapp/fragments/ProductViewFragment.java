@@ -1,8 +1,9 @@
 package com.example.myecomerceapp.fragments;
 
-import static com.example.myecomerceapp.activities.MainActivity.frameLayout;
+
 import static com.example.myecomerceapp.activities.MainActivity.productsAddedToCart;
-import static com.example.myecomerceapp.activities.MainActivity.removeViews;
+import static com.example.myecomerceapp.activities.MainActivity.productsFavorited;
+
 
 
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class ProductViewFragment extends Fragment {
     Button addToCart;
     Product product;
 
-     ImageView favoriteBtn;
+     ImageView addFavoriteBtn;
     ImageView shareBtn;
     ImageView backBtn;
     @Nullable
@@ -58,9 +59,9 @@ public class ProductViewFragment extends Fragment {
 
                 if (Boolean.TRUE.equals(product.getIsFavorite())) {
                     Glide.with(requireContext())
-                            .load(R.drawable.favorite)
+                            .load(R.drawable.favoriteicon2)
                             .fitCenter()
-                            .into(favoriteBtn);
+                            .into(addFavoriteBtn);
 
 
                 } else {
@@ -68,7 +69,7 @@ public class ProductViewFragment extends Fragment {
                     Glide.with(this)
                             .load(R.drawable.unfavorite)
                             .fitCenter()
-                            .into(favoriteBtn);
+                            .into(addFavoriteBtn);
                 }
 
             }else {
@@ -91,24 +92,25 @@ public class ProductViewFragment extends Fragment {
 
         }
 
-        favoriteBtn.setOnClickListener(v -> {
+        addFavoriteBtn.setOnClickListener(v -> {
             if (Boolean.FALSE.equals(product.getIsFavorite())) {
 
+                productsFavorited.add(product);
                 Glide.with(requireContext())
-                        .load(R.drawable.favorite)
+                        .load(R.drawable.favoriteicon2)
                         .fitCenter()
-                        .into(favoriteBtn);
-
+                        .into(addFavoriteBtn);
+                Toast.makeText(getContext(), product.getProductName() + " was favorited.", Toast.LENGTH_SHORT).show();
                 product.setIsFavorite(true);
-            } else if (Boolean.TRUE.equals(product.getIsFavorite())) {
+            } else {
 
-                Glide.with(this)
+                productsFavorited.remove(product);
+                Glide.with(requireContext())
                         .load(R.drawable.unfavorite)
                         .fitCenter()
-                        .into(favoriteBtn);
-
+                        .into(addFavoriteBtn);
+                Toast.makeText(getContext(), product.getProductName() + " was removed from favorites.", Toast.LENGTH_SHORT).show();
                 product.setIsFavorite(false);
-
             }
         });
 
@@ -139,10 +141,8 @@ public class ProductViewFragment extends Fragment {
     }
 
     private void initializeViewElements(View productView) {
-        removeViews();
-        frameLayout.setVisibility(View.VISIBLE);
         addToCart= productView.findViewById(R.id.addtocartbtn);
-        favoriteBtn= productView.findViewById(R.id.favoritebtn);
+        addFavoriteBtn = productView.findViewById(R.id.favoritebtn);
         shareBtn= productView.findViewById(R.id.sharebtn);
         backBtn= productView.findViewById(R.id.backbtn);
 

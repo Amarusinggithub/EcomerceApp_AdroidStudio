@@ -3,7 +3,7 @@ package com.example.myecomerceapp.fragments;
 
 import static com.example.myecomerceapp.activities.MainActivity.PICKED_FOR_YOU_PRODUCTS;
 import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
-import static com.example.myecomerceapp.activities.MainActivity.removeViews;
+
 
 import android.os.Bundle;
 
@@ -25,7 +25,7 @@ import com.example.myecomerceapp.models.Product;
 
 public class PickedForYouFragment extends Fragment implements MyProductOnClickListener {
 
-    private RecyclerView pickedForYouProductsRecyclerview;
+     RecyclerView pickedForYouProductsRecyclerview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +62,6 @@ public class PickedForYouFragment extends Fragment implements MyProductOnClickLi
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
-        removeViews();
+
     }
 }

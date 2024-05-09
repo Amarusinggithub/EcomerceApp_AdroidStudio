@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myecomerceapp.R;
+import com.example.myecomerceapp.interfaces.MyOrderOnClickListener;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
 
@@ -21,15 +21,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     private final ArrayList<Product> OrderedProducts;
 
-    private final MyProductOnClickListener productOnclickListener;
+    private final MyOrderOnClickListener myOrderOnClickListener;
 
     private final Context context;
-    private int newQuantity;
+  int newQuantity;
 
 
-    public OrderAdapter(ArrayList<Product> orderedProducts, MyProductOnClickListener productOnclickListener, Context context) {
+    public OrderAdapter(ArrayList<Product> orderedProducts, MyOrderOnClickListener myOrderOnClickListener, Context context) {
         OrderedProducts = orderedProducts;
-        this.productOnclickListener = productOnclickListener;
+        this.myOrderOnClickListener = myOrderOnClickListener;
         this.context = context;
     }
 
@@ -37,7 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     @Override
     public OrderAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.order_product_cardview,parent,false);
-        return new MyViewHolder(view,productOnclickListener);
+        return new MyViewHolder(view, myOrderOnClickListener);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         TextView name,price,quantity;
 
 
-        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener) {
+        public MyViewHolder(@NonNull View itemView, MyOrderOnClickListener orderOnclickListener) {
             super(itemView);
             image=itemView.findViewById(R.id.productImage);
             name=itemView.findViewById(R.id.productName);
@@ -67,7 +67,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
             itemView.setOnClickListener(v -> {
                 int position=getAdapterPosition();
-                productOnclickListener.productClicked(position);
+                orderOnclickListener.orderClicked(position);
             });
         }
     }

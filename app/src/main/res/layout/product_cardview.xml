@@ -9,12 +9,18 @@
     android:layout_margin="5dp"
     >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:padding="10dp"
             >
+
+            <ImageView
+                android:id="@+id/favoritebtn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="5dp"
+                />
 
             <ImageView
                android:layout_marginStart="20dp"
@@ -32,25 +38,33 @@
                 android:textAlignment="textStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:textStyle="normal|bold"
+                android:layout_marginEnd="60dp"
                 android:text="$1000.99"
                 android:textColor="@color/my_light_accent_color"
                 android:textSize="16sp"
-                android:ems="10"
+                android:layout_below="@id/productImage"
                 />
 
             <TextView
                 android:id="@+id/productTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:lines="2"
+                android:layout_below="@id/Price"
                 android:text="Samsung Galaxy A15"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold|normal" />
-        </LinearLayout>
+
+            <ImageView
+                android:layout_toEndOf="@id/Price"
+                android:layout_below="@id/productImage"
+                android:id="@+id/addtocartbtn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="5dp"/>
+        </RelativeLayout>
 </androidx.cardview.widget.CardView>

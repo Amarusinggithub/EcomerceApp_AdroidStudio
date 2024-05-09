@@ -1,10 +1,8 @@
 package com.example.myecomerceapp.fragments;
 
 import static com.example.myecomerceapp.activities.MainActivity.POPULAR_PRODUCTS;
-import static com.example.myecomerceapp.activities.MainActivity.frameLayout;
 import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
-import static com.example.myecomerceapp.activities.MainActivity.removeViews;
-import static com.example.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;
+
 
 import android.os.Bundle;
 
@@ -61,6 +59,5 @@ public class PopularProductsRecyclerViewFragment extends Fragment implements MyP
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
-        removeViews();
     }
 }

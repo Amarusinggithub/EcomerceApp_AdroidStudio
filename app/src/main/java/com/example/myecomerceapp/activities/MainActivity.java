@@ -2,40 +2,31 @@ package com.example.myecomerceapp.activities;
 
 
 
-import static com.example.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;
+
 
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 
-import androidx.cardview.widget.CardView;
 
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.util.Log;
 
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import android.widget.ScrollView;
+import android.widget.FrameLayout;
+
+
+
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.myecomerceapp.adapters.CategoryAdapter;
-import com.example.myecomerceapp.fragments.PickedForYouFragment;
-import com.example.myecomerceapp.fragments.PopularProductsRecyclerViewFragment;
-import com.example.myecomerceapp.fragments.ProductRecyclerViewFragment;
-import com.example.myecomerceapp.fragments.ProductViewFragment;
-import com.example.myecomerceapp.interfaces.MyCategoryOnClickListener;
+
+import com.example.myecomerceapp.fragments.HomeFragment;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.fragments.AccountFragment;
 import com.example.myecomerceapp.fragments.CartFragment;
 import com.example.myecomerceapp.fragments.OrdersFragment;
-import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Category;
 import com.example.myecomerceapp.models.Product;
 import com.example.myecomerceapp.models.User;
@@ -52,15 +43,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements  MyCategoryOnClickListener, MyProductOnClickListener {
+public class MainActivity extends AppCompatActivity  {
     public static final String LAPTOP = "Laptop";
     public static final String PHONES = "Phones";
     public static final String GAMES = "Games";
@@ -69,44 +59,21 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     public static final String POPULAR_PRODUCTS = "popular-products";
     public static final String EVERY_PRODUCT = "every-Product";
     private static final String TAG = "MainActivity";
-
     public static ArrayList<Product> productsAddedToCart;
     public static ArrayList<Product> productsUserOrdered;
     public static ArrayList<Product> productsFavorited;
-
-    public static ImageView cashbackImage;
-    public static ImageView favoriteIcon;
-
-    public static ScrollView scrollView;
-
     public static final String PICKED_FOR_YOU_PRODUCTS="picked for you products";
-
-    public  static FrameLayout pickedForYouFrameLayout;
-    public static LinearLayout pickedForYouLinearLayout;
-
-    private BottomNavigationView bottomNavigationView;
-    private static SearchView searchView;
-    public static FrameLayout frameLayout;
-    public static CardView displayBanner;
-    public static RecyclerView categoryRecycleView;
-    private static LinearLayout popularProductsLinearLayout;
-
     public static User user;
-    private String email;
-    public  String username;
-
-    public static CardView favoritesCd;
-
-    public static FrameLayout popularProductsFrameLayout;
-
-
+     BottomNavigationView bottomNavigationView;
+     FrameLayout frameLayout;
+     String email;
+     String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        getUserFromDatabase();
-
 
     }
 
@@ -149,158 +116,41 @@ public class MainActivity extends AppCompatActivity implements  MyCategoryOnClic
     }
 
     private void initializeViews() {
-        favoritesCd=findViewById(R.id.favoritecd);
-        cashbackImage=findViewById(R.id.cashbackimage);
-        favoriteIcon =findViewById(R.id.favorites);
-        scrollView=findViewById(R.id.scrollview);
-        popularProductsFrameLayout=findViewById(R.id.popularproductframelayout);
         bottomNavigationView = findViewById(R.id.bottomnav);
-        searchView=findViewById(R.id.searchview);
         frameLayout = findViewById(R.id.frameLayout);
-        displayBanner = findViewById(R.id.displayBanner);
-        categoryRecycleView = findViewById(R.id.categoriesRecycleView);
-        popularProductsLinearLayout = findViewById(R.id.popularproductsLL);
-        pickedForYouFrameLayout=findViewById(R.id.pickedforyouproductframelayout);
-        pickedForYouLinearLayout=findViewById(R.id.pickedforyouproductsLL);
-
-
-
-        Glide.with(this)
-                .load(R.drawable.cashback)
-                .fitCenter()
-                .into(cashbackImage);
-
-        Glide.with(this)
-                .load(R.drawable.favoriteicon2)
-                .fitCenter()
-                .into(favoriteIcon);
-        setupCategoryRecyclerView();
         setupBottomNavigationView();
-        loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
-        loadPickedForYouProductsFragment(new PickedForYouFragment());
         productsAddedToCart=user.getProductsUserAddedToCart();
         productsUserOrdered=user.getProductsUserOrdered();
         productsFavorited=user.getProductsFavorited();
 
     }
 
-    private void setupCategoryRecyclerView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        categoryRecycleView.setLayoutManager(linearLayoutManager);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this, getCategory(),this);
-        categoryRecycleView.setAdapter(categoryAdapter);
-    }
-
-
-
     private void setupBottomNavigationView() {
+        loadFragment(new HomeFragment());
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId()== R.id.home){
-                removeViews();
-                addViews();
-
+                loadFragment(new HomeFragment());
             }
             else if (item.getItemId()== R.id.orders) {
-                removeViews();
-                frameLayout.setVisibility(View.VISIBLE);
                 loadFragment(new OrdersFragment());
-
-
             } else if (item.getItemId()== R.id.account) {
-                removeViews();
-                frameLayout.setVisibility(View.VISIBLE);
+
                 loadFragment(new AccountFragment());
 
             }else if (item.getItemId()== R.id.cart) {
-                removeViews();
-                frameLayout.setVisibility(View.VISIBLE);
                 loadFragment(new CartFragment());
-
             }
             return true;
         });
 
     }
 
-
-    public static  void removeViews(){
-        favoritesCd.setVisibility(View.GONE);
-        scrollView.setVisibility(View.GONE);
-        searchView.setVisibility(View.GONE);
-        pickedForYouFrameLayout.setVisibility(View.GONE);
-        pickedForYouLinearLayout.setVisibility(View.GONE);
-        categoryRecycleView.setVisibility(View.GONE);
-       displayBanner.setVisibility(View.GONE);
-       popularProductsLinearLayout.setVisibility(View.GONE);
-        popularProductsFrameLayout.setVisibility(View.GONE);
-        frameLayout.setVisibility(View.GONE);
-    }
-
-    public static  void addViews(){
-        favoritesCd.setVisibility(View.VISIBLE);
-        scrollView.setVisibility(View.VISIBLE);
-        searchView.setVisibility(View.VISIBLE);
-        pickedForYouFrameLayout.setVisibility(View.VISIBLE);
-        pickedForYouLinearLayout.setVisibility(View.VISIBLE);
-        categoryRecycleView.setVisibility(View.VISIBLE);
-        displayBanner.setVisibility(View.VISIBLE);
-        popularProductsLinearLayout.setVisibility(View.VISIBLE);
-        popularProductsFrameLayout.setVisibility(View.VISIBLE);
-        frameLayout.setVisibility(View.VISIBLE);
-
-    }
-
-    public void loadPopularProductsFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.popularproductframelayout,fragment);
-        fragmentTransaction.commit();
-    }
-    public void loadPickedForYouProductsFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.pickedforyouproductframelayout,fragment);
-        fragmentTransaction.commit();
-    }
     public void loadFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.addToBackStack("Mainactivity");
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
-    }
-
-    public void removeFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.remove(fragment);
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    public void categoryClicked(int position) {
-        removeViews();
-        frameLayout.setVisibility(View.VISIBLE);
-        Category category = getCategory().get(position);
-        ProductRecyclerViewFragment productRecyclerViewFragment =new ProductRecyclerViewFragment();
-        categoryId= category.getCategoryId();
-        loadFragment(productRecyclerViewFragment);
-    }
-
-
-    @Override
-    public void productClicked(int position) {
-      Product product = getProductsData(categoryId).get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
-        bundle.putString("productName", product.getProductName());
-        bundle.putString("productPrice", product.getProductPrice());
-        bundle.putString("productDescription", product.getProductDescription());
-        bundle.putString("position", product.getProductId());
-        bundle.putInt("productImage", product.getProductImage());
-        ProductViewFragment productViewFragment = new ProductViewFragment();
-        productViewFragment.setArguments(bundle);
-        loadFragment(productViewFragment);
     }
 
     public static List<Category> getCategory() {

@@ -50,6 +50,7 @@
     <string name="total">Total</string>
     <string name="my_cart">My Cart</string>
     <string name="my_orders">My Orders</string>
+    <string name="my_favorites">My Favorites</string>
 
 
 </resources>

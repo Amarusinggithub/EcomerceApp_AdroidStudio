@@ -1,28 +1,115 @@
 package com.example.myecomerceapp.fragments;
 
+import static com.example.myecomerceapp.activities.MainActivity.PICKED_FOR_YOU_PRODUCTS;
+
+import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
+
+import static com.example.myecomerceapp.activities.MainActivity.productsFavorited;
+
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 
+import com.example.myecomerceapp.adapters.ProductAdapter;
+import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
+import com.example.myecomerceapp.models.Product;
 
-public class FavoritesFragment extends Fragment {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+public class FavoritesFragment extends Fragment implements MyProductOnClickListener {
 
-    }
+    RecyclerView recyclerView;
+    ImageView backBtn;
+    ImageView emptyFavoritesImage;
+    LinearLayoutManager linearLayoutManager;
+    ProductAdapter favoritesAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false);
+        View view=inflater.inflate(R.layout.fragment_favorites, container, false);
+        initializeViewElements(view);
+        return  view;
+    }
+
+    private void initializeViewElements(View view) {
+        backBtn=view.findViewById(R.id.backbtn);
+
+        recyclerView= view.findViewById(R.id.recyclerview);
+        emptyFavoritesImage= view.findViewById(R.id.favoritesisemptyimage);
+
+        if (!productsFavorited.isEmpty()){
+            setUpFavoritesRecyclerView();
+        }else{
+            setupFavoritesEmptyView();
+        }
+        setupBackButton();
+    }
+
+    private void setupFavoritesEmptyView() {
+        emptyFavoritesImage.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+
+        Glide.with(this)
+                .load(R.drawable.nofavorites)
+                .fitCenter()
+                .into( emptyFavoritesImage);
+    }
+
+    private void setUpFavoritesRecyclerView() {
+        emptyFavoritesImage.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        favoritesAdapter= new ProductAdapter(this,productsFavorited,getContext());
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(favoritesAdapter);
+    }
+
+    private void setupBackButton() {
+        Glide.with(this)
+                .load(R.drawable.whiteback)
+                .fitCenter()
+                .into(backBtn);
+
+        backBtn.setOnClickListener(v -> {
+
+        });
+    }
+
+    private  void loadFragment(Fragment fragment) {
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.addToBackStack("favoritesFragment");
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
+
+    }
+
+    @Override
+    public void productClicked(int position) {
+        Product product = getProductsData(PICKED_FOR_YOU_PRODUCTS).get(position);
+        Bundle bundle = new Bundle();
+        bundle.putInt("position",position);
+        bundle.putString("productName", product.getProductName());
+        bundle.putString("productPrice", product.getProductPrice());
+        bundle.putString("productDescription", product.getProductDescription());
+        bundle.putString("position", product.getProductId());
+        bundle.putInt("productImage", product.getProductImage());
+        ProductViewFragment productViewFragment = new ProductViewFragment();
+        productViewFragment.setArguments(bundle);
+        loadFragment(productViewFragment);
     }
 }

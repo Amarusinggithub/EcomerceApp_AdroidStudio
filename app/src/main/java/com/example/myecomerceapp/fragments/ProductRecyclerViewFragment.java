@@ -1,15 +1,16 @@
 package com.example.myecomerceapp.fragments;
 
 
-import static com.example.myecomerceapp.activities.MainActivity.frameLayout;
+
 import static com.example.myecomerceapp.activities.MainActivity.getCategory;
 import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
-import static com.example.myecomerceapp.activities.MainActivity.removeViews;
+
 
 
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,6 +36,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
     public static  String categoryId;
     RecyclerView categoryRecycleView;
      ImageView favoriteIcon;
+      CardView favoritesCd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +49,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
     }
 
     private void setUpProductRecyclerView(View view) {
+        favoritesCd=view.findViewById(R.id.favoritecd);
         RecyclerView productRecyclerView = view.findViewById( R.id.recyclerview);
         favoriteIcon=view.findViewById(R.id.favorites);
         Glide.with(this)
@@ -57,12 +60,15 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
         GridLayoutManager layoutManager=new GridLayoutManager(getContext(),2);
         productRecyclerView.setLayoutManager(layoutManager);
         productRecyclerView.setAdapter(productAdapter);
+
+        favoritesCd.setOnClickListener(v -> loadFragment(new FavoritesFragment()));
     }
 
 
     private  void loadFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.addToBackStack("products recyclerview");
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
@@ -93,9 +99,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
 
     @Override
     public void categoryClicked(int position) {
-        removeViews();
         categoryRecycleView.setVisibility(View.VISIBLE);
-        frameLayout.setVisibility(View.VISIBLE);
         Category category = getCategory().get(position);
         ProductRecyclerViewFragment productRecyclerViewFragment =new ProductRecyclerViewFragment();
         categoryId= category.getCategoryId();
