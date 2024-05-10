@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity  {
                             }
                             return;
                         }
-
                     }
 
                 } else {
@@ -148,7 +147,6 @@ public class MainActivity extends AppCompatActivity  {
     public void loadFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.addToBackStack("Mainactivity");
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }

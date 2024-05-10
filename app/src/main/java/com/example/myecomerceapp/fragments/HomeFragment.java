@@ -46,7 +46,6 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
      CardView displayBanner;
      RecyclerView categoryRecycleView;
      LinearLayout popularProductsLinearLayout;
-
     CardView favoritesCd;
    FrameLayout popularProductsFrameLayout;
 

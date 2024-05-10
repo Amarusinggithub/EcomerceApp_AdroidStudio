@@ -87,9 +87,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
                 .fitCenter()
                 .into(backBtn);
 
-        backBtn.setOnClickListener(v -> {
-
-        });
+        backBtn.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
     }
 
     private void setupCartEmptyView() {

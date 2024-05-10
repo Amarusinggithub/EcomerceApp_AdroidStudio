@@ -23,11 +23,11 @@ import com.example.myecomerceapp.interfaces.MyOrderOnClickListener;
 
 public class OrdersFragment extends Fragment implements MyOrderOnClickListener {
 
-    private OrderAdapter orderAdapter;
-    private RecyclerView recyclerView;
-    private ImageView emptyOrderImage;
-    private LinearLayoutManager linearLayoutManager;
-    private ImageView backBtn;
+    OrderAdapter orderAdapter;
+    RecyclerView recyclerView;
+    ImageView emptyOrderImage;
+    LinearLayoutManager linearLayoutManager;
+    ImageView backBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,9 +58,7 @@ public class OrdersFragment extends Fragment implements MyOrderOnClickListener {
                 .fitCenter()
                 .into(backBtn);
 
-        backBtn.setOnClickListener(v -> {
-
-        });
+        backBtn.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
     }
 
     private void setupOrderEmptyView() {

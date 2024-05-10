@@ -90,3 +90,5 @@ Happ/src/main/java/com/example/myecomerceapp/fragments/SalesFragment.java,3\c\3
 Rapp/src/main/java/com/example/myecomerceapp/interfaces/MyOrderOnClickListener.java,5\a\5a1da91999aaeee7e4c32af45822c2d5f84e2c37
 w
 Gapp/src/main/java/com/example/myecomerceapp/fragments/HomeFragment.java,f\9\f93cafda17a7045dc588c746d818741afcb5a4a6
+
+Oapp/src/main/java/com/example/myecomerceapp/fragments/OrderRecieptFragment.java,d\e\decaeb8eac8dabfaba2f27e2ae180f1aecd04cee

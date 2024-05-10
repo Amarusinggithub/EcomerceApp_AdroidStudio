@@ -2,17 +2,13 @@ package com.example.myecomerceapp.models;
 
 
 
-
 public class Product {
     private  int productImage;
     private  String productName;
     private  String productPrice;
     private  String productId;
     private  int productQuantity=1;
-    public  String productDescription;
-
-    private Boolean isInCart=false;
-    private Boolean isFavorite =false;
+    private String productDescription;
 
     public Product(int productImage, String productName, String productPrice, String productDescription, String productId) {
         this.productImage = productImage;
@@ -70,19 +66,5 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-    public Boolean getInCart() {
-        return isInCart;
-    }
 
-    public void setInCart(Boolean inCart) {
-        isInCart = inCart;
-    }
-
-    public Boolean getIsFavorite() {
-        return isFavorite;
-    }
-
-    public void setIsFavorite(Boolean isFavorite) {
-        this.isFavorite = isFavorite;
-    }
 }

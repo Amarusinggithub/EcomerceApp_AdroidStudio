@@ -5,7 +5,6 @@ import static com.example.myecomerceapp.activities.MainActivity.productsAddedToC
 import static com.example.myecomerceapp.activities.MainActivity.productsFavorited;
 
 
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,21 +27,31 @@ import com.example.myecomerceapp.models.Product;
 
 
 public class ProductViewFragment extends Fragment {
+    Bundle args;
     Button addToCart;
     Product product;
-
-     ImageView addFavoriteBtn;
+    ImageView addFavoriteBtn;
     ImageView shareBtn;
     ImageView backBtn;
+    boolean productAlreadyInFavorites;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         View productView=inflater.inflate(R.layout.fragment_productview, container, false);
         initializeViewElements(productView);
 
-        Bundle args = getArguments();
+        return productView;
+    }
+
+    private void initializeViewElements(View productView) {
+        addToCart= productView.findViewById(R.id.addtocartbtn);
+        addFavoriteBtn = productView.findViewById(R.id.favoritebtn);
+        shareBtn= productView.findViewById(R.id.sharebtn);
+        backBtn= productView.findViewById(R.id.backbtn);
+
+        args = getArguments();
         if (args != null) {
 
             String productId=args.getString("position");
@@ -51,29 +60,22 @@ public class ProductViewFragment extends Fragment {
             String productDescription = args.getString("productDescription");
             int productImageResource = args.getInt("productImage");
 
+            product=new Product(productImageResource,productName,productPrice,productDescription,productId);
 
-
-            if(product==null){
-                product=new Product(productImageResource,productName,productPrice,productDescription,productId);
-
-
-                if (Boolean.TRUE.equals(product.getIsFavorite())) {
+            for (Product productInFavorites : productsFavorited) {
+                if (!productInFavorites.getProductName().equals(product.getProductName())) {
+                    productAlreadyInFavorites = false;
+                    Glide.with(requireContext())
+                            .load(R.drawable.unfavorite)
+                            .fitCenter()
+                            .into(addFavoriteBtn);
+                }else{
                     Glide.with(requireContext())
                             .load(R.drawable.favoriteicon2)
                             .fitCenter()
                             .into(addFavoriteBtn);
-
-
-                } else {
-
-                    Glide.with(this)
-                            .load(R.drawable.unfavorite)
-                            .fitCenter()
-                            .into(addFavoriteBtn);
+                    productAlreadyInFavorites =true;
                 }
-
-            }else {
-                Log.d("ProductVIewFragment","The product is null");
             }
 
             TextView productNameTextView =  productView.findViewById(R.id.Name);
@@ -88,30 +90,44 @@ public class ProductViewFragment extends Fragment {
                     .load(product.getProductImage())
                     .fitCenter()
                     .into(productImageView);
-
-
         }
 
-        addFavoriteBtn.setOnClickListener(v -> {
-            if (Boolean.FALSE.equals(product.getIsFavorite())) {
+        Glide.with(requireContext())
+                .load(R.drawable.share)
+                .fitCenter()
+                .into(shareBtn);
 
+        Glide.with(requireContext())
+                .load(R.drawable.back)
+                .fitCenter()
+                .into(backBtn);
+
+        backBtn.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
+        addFavoriteBtn.setOnClickListener(v -> {
+
+            boolean productAlreadyInFavorites = false;
+            for (Product productInFavorites : productsFavorited) {
+                if (productInFavorites.getProductName().equals(product.getProductName())) {
+                    productsFavorited.remove(productInFavorites);
+                    Glide.with(requireContext())
+                            .load(R.drawable.unfavorite)
+                            .fitCenter()
+                            .into(addFavoriteBtn);
+                    Toast.makeText(getContext(), "This " + product.getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
+                    productAlreadyInFavorites = true;
+                    break;
+                }
+            }
+            if (!productAlreadyInFavorites) {
                 productsFavorited.add(product);
                 Glide.with(requireContext())
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(addFavoriteBtn);
-                Toast.makeText(getContext(), product.getProductName() + " was favorited.", Toast.LENGTH_SHORT).show();
-                product.setIsFavorite(true);
-            } else {
-
-                productsFavorited.remove(product);
-                Glide.with(requireContext())
-                        .load(R.drawable.unfavorite)
-                        .fitCenter()
-                        .into(addFavoriteBtn);
-                Toast.makeText(getContext(), product.getProductName() + " was removed from favorites.", Toast.LENGTH_SHORT).show();
-                product.setIsFavorite(false);
+                Toast.makeText(getContext(), product.getProductName() + " was favorite.", Toast.LENGTH_SHORT).show();
             }
+
+
         });
 
 
@@ -136,25 +152,6 @@ public class ProductViewFragment extends Fragment {
             }
         });
 
-
-        return productView;
-    }
-
-    private void initializeViewElements(View productView) {
-        addToCart= productView.findViewById(R.id.addtocartbtn);
-        addFavoriteBtn = productView.findViewById(R.id.favoritebtn);
-        shareBtn= productView.findViewById(R.id.sharebtn);
-        backBtn= productView.findViewById(R.id.backbtn);
-
-        Glide.with(requireContext())
-                .load(R.drawable.share)
-                .fitCenter()
-                .into(shareBtn);
-
-        Glide.with(requireContext())
-                .load(R.drawable.back)
-                .fitCenter()
-                .into(backBtn);
     }
 
 

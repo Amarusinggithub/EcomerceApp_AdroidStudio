@@ -4,7 +4,6 @@ import static com.example.myecomerceapp.activities.MainActivity.productsAddedToC
 import static com.example.myecomerceapp.activities.MainActivity.productsFavorited;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import com.example.myecomerceapp.models.Product;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
-
+    boolean productAlreadyInFavorites = false;
     private final MyProductOnClickListener productOnclickListener;
     private final List<Product> productArrayList;
     private final Context context;
@@ -44,53 +43,69 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, int position) {
+
         Product product= productArrayList.get(position);
         Glide.with(context)
                 .load(product.getProductImage())
                 .into(holder.productImage);
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getProductPrice());
-        holder.favoriteBtn.setOnClickListener(v -> {
-            if (Boolean.FALSE.equals(product.getIsFavorite())) {
 
+        for (Product productInFavorites : productsFavorited) {
+            if (!productInFavorites.getProductName().equals(product.getProductName())) {
+                productAlreadyInFavorites = false;
+                Glide.with(context)
+                        .load(R.drawable.unfavorite)
+                        .fitCenter()
+                        .into(holder.favoriteBtn);
+            }else{
+                Glide.with(context)
+                        .load(R.drawable.favoriteicon2)
+                        .fitCenter()
+                        .into(holder.favoriteBtn);
+                productAlreadyInFavorites =true;
+            }
+        }
+
+        holder.favoriteBtn.setOnClickListener(v -> {
+
+            for (Product productInFavorites : productsFavorited) {
+                if (productInFavorites.getProductName().equals(product.getProductName())) {
+                    productsFavorited.remove(productInFavorites);
+                    Glide.with(context)
+                            .load(R.drawable.unfavorite)
+                            .fitCenter()
+                            .into(holder.favoriteBtn);
+                    Toast.makeText(context, "This " + product.getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
+                    productAlreadyInFavorites = true;
+                    break;
+                }
+            }
+            if (!productAlreadyInFavorites) {
                 productsFavorited.add(product);
                 Glide.with(context)
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(holder.favoriteBtn);
                 Toast.makeText(context, product.getProductName() + " was favorited.", Toast.LENGTH_SHORT).show();
-                product.setIsFavorite(true);
-            } else {
-
-                productsFavorited.remove(product);
-                Glide.with(context)
-                        .load(R.drawable.unfavorite)
-                        .fitCenter()
-                        .into(holder.favoriteBtn);
-                Toast.makeText(context, product.getProductName() + " was removed from favorites.", Toast.LENGTH_SHORT).show();
-                product.setIsFavorite(false);
             }
         });
 
 
         holder.addToCartBtn.setOnClickListener(v -> {
-            if (product != null) {
-                boolean productAlreadyInCart = false;
-                for (Product productInCart : productsAddedToCart) {
-                    if (productInCart.getProductName().equals(product.getProductName())) {
-                        int newQuantity = productInCart.getProductQuantity() + product.getProductQuantity();
-                        productInCart.setProductQuantity(newQuantity);
-                        Toast.makeText(context, "Quantity of " + product.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
-                        productAlreadyInCart = true;
-                        break;
-                    }
+            boolean productAlreadyInCart = false;
+            for (Product productInCart : productsAddedToCart) {
+                if (productInCart.getProductName().equals(product.getProductName())) {
+                    int newQuantity = productInCart.getProductQuantity() + product.getProductQuantity();
+                    productInCart.setProductQuantity(newQuantity);
+                    Toast.makeText(context, "Quantity of " + product.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
+                    productAlreadyInCart = true;
+                    break;
                 }
-                if (!productAlreadyInCart) {
-                    productsAddedToCart.add(product);
-                    Toast.makeText(context, product.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Log.d("ProductViewFragment", "The product is null");
+            }
+            if (!productAlreadyInCart) {
+                productsAddedToCart.add(product);
+                Toast.makeText(context, product.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -104,7 +119,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         ImageView productImage;
         TextView productName;
         TextView productPrice;
-        ImageView favoriteBtn,addToCartBtn;
+        ImageView favoriteBtn;
+        ImageView addToCartBtn;
         public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener,Context context) {
             super(itemView);
 
@@ -123,8 +139,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                     .load(R.drawable.addtocart)
                     .fitCenter()
                     .into(addToCartBtn);
-
-
 
             itemView.setOnClickListener(v -> {
                 int position=getAdapterPosition();
