@@ -4,8 +4,7 @@ package com.example.myecomerceapp.fragments;
 
 import static com.example.myecomerceapp.activities.MainActivity.getCategory;
 import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
-
-
+import static com.example.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 
 
 import android.os.Bundle;
@@ -84,16 +83,8 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
 
     @Override
     public void productClicked(int position) {
-        Product product = getProductsData(categoryId).get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
-        bundle.putString("productName", product.getProductName());
-        bundle.putString("productPrice", product.getProductPrice());
-        bundle.putString("productDescription", product.getProductDescription());
-        bundle.putString("position", product.getProductId());
-        bundle.putInt("productImage", product.getProductImage());
+       productInProductViewFragment = getProductsData(categoryId).get(position);
         ProductViewFragment productViewFragment = new ProductViewFragment();
-        productViewFragment.setArguments(bundle);
         loadFragment(productViewFragment);
     }
 

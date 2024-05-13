@@ -1,6 +1,8 @@
 package com.example.myecomerceapp.activities;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,21 +12,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
 import com.example.myecomerceapp.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -35,13 +44,11 @@ public class CreateAccountActivity extends AppCompatActivity {
     EditText confirmPasswordEt;
     TextView signInTv;
     Button signUpBtn;
-
     String username;
     String email;
     String password;
-
-    private FirebaseAuth mAuth;
-
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +56,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         setContentView(R.layout.create_account_activity);
 
         //Variables
+        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         userNameEt =findViewById(R.id.usernameet);
         emailEt =findViewById(R.id.emailet);
@@ -100,6 +108,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         Toast.makeText(CreateAccountActivity.this, "Registration successful.",
                                 Toast.LENGTH_SHORT).show();
                         setUser();
+
                         updateUI(mAuth.getCurrentUser());
                         // Redirect to log in activity or any other activity
                     } else {
@@ -113,22 +122,24 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
     private void setUser() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference parentReference = firebaseDatabase.getReference("MyDatabase");
-        DatabaseReference usersReference = parentReference.child("users");
-
-
-        User user = new User();
         ArrayList<Product> productsUserBought=new ArrayList<>();
         ArrayList<Product> productsUserAddedToCart=new ArrayList<>();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setProductsUserOrdered(productsUserBought);
-        user.setProductsUserAddedToCart(productsUserAddedToCart);
-        DatabaseReference userReference = usersReference.child(user.getUsername());
+        ArrayList<Product> productsFavorited = new ArrayList<>();
 
-        userReference.setValue(user);
+
+        Map<String, Object> user = new HashMap<>();
+        user.put("username", username);
+        user.put("email", email);
+        user.put("password", password);
+        user.put("cart",productsUserAddedToCart);
+        user.put("favorites",productsFavorited);
+        user.put("ordered",productsUserBought);
+
+
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
+                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
 
 
     }

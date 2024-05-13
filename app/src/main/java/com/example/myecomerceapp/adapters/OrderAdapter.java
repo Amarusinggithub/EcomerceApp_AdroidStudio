@@ -18,13 +18,11 @@ import com.example.myecomerceapp.models.Product;
 import java.util.ArrayList;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder>{
+    ArrayList<Product> OrderedProducts;
+  MyOrderOnClickListener myOrderOnClickListener;
 
-    private final ArrayList<Product> OrderedProducts;
+  Context context;
 
-    private final MyOrderOnClickListener myOrderOnClickListener;
-
-    private final Context context;
-  int newQuantity;
 
 
     public OrderAdapter(ArrayList<Product> orderedProducts, MyOrderOnClickListener myOrderOnClickListener, Context context) {
@@ -52,7 +50,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
-        TextView name,price,quantity;
+        TextView name;
+        TextView price;
+        TextView quantity;
 
 
         public MyViewHolder(@NonNull View itemView, MyOrderOnClickListener orderOnclickListener) {
@@ -66,7 +66,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
 
 
             itemView.setOnClickListener(v -> {
-                int position=getAdapterPosition();
+                int position=getBindingAdapterPosition();
                 orderOnclickListener.orderClicked(position);
             });
         }

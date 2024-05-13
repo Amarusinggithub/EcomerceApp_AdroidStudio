@@ -51,43 +51,41 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getProductPrice());
 
-        for (Product productInFavorites : productsFavorited) {
-            if (!productInFavorites.getProductName().equals(product.getProductName())) {
-                productAlreadyInFavorites = false;
-                Glide.with(context)
-                        .load(R.drawable.unfavorite)
-                        .fitCenter()
-                        .into(holder.favoriteBtn);
-            }else{
+
+            if (productsFavorited.contains(product)) {
+
                 Glide.with(context)
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(holder.favoriteBtn);
                 productAlreadyInFavorites =true;
+            }else{
+
+                Glide.with(context)
+                        .load(R.drawable.unfavorite)
+                        .fitCenter()
+                        .into(holder.favoriteBtn);
+                productAlreadyInFavorites = false;
             }
-        }
+
 
         holder.favoriteBtn.setOnClickListener(v -> {
-
-            for (Product productInFavorites : productsFavorited) {
-                if (productInFavorites.getProductName().equals(product.getProductName())) {
-                    productsFavorited.remove(productInFavorites);
-                    Glide.with(context)
-                            .load(R.drawable.unfavorite)
-                            .fitCenter()
-                            .into(holder.favoriteBtn);
-                    Toast.makeText(context, "This " + product.getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
-                    productAlreadyInFavorites = true;
-                    break;
-                }
-            }
-            if (!productAlreadyInFavorites) {
+            if (productAlreadyInFavorites) {
+                productsFavorited.remove(product);
+                Glide.with(context)
+                        .load(R.drawable.unfavorite)
+                        .fitCenter()
+                        .into(holder.favoriteBtn);
+                Toast.makeText(context, "This " + product.getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
+                productAlreadyInFavorites = false;
+            } else {
                 productsFavorited.add(product);
+                productAlreadyInFavorites = true;
                 Glide.with(context)
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(holder.favoriteBtn);
-                Toast.makeText(context, product.getProductName() + " was favorited.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, product.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -141,7 +139,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                     .into(addToCartBtn);
 
             itemView.setOnClickListener(v -> {
-                int position=getAdapterPosition();
+                int position=getBindingAdapterPosition();
                 productOnclickListener.productClicked(position);
             });
         }

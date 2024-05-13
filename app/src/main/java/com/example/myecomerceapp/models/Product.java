@@ -10,6 +10,7 @@ public class Product {
     private  int productQuantity=1;
     private String productDescription;
 
+
     public Product(int productImage, String productName, String productPrice, String productDescription, String productId) {
         this.productImage = productImage;
         this.productName = productName;
@@ -65,6 +66,5 @@ public class Product {
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
     }
-
 
 }

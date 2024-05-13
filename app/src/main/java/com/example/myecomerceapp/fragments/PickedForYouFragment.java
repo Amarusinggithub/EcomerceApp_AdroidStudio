@@ -1,8 +1,9 @@
 package com.example.myecomerceapp.fragments;
 
 
-import static com.example.myecomerceapp.activities.MainActivity.PICKED_FOR_YOU_PRODUCTS;
-import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
+
+import static com.example.myecomerceapp.activities.MainActivity.getPickedForYouProductsData;
+import static com.example.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 
 
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import android.view.ViewGroup;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.ProductAdapter;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
-import com.example.myecomerceapp.models.Product;
+
 
 
 public class PickedForYouFragment extends Fragment implements MyProductOnClickListener {
@@ -35,7 +36,7 @@ public class PickedForYouFragment extends Fragment implements MyProductOnClickLi
         pickedForYouProductsRecyclerview=view.findViewById(R.id.pickedforyourecyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         pickedForYouProductsRecyclerview.setLayoutManager(linearLayoutManager);
-        ProductAdapter popularProductAdapter = new ProductAdapter(this, getProductsData(PICKED_FOR_YOU_PRODUCTS),getContext());
+        ProductAdapter popularProductAdapter = new ProductAdapter(this, getPickedForYouProductsData(),getContext());
         pickedForYouProductsRecyclerview.setAdapter(popularProductAdapter);
 
         return view ;
@@ -44,16 +45,8 @@ public class PickedForYouFragment extends Fragment implements MyProductOnClickLi
     @Override
     public void productClicked(int position) {
 
-        Product product = getProductsData(PICKED_FOR_YOU_PRODUCTS).get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
-        bundle.putString("productName", product.getProductName());
-        bundle.putString("productPrice", product.getProductPrice());
-        bundle.putString("productDescription", product.getProductDescription());
-        bundle.putString("position", product.getProductId());
-        bundle.putInt("productImage", product.getProductImage());
+        productInProductViewFragment = getPickedForYouProductsData().get(position);
         ProductViewFragment productViewFragment = new ProductViewFragment();
-        productViewFragment.setArguments(bundle);
         loadFragment(productViewFragment);
     }
 

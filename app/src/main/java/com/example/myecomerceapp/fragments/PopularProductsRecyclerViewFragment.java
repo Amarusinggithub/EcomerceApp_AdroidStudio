@@ -1,7 +1,8 @@
 package com.example.myecomerceapp.fragments;
 
-import static com.example.myecomerceapp.activities.MainActivity.POPULAR_PRODUCTS;
-import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
+
+import static com.example.myecomerceapp.activities.MainActivity.getPopularProductsData;
+import static com.example.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 
 
 import android.os.Bundle;
@@ -32,7 +33,7 @@ public class PopularProductsRecyclerViewFragment extends Fragment implements MyP
         popularProductsRecyclerview=view.findViewById(R.id.popularproductrecyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         popularProductsRecyclerview.setLayoutManager(linearLayoutManager);
-        ProductAdapter popularProductAdapter = new ProductAdapter(this, getProductsData(POPULAR_PRODUCTS),getContext());
+        ProductAdapter popularProductAdapter = new ProductAdapter(this, getPopularProductsData(),getContext());
         popularProductsRecyclerview.setAdapter(popularProductAdapter);
         return view;
     }
@@ -41,17 +42,9 @@ public class PopularProductsRecyclerViewFragment extends Fragment implements MyP
     @Override
     public void productClicked(int position) {
 
-        Product product = getProductsData(POPULAR_PRODUCTS).get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
-        bundle.putString("productName", product.getProductName());
-        bundle.putString("productPrice", product.getProductPrice());
-        bundle.putString("productDescription", product.getProductDescription());
-        bundle.putString("position", product.getProductId());
-        bundle.putInt("productImage", product.getProductImage());
-        ProductViewFragment productViewFragment = new ProductViewFragment();
-        productViewFragment.setArguments(bundle);
-        loadFragment(productViewFragment);
+       productInProductViewFragment = getPopularProductsData().get(position);
+       ProductViewFragment productViewFragment = new ProductViewFragment();
+       loadFragment(productViewFragment);
     }
 
     private  void loadFragment(Fragment fragment) {

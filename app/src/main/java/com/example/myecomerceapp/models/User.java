@@ -9,7 +9,6 @@ public class User {
     String password;
     ArrayList<Product> productsUserOrdered = new ArrayList<>();
     ArrayList<Product> productsUserAddedToCart= new ArrayList<>();
-
     ArrayList<Product> productsFavorited = new ArrayList<>();
 
     public String getEmail() {

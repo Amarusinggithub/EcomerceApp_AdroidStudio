@@ -43,7 +43,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
     @Override
     public CartAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_product_cardview,parent,false);
-        return new MyViewHolder(view,productOnclickListener);
+        return new MyViewHolder(view,productOnclickListener,context);
     }
 
     @Override
@@ -51,11 +51,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
         // Get product from the list
         Product product = cartProducts.get(position);
 
-        if (product != null) {
 
             Glide.with(context)
                     .load(product.getProductImage())
                     .into(holder.image);
+
+        Glide.with(context)
+                .load(R.drawable.delete)
+                .fitCenter()
+                .into(holder.close);
 
             holder.name.setText(product.getProductName());
             holder.quantity.setText(String.valueOf(product.getProductQuantity()));
@@ -76,8 +80,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
                 holder.quantity.setText(String.valueOf(newQuantity));
                 totalNumber.setText(calculateTotalFormatted());
             });
+
+            holder.close.setOnClickListener(v -> productsAddedToCart.remove(product));
         }
-    }
+
 
     @Override
     public int getItemCount() {
@@ -112,11 +118,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        ImageView image;
+        ImageView image,close;
         TextView name,price,quantity;
-        Button minus,plus;
+        Button minus;
+        Button plus;
 
-        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener) {
+        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener,Context context) {
             super(itemView);
             image=itemView.findViewById(R.id.productImage);
             name=itemView.findViewById(R.id.productName);
@@ -124,11 +131,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
             quantity=itemView.findViewById(R.id.productQuantity);
             minus=itemView.findViewById(R.id.minusBtn);
             plus=itemView.findViewById(R.id.plusBtn);
+            close=itemView.findViewById(R.id.close);
+
 
 
 
             itemView.setOnClickListener(v -> {
-                int position=getAdapterPosition();
+                int position=getBindingAdapterPosition();
                 productOnclickListener.productClicked(position);
             });
         }

@@ -51,7 +51,8 @@
 
                 <Button
                     android:id="@+id/plusBtn"
-                    android:layout_toEndOf="@id/productName"
+                    android:layout_below="@id/productPrice"
+                    android:layout_toEndOf="@id/productQuantity"
                     android:background="@drawable/cart_product_view_plus_btn"
                     android:text="+"
                     android:textSize="20sp"
@@ -61,8 +62,8 @@
 
                 <TextView
                     android:id="@+id/productQuantity"
-                    android:layout_toEndOf="@id/productName"
-                    android:layout_below="@id/plusBtn"
+                    android:layout_toEndOf="@id/minusBtn"
+                    android:layout_below="@id/productPrice"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:layout_marginTop="8dp"
@@ -77,11 +78,20 @@
                     android:text="-"
                     android:textColor="@color/black"
                     android:textSize="30sp"
-                    android:layout_toEndOf="@id/productName"
-                    android:layout_below="@id/productQuantity"
+                    android:textAlignment="center"
+                    android:layout_toEndOf="@id/productPrice"
+                    android:layout_below="@id/productPrice"
                     android:background="@drawable/cart_product_view_minus_btn"
+                    android:layout_marginStart="30dp"
                     android:layout_width="50dp"
                     android:layout_height="50dp"/>
+
+            <ImageView
+                android:id="@+id/close"
+                android:layout_marginStart="250dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
 
         </RelativeLayout>
 

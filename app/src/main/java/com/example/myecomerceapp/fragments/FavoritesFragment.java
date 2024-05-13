@@ -1,9 +1,8 @@
 package com.example.myecomerceapp.fragments;
 
-import static com.example.myecomerceapp.activities.MainActivity.PICKED_FOR_YOU_PRODUCTS;
 
-import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
 
+import static com.example.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.example.myecomerceapp.activities.MainActivity.productsFavorited;
 
 
@@ -25,7 +24,7 @@ import com.example.myecomerceapp.R;
 
 import com.example.myecomerceapp.adapters.ProductAdapter;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
-import com.example.myecomerceapp.models.Product;
+
 
 
 public class FavoritesFragment extends Fragment implements MyProductOnClickListener {
@@ -98,16 +97,8 @@ public class FavoritesFragment extends Fragment implements MyProductOnClickListe
 
     @Override
     public void productClicked(int position) {
-        Product product = getProductsData(PICKED_FOR_YOU_PRODUCTS).get(position);
-        Bundle bundle = new Bundle();
-        bundle.putInt("position",position);
-        bundle.putString("productName", product.getProductName());
-        bundle.putString("productPrice", product.getProductPrice());
-        bundle.putString("productDescription", product.getProductDescription());
-        bundle.putString("position", product.getProductId());
-        bundle.putInt("productImage", product.getProductImage());
+       productInProductViewFragment = productsFavorited.get(position);
         ProductViewFragment productViewFragment = new ProductViewFragment();
-        productViewFragment.setArguments(bundle);
         loadFragment(productViewFragment);
     }
 }

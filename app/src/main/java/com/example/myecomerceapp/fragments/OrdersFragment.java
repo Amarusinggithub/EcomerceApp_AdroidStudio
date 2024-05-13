@@ -44,7 +44,7 @@ public class OrdersFragment extends Fragment implements MyOrderOnClickListener {
         recyclerView= view.findViewById(R.id.recyclerview);
         emptyOrderImage= view.findViewById(R.id.orderisemptyimage);
 
-        if (!productsAddedToCart.isEmpty()){
+        if (!productsUserOrdered.isEmpty()){
             setUpOrderRecyclerView();
         }else{
             setupOrderEmptyView();
