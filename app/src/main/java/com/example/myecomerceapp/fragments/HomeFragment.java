@@ -19,10 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
@@ -30,9 +32,6 @@ import com.example.myecomerceapp.adapters.CategoryAdapter;
 import com.example.myecomerceapp.interfaces.MyCategoryOnClickListener;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Category;
-import com.example.myecomerceapp.models.Product;
-
-
 
 
 public class HomeFragment extends Fragment implements MyCategoryOnClickListener, MyProductOnClickListener {
@@ -42,13 +41,16 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
      ScrollView scrollView;
      FrameLayout pickedForYouFrameLayout;
      LinearLayout pickedForYouLinearLayout;
-     SearchView searchView;
+     EditText searchView;
      FrameLayout frameLayout;
-     CardView displayBanner;
+     CardView salesBanner;
      RecyclerView categoryRecycleView;
      LinearLayout popularProductsLinearLayout;
     CardView favoritesCd;
    FrameLayout popularProductsFrameLayout;
+
+   TextView seeAllPopularProducts;
+   TextView seeAllPickedForYou;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +62,8 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
     }
 
     private void initializeViews(View view) {
+        seeAllPickedForYou=view.findViewById(R.id.seeallforpickedforyou);
+        seeAllPopularProducts=view.findViewById(R.id.seeallforpopularproductstv);
         favoritesCd=view.findViewById(R.id.favoritecd);
         cashbackImage=view.findViewById(R.id.cashbackimage);
         favoriteIcon =view.findViewById(R.id.favorites);
@@ -67,7 +71,7 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         popularProductsFrameLayout=view.findViewById(R.id.popularproductframelayout);
         searchView=view.findViewById(R.id.searchview);
         frameLayout = view.findViewById(R.id.frameLayout);
-        displayBanner =view. findViewById(R.id.displayBanner);
+        salesBanner =view. findViewById(R.id.salesBanner);
         categoryRecycleView =view. findViewById(R.id.categoriesRecycleView);
         popularProductsLinearLayout = view.findViewById(R.id.popularproductsLL);
         pickedForYouFrameLayout=view.findViewById(R.id.pickedforyouproductframelayout);
@@ -89,6 +93,19 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         loadPickedForYouProductsFragment(new PickedForYouFragment());
 
         favoritesCd.setOnClickListener(v -> loadFragment(new FavoritesFragment()));
+        seeAllPopularProducts.setOnClickListener(v -> {
+            PopularProductsSecondFragment fragment= new PopularProductsSecondFragment();
+            loadFragment(fragment);
+        });
+        seeAllPickedForYou.setOnClickListener(v -> {
+            PickedForYOuSecondFragment fragment=new PickedForYOuSecondFragment();
+            loadFragment(fragment);
+        });
+
+        salesBanner.setOnClickListener(v -> {
+            SalesFragment fragment=new SalesFragment();
+            loadFragment(fragment);
+        });
 
     }
     private void setupCategoryRecyclerView() {

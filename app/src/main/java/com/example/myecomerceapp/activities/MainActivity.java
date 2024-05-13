@@ -67,13 +67,13 @@ public class MainActivity extends AppCompatActivity  {
      String username;
     FirebaseFirestore db;
     // Phones
-    public static Product SAMSUNGGalaxyS24Plus = new Product(R.drawable.s24plus,"SAMSUNG Galaxy S24+","$969.99 ","SAMSUNG Galaxy S24+ Plus Cell Phone, 512GB AI Smartphone, Unlocked Android, 50MP Camera, Fastest Processor, Long Battery Life, US Version, 2024, Onyx Black", PHONES);
+    public static Product SAMSUNGGalaxyS24Plus = new Product(R.drawable.s24plus,"SAMSUNG Galaxy S24+","$969.99","SAMSUNG Galaxy S24+ Plus Cell Phone, 512GB AI Smartphone, Unlocked Android, 50MP Camera, Fastest Processor, Long Battery Life, US Version, 2024, Onyx Black", PHONES);
     public static Product oneplus_12 = new Product(R.drawable.oneplus_12,"OnePlus 12","$899.99","OnePlus 12,16GB RAM+512GB,Dual-SIM,Unlocked Android Smartphone,Supports 50W Wireless Charging,Latest Mobile Processor,Advanced Hasselblad Camera,5400 mAh Battery,2024,Flowy Emerald", PHONES);
     public static Product googlePixel8 = new Product(R.drawable.pixel_8,"Google Pixel 8","$499.00 ","Smartphone with Advanced Pixel Camera, 24-Hour Battery, and Powerful Security - Obsidian - 128 GB", PHONES);
     public static Product samsungGalaxyA54 = new Product(R.drawable.a54_samsung,"SAMSUNG Galaxy A54","$449.99","SAMSUNG Galaxy A54 5G A Series Cell Phone, Unlocked Android Smartphone, 128GB, 6.4” Fluid Display Screen, Pro Grade Camera, Long Battery Life, Refined Design, US Version, 2023, Awesome Black", PHONES);
     public static Product redmiNote13Pro = new Product(R.drawable.redmi_note13_pro,"Redmi Note 13 PRO","$310.96","Xiaomi Redmi Note 13 PRO 5G + 4G LTE (256GB + 8GB) 6.67, 200MP Triple (Tmobile Mint Tello & Global) Global Bands Unlocked + (Fast Car Dual Charger Bundle) (Midnight Black (Global ROM))", PHONES);
     public static Product asusROGPhone8Pro = new Product(R.drawable.asus_rog_phone_8_pro,"ASUS ROG Phone 8 Pro","$1,199.99","ASUS ROG Phone 8 Pro Unlocked Android Phone, US Version, 6.78 165Hz AMOLED Display, 512GB, 16GB RAM, 5500mAh Battery, 50MP Gimbal Camera, 32MP Front, Snapdragon 8 Gen 3, Dual-SIM, Phantom Black", PHONES);
-    public static Product googlePixel8Pro = new Product(R.drawable.pixel_8_pro,"Google Pixel 8 Pro","$749.00 ","Google Pixel 8 Pro - Unlocked Android Smartphone with Telephoto Lens and Super Actua Display - 24-Hour Battery - Porcelain - 128 GB", PHONES);
+    public static Product googlePixel8Pro = new Product(R.drawable.pixel_8_pro,"Google Pixel 8 Pro","$749.00","Google Pixel 8 Pro - Unlocked Android Smartphone with Telephoto Lens and Super Actua Display - 24-Hour Battery - Porcelain - 128 GB", PHONES);
     public static Product iPhone13 = new Product(R.drawable.iphone_13,"IPhone 13","$388.10","The iPhone 13 features a 6.1-inch (155 mm) display with Super Retina XDR OLED technology at a resolution of 2532×1170 pixels and a pixel density of about 460 PPI with a refresh rate of 60 Hz and Dolby Vision HDR.", PHONES);
     public static Product iPhone13Pro = new Product(R.drawable.iphone_13_pro,"IPhone 13 Pro","$494.75","iPhone 13 Pro, 256GB, Sierra Blue - Unlocked (Renewed Premium), comes with charger, Mfi cable and SIM Pin ejector", PHONES);
     public static Product samsungGalaxyS10Plus = new Product(R.drawable.s10_plus,"SAMSUNG Galaxy S10+","$265.72","SAMSUNG Galaxy S10+ Plus (128GB, 8GB) 6.4\" AMOLED, Snapdragon 855, IP68 Water Resistant, Global 4G LTE (GSM + CDMA) Unlocked (AT&T, Verizon, T-Mobile, Metro) G975U (Prism Blue)", PHONES);
@@ -353,6 +353,23 @@ public class MainActivity extends AppCompatActivity  {
 
     }
     public static List<Product> getPopularProductsData() {
+        List<Product>productsArrayList = new ArrayList<>();
+        productsArrayList.add(lenovoLegion7i);
+        productsArrayList.add(asusROGStrix16);
+        productsArrayList.add(asusTUFA17Gaming);
+        productsArrayList.add(asusTufA16);
+        productsArrayList.add(samsung32Inch4K);
+        productsArrayList.add(clearCookAirFryer);
+        productsArrayList.add(metaQuest2);
+        productsArrayList.add(xboxSeriesS);
+        productsArrayList.add(playstation4Slim);
+        productsArrayList.add(valveSteamDeck);
+        productsArrayList.add(asusRogAlly);
+        productsArrayList.add(smartTowerFan);
+        return productsArrayList;
+    }
+
+    public static List<Product> getSalesProductsData() {
         List<Product>productsArrayList = new ArrayList<>();
         productsArrayList.add(lenovoLegion7i);
         productsArrayList.add(asusROGStrix16);

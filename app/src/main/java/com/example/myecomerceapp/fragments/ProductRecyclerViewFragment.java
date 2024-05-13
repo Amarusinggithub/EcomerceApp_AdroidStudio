@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -37,11 +38,14 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
      ImageView favoriteIcon;
       CardView favoritesCd;
 
+    EditText searchView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_products_recyclerview, container, false);
+        searchView=view.findViewById(R.id.searchview);
         setupCategoryRecyclerView(view);
         setUpProductRecyclerView(view);
         return view;
@@ -67,7 +71,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
     private  void loadFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.addToBackStack("products recyclerview");
+        fragmentTransaction.addToBackStack("productsrecyclerview");
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }

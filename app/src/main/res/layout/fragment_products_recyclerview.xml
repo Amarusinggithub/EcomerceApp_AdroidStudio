@@ -17,15 +17,20 @@
             android:layout_height="75dp"
             android:background="@drawable/view"/>
 
-        <androidx.appcompat.widget.SearchView
+        <EditText
+            android:padding="10dp"
             android:id="@+id/searchview"
-            android:layout_width="290dp"
+            android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/custom_searchview"
-            android:hint="@string/search_product" />
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/search_1"
+            android:background="@drawable/edit_text_ui"
+            android:hint="@string/search_product"
+            />
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/favoritecd"

@@ -92,3 +92,13 @@ w
 Gapp/src/main/java/com/example/myecomerceapp/fragments/HomeFragment.java,f\9\f93cafda17a7045dc588c746d818741afcb5a4a6
 
 Oapp/src/main/java/com/example/myecomerceapp/fragments/OrderRecieptFragment.java,d\e\decaeb8eac8dabfaba2f27e2ae180f1aecd04cee
+ˆ
+Xapp/src/main/java/com/example/myecomerceapp/fragments/PopularProductsSecondFragment.java,f\6\f61420fa7e941b59ca3a9d0e3f12616802f0dba1
+…
+Uapp/src/main/java/com/example/myecomerceapp/fragments/PickedForYOuSecondFragment.java,a\6\a63e57d5e2f106acd0a9edf620ad212966a62431
+‚
+Rapp/src/main/java/com/example/myecomerceapp/interfaces/MySalesOnclickListener.java,e\7\e78f19b44092a9ec67420b2c6ad96eee73cced3e
+v
+Fapp/src/main/java/com/example/myecomerceapp/adapters/SalesAdapter.java,0\0\00534f7c6868027de634a12aadb46117905775b5
+ƒ
+Sapp/src/main/java/com/example/myecomerceapp/fragments/SalesProductViewFragment.java,1\c\1c278df3bc65a2968a84c112f42233fb99c784ed

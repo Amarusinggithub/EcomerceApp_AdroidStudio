@@ -1,12 +1,14 @@
 package com.example.myecomerceapp.fragments;
 
-
 import static com.example.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.example.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.example.myecomerceapp.activities.MainActivity.productsFavorited;
 
-
+import android.graphics.Paint;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,34 +18,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
 
 
-public class ProductViewFragment extends Fragment {
-
+public class SalesProductViewFragment extends Fragment {
     Button addToCart;
-   Product product;
+    Product product;
     ImageView addFavoriteBtn;
     ImageView shareBtn;
     ImageView backBtn;
     boolean productAlreadyInFavorites;
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View productView=inflater.inflate(R.layout.fragment_productview, container, false);
-        initializeViewElements(productView);
-
-        return productView;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view=inflater.inflate(R.layout.fragment_sales_product_view, container, false);
+        initializeViewElements(view);
+        return view;
     }
-
     private void initializeViewElements(View productView) {
         addToCart= productView.findViewById(R.id.addtocartbtn);
         addFavoriteBtn = productView.findViewById(R.id.favoritebtn);
@@ -51,34 +45,36 @@ public class ProductViewFragment extends Fragment {
         backBtn= productView.findViewById(R.id.backbtn);
 
 
-            TextView productNameTextView =  productView.findViewById(R.id.Name);
-            TextView productPriceTextView =  productView.findViewById(R.id.Price);
-            TextView productDescriptionTextView =  productView.findViewById(R.id.Description);
-            ImageView productImageView =  productView.findViewById(R.id.Image);
+        TextView productNameTextView =  productView.findViewById(R.id.Name);
+        TextView productPriceTextView =  productView.findViewById(R.id.Price);
+        TextView productSalesPriceTextView =  productView.findViewById(R.id.SalesPrice);
+        TextView productDescriptionTextView =  productView.findViewById(R.id.Description);
+        ImageView productImageView =  productView.findViewById(R.id.Image);
 
-            if (!productsFavorited.contains(product)) {
-                productAlreadyInFavorites = false;
-                Glide.with(requireContext())
-                        .load(R.drawable.unfavorite)
-                        .fitCenter()
-                        .into(addFavoriteBtn);
-            }else{
-                Glide.with(requireContext())
-                        .load(R.drawable.favoriteicon2)
-                        .fitCenter()
-                        .into(addFavoriteBtn);
-                productAlreadyInFavorites =true;
-            }
-
-
-            productNameTextView.setText(productInProductViewFragment.getProductName());
-            productPriceTextView.setText(productInProductViewFragment.getProductPrice());
-            productDescriptionTextView.setText(productInProductViewFragment.getProductDescription());
-            Glide.with(this)
-                    .load(productInProductViewFragment.getProductImage())
+        if (!productsFavorited.contains(product)) {
+            productAlreadyInFavorites = false;
+            Glide.with(requireContext())
+                    .load(R.drawable.unfavorite)
                     .fitCenter()
-                    .into(productImageView);
+                    .into(addFavoriteBtn);
+        }else{
+            Glide.with(requireContext())
+                    .load(R.drawable.favoriteicon2)
+                    .fitCenter()
+                    .into(addFavoriteBtn);
+            productAlreadyInFavorites =true;
+        }
 
+
+        productNameTextView.setText(productInProductViewFragment.getProductName());
+        productSalesPriceTextView.setText(productInProductViewFragment.getProductSalesPrice());
+        productPriceTextView.setText(productInProductViewFragment.getProductPrice());
+        productDescriptionTextView.setText(productInProductViewFragment.getProductDescription());
+        Glide.with(this)
+                .load(productInProductViewFragment.getProductImage())
+                .fitCenter()
+                .into(productImageView);
+        productPriceTextView.setPaintFlags(productPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         Glide.with(requireContext())
                 .load(R.drawable.share)
@@ -135,6 +131,4 @@ public class ProductViewFragment extends Fragment {
         });
 
     }
-
-
 }
