@@ -1,6 +1,8 @@
 package com.example.myecomerceapp.fragments;
 
 
+import static com.example.myecomerceapp.activities.MainActivity.EVERY_PRODUCT;
+import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.example.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.example.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.example.myecomerceapp.activities.MainActivity.productsFavorited;
@@ -19,16 +21,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.models.Product;
 
+import java.util.Objects;
+
 
 public class ProductViewFragment extends Fragment {
 
     Button addToCart;
-   Product product;
+    Button buyBtn;
     ImageView addFavoriteBtn;
     ImageView shareBtn;
     ImageView backBtn;
@@ -49,6 +55,7 @@ public class ProductViewFragment extends Fragment {
         addFavoriteBtn = productView.findViewById(R.id.favoritebtn);
         shareBtn= productView.findViewById(R.id.sharebtn);
         backBtn= productView.findViewById(R.id.backbtn);
+        buyBtn=productView.findViewById(R.id.buyBtn);
 
 
             TextView productNameTextView =  productView.findViewById(R.id.Name);
@@ -56,7 +63,9 @@ public class ProductViewFragment extends Fragment {
             TextView productDescriptionTextView =  productView.findViewById(R.id.Description);
             ImageView productImageView =  productView.findViewById(R.id.Image);
 
-            if (!productsFavorited.contains(product)) {
+
+
+            if (!productsFavorited.contains(getProductsData(EVERY_PRODUCT).get(getProductInPosition()))) {
                 productAlreadyInFavorites = false;
                 Glide.with(requireContext())
                         .load(R.drawable.unfavorite)
@@ -71,11 +80,11 @@ public class ProductViewFragment extends Fragment {
             }
 
 
-            productNameTextView.setText(productInProductViewFragment.getProductName());
-            productPriceTextView.setText(productInProductViewFragment.getProductPrice());
-            productDescriptionTextView.setText(productInProductViewFragment.getProductDescription());
+            productNameTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName());
+            productPriceTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductPrice());
+            productDescriptionTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductDescription());
             Glide.with(this)
-                    .load(productInProductViewFragment.getProductImage())
+                    .load(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductImage())
                     .fitCenter()
                     .into(productImageView);
 
@@ -94,21 +103,21 @@ public class ProductViewFragment extends Fragment {
 
         addFavoriteBtn.setOnClickListener(v -> {
             if (productAlreadyInFavorites) {
-                productsFavorited.remove(productInProductViewFragment);
+                productsFavorited.remove(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
                 Glide.with(requireContext())
                         .load(R.drawable.unfavorite)
                         .fitCenter()
                         .into(addFavoriteBtn);
-                Toast.makeText(getContext(), "This " + productInProductViewFragment.getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "This " + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
                 productAlreadyInFavorites = false;
             } else {
-                productsFavorited.add(productInProductViewFragment);
+                productsFavorited.add(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
                 productAlreadyInFavorites = true;
                 Glide.with(requireContext())
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(addFavoriteBtn);
-                Toast.makeText(getContext(), productInProductViewFragment.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -117,23 +126,45 @@ public class ProductViewFragment extends Fragment {
             if (productInProductViewFragment != null) {
                 boolean productAlreadyInCart = false;
                 for (Product productInCart : productsAddedToCart) {
-                    if (productInCart.getProductName().equals(productInProductViewFragment.getProductName())) {
-                        int newQuantity = productInCart.getProductQuantity() + productInProductViewFragment.getProductQuantity();
+                    if (productInCart.getProductName().equals(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName())) {
+                        int newQuantity = productInCart.getProductQuantity() + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductQuantity();
                         productInCart.setProductQuantity(newQuantity);
-                        Toast.makeText(getContext(), "Quantity of " + productInProductViewFragment.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Quantity of " + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
                         productAlreadyInCart = true;
                         break;
                     }
                 }
                 if (!productAlreadyInCart) {
-                    productsAddedToCart.add(productInProductViewFragment);
-                    Toast.makeText(getContext(), productInProductViewFragment.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
+                    productsAddedToCart.add(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
+                    Toast.makeText(getContext(), getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Log.d("ProductViewFragment", "The product is null");
             }
         });
 
+        buyBtn.setOnClickListener(v -> {
+
+        });
+
+    }
+
+    public void loadFragment(Fragment fragment) {
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.addToBackStack("ProductViewFragment");
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
+    }
+
+    public int getProductInPosition(){
+        int position=0;
+        for(Product productInEveryThing: getProductsData(EVERY_PRODUCT)){
+            if(Objects.equals(productInEveryThing.getProductName(), productInProductViewFragment.getProductName())){
+                position=getProductsData(EVERY_PRODUCT).indexOf(productInEveryThing);
+            }
+        }
+        return position;
     }
 
 

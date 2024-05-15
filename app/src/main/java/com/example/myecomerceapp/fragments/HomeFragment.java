@@ -37,7 +37,6 @@ import com.example.myecomerceapp.models.Category;
 public class HomeFragment extends Fragment implements MyCategoryOnClickListener, MyProductOnClickListener {
      ImageView cashbackImage;
      ImageView favoriteIcon;
-
      ScrollView scrollView;
      FrameLayout pickedForYouFrameLayout;
      LinearLayout pickedForYouLinearLayout;

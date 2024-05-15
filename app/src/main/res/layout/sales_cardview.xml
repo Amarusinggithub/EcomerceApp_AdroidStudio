@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
+        android:padding="5dp"
         >
 
         <ImageView
@@ -29,8 +29,8 @@
             android:layout_marginBottom="20dp"
             android:id="@+id/productImage"
             android:scaleType="fitCenter"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_marginEnd="10dp"
             android:text="$1000.99"
             android:textColor="@color/my_light_accent_color"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:layout_below="@id/productImage"
             />
         <TextView
@@ -72,7 +72,9 @@
             android:textStyle="bold|normal" />
 
         <ImageView
-            android:layout_marginTop="100dp"
+            android:layout_toEndOf="@id/Price"
+           android:layout_below="@id/productImage"
+            android:layout_marginBottom="3dp"
             android:id="@+id/addtocartbtn"
             android:layout_width="20dp"
             android:layout_height="20dp"

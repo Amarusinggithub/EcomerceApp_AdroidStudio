@@ -22,7 +22,7 @@ import com.example.myecomerceapp.models.Product;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
-    boolean productAlreadyInFavorites = false;
+    boolean productAlreadyInFavorites;
     private final MyProductOnClickListener productOnclickListener;
     private final List<Product> productArrayList;
     private final Context context;
@@ -44,15 +44,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, int position) {
 
-        Product product= productArrayList.get(position);
         Glide.with(context)
-                .load(product.getProductImage())
+                .load(productArrayList.get(position).getProductImage())
                 .into(holder.productImage);
-        holder.productName.setText(product.getProductName());
-        holder.productPrice.setText(product.getProductPrice());
+        holder.productName.setText(productArrayList.get(position).getProductName());
+        holder.productPrice.setText(productArrayList.get(position).getProductPrice());
 
 
-            if (productsFavorited.contains(product)) {
+            if (productsFavorited.contains(productArrayList.get(position))) {
 
                 Glide.with(context)
                         .load(R.drawable.favoriteicon2)
@@ -71,21 +70,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
         holder.favoriteBtn.setOnClickListener(v -> {
             if (productAlreadyInFavorites) {
-                productsFavorited.remove(product);
+                productsFavorited.remove(productArrayList.get(position));
                 Glide.with(context)
                         .load(R.drawable.unfavorite)
                         .fitCenter()
                         .into(holder.favoriteBtn);
-                Toast.makeText(context, "This " + product.getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "This " + productArrayList.get(position).getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
                 productAlreadyInFavorites = false;
             } else {
-                productsFavorited.add(product);
+                productsFavorited.add(productArrayList.get(position));
                 productAlreadyInFavorites = true;
                 Glide.with(context)
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(holder.favoriteBtn);
-                Toast.makeText(context, product.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, productArrayList.get(position).getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,17 +92,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.addToCartBtn.setOnClickListener(v -> {
             boolean productAlreadyInCart = false;
             for (Product productInCart : productsAddedToCart) {
-                if (productInCart.getProductName().equals(product.getProductName())) {
-                    int newQuantity = productInCart.getProductQuantity() + product.getProductQuantity();
+                if (productInCart.getProductName().equals(productArrayList.get(position).getProductName())) {
+                    int newQuantity = productInCart.getProductQuantity() + productArrayList.get(position).getProductQuantity();
                     productInCart.setProductQuantity(newQuantity);
-                    Toast.makeText(context, "Quantity of " + product.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Quantity of " + productArrayList.get(position).getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
                     productAlreadyInCart = true;
                     break;
                 }
             }
             if (!productAlreadyInCart) {
-                productsAddedToCart.add(product);
-                Toast.makeText(context, product.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
+                productsAddedToCart.add(productArrayList.get(position));
+                Toast.makeText(context, productArrayList.get(position).getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
             }
         });
     }

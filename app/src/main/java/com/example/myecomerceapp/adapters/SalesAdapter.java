@@ -53,6 +53,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
                 .into(holder.productImage);
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getProductPrice());
+        holder.productSalesPrice.setText(product.getProductSalesPrice());
 
 
         if (productsFavorited.contains(product)) {
@@ -135,6 +136,10 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
             productPrice.setPaintFlags(productPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+            Glide.with(context)
+                    .load(R.drawable.addtocart)
+                    .fitCenter()
+                    .into(addToCartBtn);
 
             itemView.setOnClickListener(v -> {
                 int position=getBindingAdapterPosition();
