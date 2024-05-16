@@ -44,24 +44,24 @@ public class ProductViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View productView=inflater.inflate(R.layout.fragment_productview, container, false);
-        initializeViewElements(productView);
+        View view=inflater.inflate(R.layout.fragment_productview, container, false);
+        initializeViewElements(view);
 
-        return productView;
+        return view;
     }
 
-    private void initializeViewElements(View productView) {
-        addToCart= productView.findViewById(R.id.addtocartbtn);
-        addFavoriteBtn = productView.findViewById(R.id.favoritebtn);
-        shareBtn= productView.findViewById(R.id.sharebtn);
-        backBtn= productView.findViewById(R.id.backbtn);
-        buyBtn=productView.findViewById(R.id.buyBtn);
+    private void initializeViewElements(View view) {
+        addToCart= view.findViewById(R.id.addtocartbtn);
+        addFavoriteBtn = view.findViewById(R.id.favoritebtn);
+        shareBtn= view.findViewById(R.id.sharebtn);
+        backBtn= view.findViewById(R.id.backbtn);
+        buyBtn=view.findViewById(R.id.buyBtn);
 
 
-            TextView productNameTextView =  productView.findViewById(R.id.Name);
-            TextView productPriceTextView =  productView.findViewById(R.id.Price);
-            TextView productDescriptionTextView =  productView.findViewById(R.id.Description);
-            ImageView productImageView =  productView.findViewById(R.id.Image);
+            TextView productNameTextView =  view.findViewById(R.id.Name);
+            TextView productPriceTextView =  view.findViewById(R.id.Price);
+            TextView productDescriptionTextView =  view.findViewById(R.id.Description);
+            ImageView productImageView =  view.findViewById(R.id.Image);
 
 
 

@@ -126,11 +126,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             productPrice=itemView.findViewById(R.id.Price);
             favoriteBtn=itemView.findViewById(R.id.favoritebtn);
             addToCartBtn=itemView.findViewById(R.id.addtocartbtn);
-
-            Glide.with(context)
-                    .load(R.drawable.unfavorite)
-                    .fitCenter()
-                    .into(favoriteBtn);
+            
 
             Glide.with(context)
                     .load(R.drawable.addtocart)

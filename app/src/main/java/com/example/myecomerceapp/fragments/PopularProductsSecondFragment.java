@@ -64,7 +64,7 @@ public class PopularProductsSecondFragment extends Fragment implements MyProduct
     private  void loadFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.addToBackStack("HomeFragment");
+        fragmentTransaction.addToBackStack("popularProductsSecondFragment");
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
 

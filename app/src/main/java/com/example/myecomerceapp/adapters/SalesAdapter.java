@@ -47,16 +47,16 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull SalesAdapter.MyViewHolder holder, int position) {
-        Product product= salesArrayList.get(position);
+
         Glide.with(context)
-                .load(product.getProductImage())
+                .load(salesArrayList.get(position).getProductImage())
                 .into(holder.productImage);
-        holder.productName.setText(product.getProductName());
-        holder.productPrice.setText(product.getProductPrice());
-        holder.productSalesPrice.setText(product.getProductSalesPrice());
+        holder.productName.setText(salesArrayList.get(position).getProductName());
+        holder.productPrice.setText(salesArrayList.get(position).getProductPrice());
+        holder.productSalesPrice.setText(salesArrayList.get(position).getProductSalesPrice());
 
 
-        if (productsFavorited.contains(product)) {
+        if (productsFavorited.contains(salesArrayList.get(position))) {
 
             Glide.with(context)
                     .load(R.drawable.favoriteicon2)
@@ -75,21 +75,21 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
         holder.favoriteBtn.setOnClickListener(v -> {
             if (productAlreadyInFavorites) {
-                productsFavorited.remove(product);
+                productsFavorited.remove(salesArrayList.get(position));
                 Glide.with(context)
                         .load(R.drawable.unfavorite)
                         .fitCenter()
                         .into(holder.favoriteBtn);
-                Toast.makeText(context, "This " + product.getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "This " + salesArrayList.get(position).getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
                 productAlreadyInFavorites = false;
             } else {
-                productsFavorited.add(product);
+                productsFavorited.add(salesArrayList.get(position));
                 productAlreadyInFavorites = true;
                 Glide.with(context)
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(holder.favoriteBtn);
-                Toast.makeText(context, product.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, salesArrayList.get(position).getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -97,17 +97,17 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
         holder.addToCartBtn.setOnClickListener(v -> {
             boolean productAlreadyInCart = false;
             for (Product productInCart : productsAddedToCart) {
-                if (productInCart.getProductName().equals(product.getProductName())) {
-                    int newQuantity = productInCart.getProductQuantity() + product.getProductQuantity();
+                if (productInCart.getProductName().equals(salesArrayList.get(position).getProductName())) {
+                    int newQuantity = productInCart.getProductQuantity() + salesArrayList.get(position).getProductQuantity();
                     productInCart.setProductQuantity(newQuantity);
-                    Toast.makeText(context, "Quantity of " + product.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Quantity of " + salesArrayList.get(position).getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
                     productAlreadyInCart = true;
                     break;
                 }
             }
             if (!productAlreadyInCart) {
-                productsAddedToCart.add(product);
-                Toast.makeText(context, product.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
+                productsAddedToCart.add(salesArrayList.get(position));
+                Toast.makeText(context, salesArrayList.get(position).getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
             }
         });
     }

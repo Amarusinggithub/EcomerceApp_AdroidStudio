@@ -62,7 +62,7 @@ public class PickedForYOuSecondFragment extends Fragment implements MyProductOnC
     private  void loadFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.addToBackStack("HomeFragment");
+        fragmentTransaction.addToBackStack("pickedForYouSecondFragment");
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
 

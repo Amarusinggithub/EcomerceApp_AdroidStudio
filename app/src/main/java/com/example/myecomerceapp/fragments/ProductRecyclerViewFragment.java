@@ -71,7 +71,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
     private  void loadFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.addToBackStack("productsrecyclerview");
+        fragmentTransaction.addToBackStack("productsRecyclerview");
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
