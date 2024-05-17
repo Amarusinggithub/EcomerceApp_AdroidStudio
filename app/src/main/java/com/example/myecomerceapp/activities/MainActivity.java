@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity  {
      FrameLayout frameLayout;
      String email;
      String username;
-    FirebaseFirestore db;
+     FirebaseFirestore db;
+
     // Phones
     public static Product SAMSUNGGalaxyS24Plus = new Product(R.drawable.s24plus,1,"SAMSUNG Galaxy S24+","$969.99","$775.99","SAMSUNG Galaxy S24+ Plus Cell Phone, 512GB AI Smartphone, Unlocked Android, 50MP Camera, Fastest Processor, Long Battery Life, US Version, 2024, Onyx Black", PHONES);
     public static Product oneplus_12 = new Product(R.drawable.oneplus_12,1,"OnePlus 12","$899.99","$719.99","OnePlus 12,16GB RAM+512GB,Dual-SIM,Unlocked Android Smartphone,Supports 50W Wireless Charging,Latest Mobile Processor,Advanced Hasselblad Camera,5400 mAh Battery,2024,Flowy Emerald", PHONES);
@@ -147,7 +148,6 @@ public class MainActivity extends AppCompatActivity  {
       /* for(Product product:getProductsData(EVERY_PRODUCT)){
            addProductDataToDatabase(product);
        }*/
-
     }
 
     public void addProductDataToDatabase(Product product){
@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity  {
         productsAddedToCart=user.getProductsUserAddedToCart();
         productsUserOrdered=user.getProductsUserOrdered();
         productsFavorited=user.getProductsFavorited();
-
     }
 
     private void setupBottomNavigationView() {
@@ -216,7 +215,6 @@ public class MainActivity extends AppCompatActivity  {
             }
             return true;
         });
-
     }
 
     public void loadFragment(Fragment fragment) {

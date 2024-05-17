@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/mycart"
-            android:text="@string/my_profile"
+            android:text="@string/my_account"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:layout_marginTop="20dp"

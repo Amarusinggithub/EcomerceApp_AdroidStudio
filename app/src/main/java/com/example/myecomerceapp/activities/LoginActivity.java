@@ -1,10 +1,15 @@
 package com.example.myecomerceapp.activities;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,8 +45,10 @@ public class LoginActivity extends AppCompatActivity {
     String finalPassword;
     User user;
     FirebaseFirestore db;
+    private boolean isPasswordVisible=false;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,25 @@ public class LoginActivity extends AppCompatActivity {
 
         signInBtn.setOnClickListener(v -> signIn());
         signUpTv.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class)));
+
+        passwordEditText.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                Drawable drawableEnd = passwordEditText.getCompoundDrawables()[2];
+                if (drawableEnd != null && event.getRawX() >= (passwordEditText.getRight() - drawableEnd.getBounds().width())) {
+                    // Toggle password visibility
+                    if (isPasswordVisible) {
+                        passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    } else {
+                        passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    }
+                    isPasswordVisible = !isPasswordVisible;
+                    // Move the cursor to the end of the text
+                    passwordEditText.setSelection(passwordEditText.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     private void signIn() {
