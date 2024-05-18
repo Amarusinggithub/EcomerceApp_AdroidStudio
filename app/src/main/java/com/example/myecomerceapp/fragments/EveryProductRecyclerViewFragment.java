@@ -24,7 +24,7 @@ import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 
 public class EveryProductRecyclerViewFragment extends Fragment implements MyProductOnClickListener {
 RecyclerView recyclerView;
-ProductAdapter adapter;
+public static ProductAdapter adapter;
 GridLayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

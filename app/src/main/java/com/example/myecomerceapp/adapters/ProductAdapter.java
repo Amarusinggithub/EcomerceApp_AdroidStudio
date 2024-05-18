@@ -20,16 +20,19 @@ import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
     private final MyProductOnClickListener productOnclickListener;
-    private final List<Product> productArrayList;
+    private final List<Product> originalList;
+    private List<Product> filteredList;
     private final Context context;
 
     public ProductAdapter(MyProductOnClickListener productOnclickListener, List<Product> productArrayList, Context context) {
         this.productOnclickListener = productOnclickListener;
-        this.productArrayList = productArrayList;
+        this.originalList = productArrayList;
+        this.filteredList = new ArrayList<>(productArrayList); // Initialize filteredList with the original data
         this.context = context;
     }
 
@@ -42,8 +45,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, int position) {
-        if (position >= 0 && position < productArrayList.size()) {
-            Product currentProduct = productArrayList.get(position);
+        if (position >= 0 && position < filteredList.size()) {
+            Product currentProduct = filteredList.get(position);
 
             Glide.with(context)
                     .load(currentProduct.getProductImage())
@@ -65,11 +68,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 holder.productAlreadyInFavorites = false;
             }
 
-
             holder.favoriteBtn.setOnClickListener(v -> {
                 int adapterPosition = holder.getBindingAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < productArrayList.size()) {
-                    Product clickedProduct = productArrayList.get(adapterPosition);
+                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < filteredList.size()) {
+                    Product clickedProduct = filteredList.get(adapterPosition);
                     if (holder.productAlreadyInFavorites) {
                         productsFavorited.remove(clickedProduct);
                         Glide.with(context)
@@ -90,11 +92,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 }
             });
 
-
             holder.addToCartBtn.setOnClickListener(v -> {
                 int adapterPosition = holder.getBindingAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < productArrayList.size()) {
-                    Product clickedProduct = productArrayList.get(adapterPosition);
+                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < filteredList.size()) {
+                    Product clickedProduct = filteredList.get(adapterPosition);
                     boolean productAlreadyInCart = false;
                     for (Product productInCart : productsAddedToCart) {
                         if (productInCart.getProductName().equals(clickedProduct.getProductName())) {
@@ -113,13 +114,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             });
         } else {
             // Logging for index out of bounds
-            Log.e("ProductAdapter", "Index " + position + " out of bounds for length " + productArrayList.size());
+            Log.e("ProductAdapter", "Index " + position + " out of bounds for length " + filteredList.size());
         }
     }
 
     @Override
     public int getItemCount() {
-        return productArrayList.size();
+        return filteredList.size();
+    }
+
+    public void filter(String query) {
+        if (query.isEmpty()) {
+            filteredList = new ArrayList<>(originalList);
+        } else {
+            List<Product> filtered = new ArrayList<>();
+            for (Product product : originalList) {
+                if (product.getProductName().toLowerCase().contains(query.toLowerCase())) {
+                    filtered.add(product);
+                }
+            }
+            filteredList = filtered;
+        }
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

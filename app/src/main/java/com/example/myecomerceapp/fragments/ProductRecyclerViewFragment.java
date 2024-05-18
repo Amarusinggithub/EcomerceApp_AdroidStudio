@@ -1,13 +1,18 @@
 package com.example.myecomerceapp.fragments;
 
 
-
 import static com.example.myecomerceapp.activities.MainActivity.getCategory;
 import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.example.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 
-
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -17,12 +22,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.example.myecomerceapp.R;
 import com.example.myecomerceapp.adapters.CategoryAdapter;
@@ -30,7 +29,6 @@ import com.example.myecomerceapp.adapters.ProductAdapter;
 import com.example.myecomerceapp.interfaces.MyCategoryOnClickListener;
 import com.example.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.example.myecomerceapp.models.Category;
-import com.example.myecomerceapp.models.Product;
 
 public class ProductRecyclerViewFragment extends Fragment implements MyProductOnClickListener, MyCategoryOnClickListener {
     public static  String categoryId;
@@ -65,6 +63,23 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
         productRecyclerView.setAdapter(productAdapter);
 
         favoritesCd.setOnClickListener(v -> loadFragment(new FavoritesFragment()));
+
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                productAdapter.filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 

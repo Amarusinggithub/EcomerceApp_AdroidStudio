@@ -191,7 +191,6 @@ public class MainActivity extends AppCompatActivity  {
 
     private void initializeViews() {
         bottomNavigationView = findViewById(R.id.bottomnav);
-        frameLayout = findViewById(R.id.frameLayout);
         setupBottomNavigationView();
         productsAddedToCart=user.getProductsUserAddedToCart();
         productsUserOrdered=user.getProductsUserOrdered();

@@ -50,6 +50,7 @@
                 android:layout_margin="12dp"
                 />
         </androidx.cardview.widget.CardView>
+
         <FrameLayout
             android:id="@+id/recyclerviewcontainer"
             android:layout_width="match_parent"

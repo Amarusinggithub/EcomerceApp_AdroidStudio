@@ -7,7 +7,6 @@ import static com.example.myecomerceapp.activities.MainActivity.productInProduct
 import static com.example.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.example.myecomerceapp.activities.MainActivity.productsFavorited;
 
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +31,6 @@ import java.util.Objects;
 
 
 public class ProductViewFragment extends Fragment {
-
     Button addToCart;
     Button buyBtn;
     ImageView addFavoriteBtn;
@@ -78,7 +76,6 @@ public class ProductViewFragment extends Fragment {
                         .into(addFavoriteBtn);
                 productAlreadyInFavorites =true;
             }
-
 
             productNameTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName());
             productPriceTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductPrice());

@@ -4,8 +4,10 @@ package com.example.myecomerceapp.fragments;
 import static com.example.myecomerceapp.activities.MainActivity.getCategory;
 import static com.example.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.example.myecomerceapp.activities.MainActivity.productInProductViewFragment;
+import static com.example.myecomerceapp.fragments.EveryProductRecyclerViewFragment.adapter;
 import static com.example.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -16,7 +18,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -45,11 +50,10 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
      CardView salesBanner;
      RecyclerView categoryRecycleView;
      LinearLayout popularProductsLinearLayout;
-    CardView favoritesCd;
-   FrameLayout popularProductsFrameLayout;
-
-   TextView seeAllPopularProducts;
-   TextView seeAllPickedForYou;
+     CardView favoritesCd;
+     FrameLayout popularProductsFrameLayout;
+     TextView seeAllPopularProducts;
+     TextView seeAllPickedForYou;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +64,7 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         return view;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initializeViews(View view) {
         seeAllPickedForYou=view.findViewById(R.id.seeallforpickedforyou);
         seeAllPopularProducts=view.findViewById(R.id.seeallforpopularproductstv);
@@ -69,14 +74,12 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         scrollView=view.findViewById(R.id.scrollview);
         popularProductsFrameLayout=view.findViewById(R.id.popularproductframelayout);
         searchView=view.findViewById(R.id.searchview);
-        frameLayout = view.findViewById(R.id.frameLayout);
+        frameLayout = view.findViewById(R.id.recyclerviewcontainer);
         salesBanner =view. findViewById(R.id.salesBanner);
         categoryRecycleView =view. findViewById(R.id.categoriesRecycleView);
         popularProductsLinearLayout = view.findViewById(R.id.popularproductsLL);
         pickedForYouFrameLayout=view.findViewById(R.id.pickedforyouproductframelayout);
         pickedForYouLinearLayout=view.findViewById(R.id.pickedforyouproductsLL);
-
-
 
         Glide.with(this)
                 .load(R.drawable.cashback)
@@ -106,6 +109,30 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
             loadFragment(fragment);
         });
 
+        searchView.setOnTouchListener((v, event) -> {
+            scrollView.setVisibility(View.GONE);
+            frameLayout.setVisibility(View.VISIBLE);
+            loadSearchFragment(new EveryProductRecyclerViewFragment());
+            return false;
+        });
+
+       searchView.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+               adapter.filter(s.toString());
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+
+           }
+       });
+
     }
     private void setupCategoryRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -121,12 +148,14 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         fragmentTransaction.commit();
 
     }
+
     public void loadPickedForYouProductsFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.pickedforyouproductframelayout,fragment);
         fragmentTransaction.commit();
     }
+
     public void loadFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -135,6 +164,15 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         fragmentTransaction.commit();
     }
 
+    public void loadSearchFragment(Fragment fragment) {
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.addToBackStack("HomeFragment");
+        fragmentTransaction.replace(R.id.recyclerviewcontainer, fragment);
+        fragmentTransaction.commit();
+    }
+
+
     @Override
     public void categoryClicked(int position) {
         Category category = getCategory().get(position);
@@ -142,6 +180,7 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         categoryId= category.getCategoryId();
         loadFragment(productRecyclerViewFragment);
     }
+
 
     @Override
     public void productClicked(int position) {
