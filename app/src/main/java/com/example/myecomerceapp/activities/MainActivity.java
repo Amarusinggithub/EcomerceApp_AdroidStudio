@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity  {
     public void loadFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        /*fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }

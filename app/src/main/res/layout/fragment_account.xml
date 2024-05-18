@@ -16,7 +16,7 @@
             android:background="@drawable/view"/>
 
         <TextView
-            android:id="@+id/mycart"
+            android:id="@+id/Account"
             android:text="@string/my_account"
             android:textColor="@color/white"
             android:textSize="30sp"
@@ -25,14 +25,5 @@
             android:textStyle="bold|normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <ImageView
-            android:id="@+id/backbtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"
-            />
-
     </RelativeLayout>
 </FrameLayout>

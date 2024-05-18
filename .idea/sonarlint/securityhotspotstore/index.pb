@@ -102,3 +102,5 @@ v
 Fapp/src/main/java/com/example/myecomerceapp/adapters/SalesAdapter.java,0\0\00534f7c6868027de634a12aadb46117905775b5
 ƒ
 Sapp/src/main/java/com/example/myecomerceapp/fragments/SalesProductViewFragment.java,1\c\1c278df3bc65a2968a84c112f42233fb99c784ed
+‹
+[app/src/main/java/com/example/myecomerceapp/fragments/EveryProductRecyclerViewFragment.java,0\a\0a2eb8db5887ae532662962848ab324e2e94de4d

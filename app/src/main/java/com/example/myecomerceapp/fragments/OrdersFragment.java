@@ -27,7 +27,7 @@ public class OrdersFragment extends Fragment implements MyOrderOnClickListener {
     RecyclerView recyclerView;
     ImageView emptyOrderImage;
     LinearLayoutManager linearLayoutManager;
-    ImageView backBtn;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +39,7 @@ public class OrdersFragment extends Fragment implements MyOrderOnClickListener {
     }
 
     private void initializeViewElements(View view) {
-        backBtn=view.findViewById(R.id.backbtn);
+
 
         recyclerView= view.findViewById(R.id.recyclerview);
         emptyOrderImage= view.findViewById(R.id.orderisemptyimage);
@@ -49,17 +49,9 @@ public class OrdersFragment extends Fragment implements MyOrderOnClickListener {
         }else{
             setupOrderEmptyView();
         }
-        setupBackButton();
     }
 
-    private void setupBackButton() {
-        Glide.with(this)
-                .load(R.drawable.whiteback)
-                .fitCenter()
-                .into(backBtn);
 
-        backBtn.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
-    }
 
     private void setupOrderEmptyView() {
         emptyOrderImage.setVisibility(View.VISIBLE);

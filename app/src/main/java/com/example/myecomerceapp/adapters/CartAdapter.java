@@ -4,6 +4,7 @@ import static com.example.myecomerceapp.activities.MainActivity.productsAddedToC
 import static com.example.myecomerceapp.fragments.CartFragment.totalNumber;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
-
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
     private final ArrayList<Product> cartProducts;
-
     private final MyProductOnClickListener productOnclickListener;
-
     private final Context context;
     private int newQuantity;
 
@@ -42,48 +39,57 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
     @NonNull
     @Override
     public CartAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_product_cardview,parent,false);
-        return new MyViewHolder(view,productOnclickListener,context);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_product_cardview, parent, false);
+        return new MyViewHolder(view, productOnclickListener, context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.MyViewHolder holder, int position) {
-        // Get product from the list
-        Product product = cartProducts.get(position);
 
+        if (position >= 0 && position < cartProducts.size()) {
+            Product product = cartProducts.get(position);
 
             Glide.with(context)
                     .load(product.getProductImage())
                     .into(holder.image);
 
-        Glide.with(context)
-                .load(R.drawable.delete)
-                .fitCenter()
-                .into(holder.close);
+            Glide.with(context)
+                    .load(R.drawable.delete)
+                    .fitCenter()
+                    .into(holder.close);
 
             holder.name.setText(product.getProductName());
             holder.quantity.setText(String.valueOf(product.getProductQuantity()));
             holder.price.setText(product.getProductPrice());
 
             holder.minus.setOnClickListener(v -> {
-                 newQuantity = product.getProductQuantity() - 1;
+                int currentQuantity = product.getProductQuantity();
+                newQuantity = currentQuantity - 1;
                 if (newQuantity >= 1) {
                     product.setProductQuantity(newQuantity);
-                    holder.quantity.setText(String.valueOf( product.getProductQuantity()));
+                    holder.quantity.setText(String.valueOf(newQuantity));
                     totalNumber.setText(calculateTotalFormatted());
                 }
             });
 
             holder.plus.setOnClickListener(v -> {
-                newQuantity = product.getProductQuantity() + 1;
+                int currentQuantity = product.getProductQuantity();
+                newQuantity = currentQuantity + 1;
                 product.setProductQuantity(newQuantity);
                 holder.quantity.setText(String.valueOf(newQuantity));
                 totalNumber.setText(calculateTotalFormatted());
             });
 
-            holder.close.setOnClickListener(v -> productsAddedToCart.remove(product));
+            holder.close.setOnClickListener(v -> {
+                productsAddedToCart.remove(product);
+                notifyItemRemoved(position);
+                totalNumber.setText(calculateTotalFormatted());
+            });
+        } else {
+            // Logging for index out of bounds
+            Log.e("CartAdapter", "Index " + position + " out of bounds for length " + cartProducts.size());
         }
-
+    }
 
     @Override
     public int getItemCount() {
@@ -96,19 +102,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
             String[] priceParts = product.getProductPrice().split("\\$");
             String priceWithoutDollarSign = priceParts[1].replaceAll("[^\\d.]", "");
             double price = Double.parseDouble(priceWithoutDollarSign);
-
-            total += (int) (price * newQuantity * 100);
+            total += (int) (price * product.getProductQuantity() * 100);
         }
         return total;
     }
 
-
     private String formatTotal(int total) {
-
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-
         double amount = total / 100.0;
-
         return format.format(amount);
     }
 
@@ -117,28 +118,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder>{
         return formatTotal(total);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
-        ImageView image,close;
-        TextView name,price,quantity;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView image, close;
+        TextView name, price, quantity;
         Button minus;
         Button plus;
 
-        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener,Context context) {
+        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener, Context context) {
             super(itemView);
-            image=itemView.findViewById(R.id.productImage);
-            name=itemView.findViewById(R.id.productName);
-            price=itemView.findViewById(R.id.productPrice);
-            quantity=itemView.findViewById(R.id.productQuantity);
-            minus=itemView.findViewById(R.id.minusBtn);
-            plus=itemView.findViewById(R.id.plusBtn);
-            close=itemView.findViewById(R.id.close);
-
-
-
+            image = itemView.findViewById(R.id.productImage);
+            name = itemView.findViewById(R.id.productName);
+            price = itemView.findViewById(R.id.productPrice);
+            quantity = itemView.findViewById(R.id.productQuantity);
+            minus = itemView.findViewById(R.id.minusBtn);
+            plus = itemView.findViewById(R.id.plusBtn);
+            close = itemView.findViewById(R.id.close);
 
             itemView.setOnClickListener(v -> {
-                int position=getBindingAdapterPosition();
-                productOnclickListener.productClicked(position);
+                int position = getBindingAdapterPosition();
+
+                if (position != RecyclerView.NO_POSITION) {
+                    productOnclickListener.productClicked(position);
+                }
             });
         }
     }

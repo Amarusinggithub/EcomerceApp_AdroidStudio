@@ -62,7 +62,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
     }
 
     private void initializeViewElements(View view) {
-        backBtn=view.findViewById(R.id.backbtn);
+
         checkOutBtn= view.findViewById(R.id.checkoutbtn);
         recyclerView= view.findViewById(R.id.recyclerview);
         emptyCartImage= view.findViewById(R.id.cartisemptyimage);
@@ -78,17 +78,10 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
         }
 
 
-        setupBackButton();
+
     }
 
-    private void setupBackButton() {
-        Glide.with(this)
-                .load(R.drawable.whiteback)
-                .fitCenter()
-                .into(backBtn);
 
-        backBtn.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
-    }
 
     private void setupCartEmptyView() {
         emptyCartImage.setVisibility(View.VISIBLE);
