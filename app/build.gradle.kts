@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myecomerceapp"
+    namespace = "com.amar.myecomerceapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myecomerceapp"
+        applicationId = "com.amar.myecomerceapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
