@@ -22,21 +22,11 @@ import com.amar.myecomerceapp.fragments.OrdersFragment;
 import com.amar.myecomerceapp.models.Category;
 import com.amar.myecomerceapp.models.Product;
 import com.amar.myecomerceapp.models.User;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-
-
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

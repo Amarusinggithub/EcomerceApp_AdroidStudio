@@ -38,20 +38,20 @@ import com.amar.myecomerceapp.models.Category;
 
 
 public class HomeFragment extends Fragment implements MyCategoryOnClickListener, MyProductOnClickListener {
-     ImageView cashbackImage;
-     ImageView favoriteIcon;
-     ScrollView scrollView;
-     FrameLayout pickedForYouFrameLayout;
-     LinearLayout pickedForYouLinearLayout;
-     EditText searchView;
-     FrameLayout frameLayout;
-     CardView salesBanner;
-     RecyclerView categoryRecycleView;
-     LinearLayout popularProductsLinearLayout;
-     CardView favoritesCd;
-     FrameLayout popularProductsFrameLayout;
-     TextView seeAllPopularProducts;
-     TextView seeAllPickedForYou;
+    ImageView cashbackImage;
+    ImageView favoriteIcon;
+    ScrollView scrollView;
+    FrameLayout pickedForYouFrameLayout;
+    LinearLayout pickedForYouLinearLayout;
+    EditText searchView;
+    FrameLayout frameLayout;
+    CardView salesBanner;
+    RecyclerView categoryRecycleView;
+    LinearLayout popularProductsLinearLayout;
+    CardView favoritesCd;
+    FrameLayout popularProductsFrameLayout;
+    TextView seeAllPopularProducts;
+    TextView seeAllPickedForYou;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,22 +114,24 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
             return false;
         });
 
-       searchView.addTextChangedListener(new TextWatcher() {
-           @Override
-           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-           }
+            }
 
-           @Override
-           public void onTextChanged(CharSequence s, int start, int before, int count) {
-               adapter.filter(s.toString());
-           }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s!=null&&adapter!=null){
+                    adapter.filter(s.toString());
+                }
+            }
 
-           @Override
-           public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-           }
-       });
+            }
+        });
 
     }
     private void setupCategoryRecyclerView() {

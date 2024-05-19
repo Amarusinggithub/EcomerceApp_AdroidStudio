@@ -39,15 +39,12 @@ import java.util.Locale;
 
 public class CartFragment extends Fragment implements MyProductOnClickListener {
     private static final String TAG = "MainActivity";
-
-
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     CartAdapter cartAdapter;
     Button checkOutBtn;
     ImageView emptyCartImage;
     TextView totalText;
-    ImageView backBtn;
     public static TextView totalNumber;
     View line;
 

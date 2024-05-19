@@ -6,6 +6,7 @@ import static com.amar.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.amar.myecomerceapp.adapters.ProductAdapter.filteredList;
 
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -73,7 +74,9 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                productAdapter.filter(s.toString());
+                if (s != null && productAdapter!= null) {
+                    productAdapter.filter(s.toString());
+                }
             }
 
             @Override
@@ -104,16 +107,14 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
     @Override
     public void productClicked(int position) {
        productInProductViewFragment = filteredList.get(position);
-        ProductViewFragment productViewFragment = new ProductViewFragment();
-        loadFragment(productViewFragment);
+        loadFragment(new ProductViewFragment());
     }
 
     @Override
     public void categoryClicked(int position) {
         categoryRecycleView.setVisibility(View.VISIBLE);
         Category category = getCategory().get(position);
-        ProductRecyclerViewFragment productRecyclerViewFragment =new ProductRecyclerViewFragment();
         categoryId= category.getCategoryId();
-        loadFragment(productRecyclerViewFragment);
+        loadFragment(new ProductRecyclerViewFragment());
     }
 }

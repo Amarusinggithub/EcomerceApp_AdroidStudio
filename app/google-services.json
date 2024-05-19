@@ -8,6 +8,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:239100579519:android:396bb25423d21223c9400a",
+        "android_client_info": {
+          "package_name": "com.amar.myecomerceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239100579519-ik74h64r7u27rggb139b6ntdk56csmmt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amar.myecomerceapp",
+            "certificate_hash": "5834ddf47f9cbc9f7452f497183fbb37b82304d8"
+          }
+        },
+        {
+          "client_id": "239100579519-4fdgi2d339cuor9b0aslcm7p0sba64ei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpomHCX1_rSlwmUTM44Z_3zS4RRivhf7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239100579519-4fdgi2d339cuor9b0aslcm7p0sba64ei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:239100579519:android:f8e1b0d09b4bc5c3c9400a",
         "android_client_info": {
           "package_name": "com.example.myecomerceapp"

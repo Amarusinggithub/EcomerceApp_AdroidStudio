@@ -3,6 +3,7 @@ package com.amar.myecomerceapp.adapters;
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.fragments.CartFragment.totalNumber;
 
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                     .into(holder.image);
 
             Glide.with(context)
-                    .load(R.drawable.delete)
+                    .load(R.drawable.close)
                     .fitCenter()
                     .into(holder.close);
 
@@ -143,4 +144,5 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             });
         }
     }
+
 }
