@@ -3,6 +3,7 @@ package com.amar.myecomerceapp.adapters;
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.activities.MainActivity.productsFavorited;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     public ProductAdapter(MyProductOnClickListener productOnclickListener, List<Product> productArrayList, Context context) {
         this.productOnclickListener = productOnclickListener;
         this.originalList = productArrayList;
-        this.filteredList = new ArrayList<>(productArrayList); // Initialize filteredList with the original data
+        this.filteredList = new ArrayList<>(productArrayList);
         this.context = context;
     }
 
@@ -123,6 +124,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         return filteredList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void filter(String query) {
         if (query.isEmpty()) {
             filteredList = new ArrayList<>(originalList);

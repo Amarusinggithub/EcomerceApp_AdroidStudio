@@ -88,24 +88,16 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
                 .load(R.drawable.favoriteicon2)
                 .fitCenter()
                 .into(favoriteIcon);
+
         setupCategoryRecyclerView();
-        loadPopularProductsFragment(new PopularProductsRecyclerViewFragment());
+        loadPopularProductsFragment(new PopularProductsFragment());
         loadPickedForYouProductsFragment(new PickedForYouFragment());
 
-        favoritesCd.setOnClickListener(v -> loadFragment(new FavoritesFragment()));
-        seeAllPopularProducts.setOnClickListener(v -> {
-            PopularProductsSecondFragment fragment= new PopularProductsSecondFragment();
-            loadFragment(fragment);
-        });
-        seeAllPickedForYou.setOnClickListener(v -> {
-            PickedForYOuSecondFragment fragment=new PickedForYOuSecondFragment();
-            loadFragment(fragment);
-        });
 
-        salesBanner.setOnClickListener(v -> {
-            SalesFragment fragment=new SalesFragment();
-            loadFragment(fragment);
-        });
+        favoritesCd.setOnClickListener(v -> loadFragment(new FavoritesFragment()));
+        seeAllPopularProducts.setOnClickListener(v -> loadFragment( new PopularProductsSecondFragment()));
+        seeAllPickedForYou.setOnClickListener(v -> loadFragment(new PickedForYOuSecondFragment()));
+        salesBanner.setOnClickListener(v -> loadFragment(new SalesFragment()));
 
         searchView.setOnTouchListener((v, event) -> {
             scrollView.setVisibility(View.GONE);
@@ -144,6 +136,7 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
     public void loadPopularProductsFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.addToBackStack("HomeFragment");
         fragmentTransaction.add(R.id.popularproductframelayout,fragment);
         fragmentTransaction.commit();
 
@@ -152,6 +145,7 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
     public void loadPickedForYouProductsFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.addToBackStack("HomeFragment");
         fragmentTransaction.add(R.id.pickedforyouproductframelayout,fragment);
         fragmentTransaction.commit();
     }
@@ -176,16 +170,14 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
     @Override
     public void categoryClicked(int position) {
         Category category = getCategory().get(position);
-        ProductRecyclerViewFragment productRecyclerViewFragment =new ProductRecyclerViewFragment();
         categoryId= category.getCategoryId();
-        loadFragment(productRecyclerViewFragment);
+        loadFragment(new ProductRecyclerViewFragment());
     }
 
 
     @Override
     public void productClicked(int position) {
         productInProductViewFragment = filteredList.get(position);
-        ProductViewFragment productViewFragment = new ProductViewFragment();
-        loadFragment(productViewFragment);
+        loadFragment(new ProductViewFragment());
     }
 }

@@ -22,18 +22,18 @@ import com.amar.myecomerceapp.adapters.ProductAdapter;
 import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 
 
-public class PopularProductsRecyclerViewFragment extends Fragment implements MyProductOnClickListener {
-     RecyclerView popularProductsRecyclerview;
+public class PopularProductsFragment extends Fragment implements MyProductOnClickListener {
+     RecyclerView recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_popular_products_recycler_view, container, false);
-        popularProductsRecyclerview=view.findViewById(R.id.popularproductrecyclerview);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        popularProductsRecyclerview.setLayoutManager(linearLayoutManager);
-        ProductAdapter popularProductAdapter = new ProductAdapter(this, getPopularProductsData(),getContext());
-        popularProductsRecyclerview.setAdapter(popularProductAdapter);
+        View view=inflater.inflate(R.layout.fragment_popular_products, container, false);
+        recyclerView =view.findViewById(R.id.popularproductrecyclerview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        ProductAdapter adapter = new ProductAdapter(this, getPopularProductsData(),getContext());
+        recyclerView.setAdapter(adapter);
         return view;
     }
 

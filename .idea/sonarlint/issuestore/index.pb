@@ -88,8 +88,6 @@ i
 9app/src/main/java/com/amar/myecomerceapp/models/User.java,4\b\4b49896271796239b9d9e61d051d6c30df78364e
 ‚
 Rapp/src/main/java/com/amar/myecomerceapp/interfaces/MyCategoryOnClickListener.java,f\0\f0e243cb9dc1c7c4244e2c85d0c8a26320a3a714
-‹
-[app/src/main/java/com/amar/myecomerceapp/fragments/PopularProductsRecyclerViewFragment.java,8\b\8b9d9d9640cc7c56df01ca1020dc6ceaa52c331f
 y
 Iapp/src/main/java/com/amar/myecomerceapp/fragments/FavoritesFragment.java,d\b\db6393370b24d98f427dedb1409f2bf608a4c913
 {
@@ -102,5 +100,5 @@ v
 Fapp/src/main/java/com/amar/myecomerceapp/fragments/OrdersFragment.java,6\5\65b2e4a9470095855068401140932868e357bc11
 …
 Uapp/src/main/java/com/amar/myecomerceapp/fragments/PopularProductsSecondFragment.java,1\0\10178509df2666d459e4dab887c45980df7106b5
-L
-app/src/google-services.json,8\8\88a80eabc37aa96a2f3c94e7690c1818167904fb
+
+Oapp/src/main/java/com/amar/myecomerceapp/fragments/PopularProductsFragment.java,f\b\fbef89e60dd0e611c77f7b9124b8658a31910b1f
