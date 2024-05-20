@@ -39,82 +39,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
     @NonNull
     @Override
-    public ProductAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_cardview, parent, false);
         return new MyViewHolder(view, productOnclickListener, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         if (position >= 0 && position < filteredList.size()) {
             Product currentProduct = filteredList.get(position);
 
             Glide.with(context)
                     .load(currentProduct.getProductImage())
                     .into(holder.productImage);
+
             holder.productName.setText(currentProduct.getProductName());
             holder.productPrice.setText(currentProduct.getProductPrice());
 
-            if (productsFavorited.contains(currentProduct)) {
-                Glide.with(context)
-                        .load(R.drawable.favoriteicon2)
-                        .fitCenter()
-                        .into(holder.favoriteBtn);
-                holder.productAlreadyInFavorites = true;
-            } else {
-                Glide.with(context)
-                        .load(R.drawable.unfavorite)
-                        .fitCenter()
-                        .into(holder.favoriteBtn);
-                holder.productAlreadyInFavorites = false;
-            }
+            updateFavoriteIcon(holder, currentProduct);
 
-            holder.favoriteBtn.setOnClickListener(v -> {
-                int adapterPosition = holder.getBindingAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < filteredList.size()) {
-                    Product clickedProduct = filteredList.get(adapterPosition);
-                    if (holder.productAlreadyInFavorites) {
-                        productsFavorited.remove(clickedProduct);
-                        Glide.with(context)
-                                .load(R.drawable.unfavorite)
-                                .fitCenter()
-                                .into(holder.favoriteBtn);
-                        Toast.makeText(context, "This " + clickedProduct.getProductName() + " was removed from favorites.", Toast.LENGTH_SHORT).show();
-                        holder.productAlreadyInFavorites = false;
-                    } else {
-                        productsFavorited.add(clickedProduct);
-                        Glide.with(context)
-                                .load(R.drawable.favoriteicon2)
-                                .fitCenter()
-                                .into(holder.favoriteBtn);
-                        Toast.makeText(context, clickedProduct.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
-                        holder.productAlreadyInFavorites = true;
-                    }
-                }
-            });
+            holder.favoriteBtn.setOnClickListener(v -> toggleFavorite(holder, currentProduct));
+            holder.addToCartBtn.setOnClickListener(v -> addToCart(currentProduct));
 
-            holder.addToCartBtn.setOnClickListener(v -> {
-                int adapterPosition = holder.getBindingAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < filteredList.size()) {
-                    Product clickedProduct = filteredList.get(adapterPosition);
-                    boolean productAlreadyInCart = false;
-                    for (Product productInCart : productsAddedToCart) {
-                        if (productInCart.getProductName().equals(clickedProduct.getProductName())) {
-                            int newQuantity = productInCart.getProductQuantity() + clickedProduct.getProductQuantity();
-                            productInCart.setProductQuantity(newQuantity);
-                            Toast.makeText(context, "Quantity of " + clickedProduct.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
-                            productAlreadyInCart = true;
-                            break;
-                        }
-                    }
-                    if (!productAlreadyInCart) {
-                        productsAddedToCart.add(clickedProduct);
-                        Toast.makeText(context, clickedProduct.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
         } else {
-            // Logging for index out of bounds
             Log.e("ProductAdapter", "Index " + position + " out of bounds for length " + filteredList.size());
         }
     }
@@ -138,6 +85,59 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             filteredList = filtered;
         }
         notifyDataSetChanged();
+    }
+
+    private void updateFavoriteIcon(MyViewHolder holder, Product product) {
+        if (productsFavorited.contains(product)) {
+            Glide.with(context)
+                    .load(R.drawable.favoriteicon2)
+                    .fitCenter()
+                    .into(holder.favoriteBtn);
+            holder.productAlreadyInFavorites = true;
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.unfavorite)
+                    .fitCenter()
+                    .into(holder.favoriteBtn);
+            holder.productAlreadyInFavorites = false;
+        }
+    }
+
+    private void toggleFavorite(MyViewHolder holder, Product product) {
+        if (holder.productAlreadyInFavorites) {
+            productsFavorited.remove(product);
+            Glide.with(context)
+                    .load(R.drawable.unfavorite)
+                    .fitCenter()
+                    .into(holder.favoriteBtn);
+            Toast.makeText(context, "This " + product.getProductName() + " was removed from favorites.", Toast.LENGTH_SHORT).show();
+            holder.productAlreadyInFavorites = false;
+        } else {
+            productsFavorited.add(product);
+            Glide.with(context)
+                    .load(R.drawable.favoriteicon2)
+                    .fitCenter()
+                    .into(holder.favoriteBtn);
+            Toast.makeText(context, product.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
+            holder.productAlreadyInFavorites = true;
+        }
+    }
+
+    private void addToCart(Product product) {
+        boolean productAlreadyInCart = false;
+        for (Product productInCart : productsAddedToCart) {
+            if (productInCart.getProductName().equals(product.getProductName())) {
+                int newQuantity = productInCart.getProductQuantity() + product.getProductQuantity();
+                productInCart.setProductQuantity(newQuantity);
+                Toast.makeText(context, "Quantity of " + product.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
+                productAlreadyInCart = true;
+                break;
+            }
+        }
+        if (!productAlreadyInCart) {
+            productsAddedToCart.add(product);
+            Toast.makeText(context, product.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

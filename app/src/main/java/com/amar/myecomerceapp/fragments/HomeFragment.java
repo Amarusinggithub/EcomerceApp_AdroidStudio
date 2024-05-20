@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,8 +91,9 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
                 .into(favoriteIcon);
 
         setupCategoryRecyclerView();
-        loadPopularProductsFragment(new PopularProductsFragment());
         loadPickedForYouProductsFragment(new PickedForYouFragment());
+        loadPopularProductsFragment(new PopularProductsFragment());
+
 
 
         favoritesCd.setOnClickListener(v -> loadFragment(new FavoritesFragment()));
@@ -134,20 +136,31 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
     }
 
     public void loadPopularProductsFragment(Fragment fragment) {
-        FragmentManager fm = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.addToBackStack("HomeFragment");
-        fragmentTransaction.add(R.id.popularproductframelayout,fragment);
-        fragmentTransaction.commit();
-
+        try {
+            Log.d("FragmentTransaction", "Starting to load Popular Products Fragment.");
+            FragmentManager fm = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.addToBackStack("HomeFragment");
+            fragmentTransaction.add(R.id.popularproductframelayout, fragment);
+            fragmentTransaction.commit();
+            Log.d("FragmentTransaction", "Successfully loaded Popular Products Fragment.");
+        } catch (Exception e) {
+            Log.e("FragmentTransaction", "Error loading Popular Products Fragment: " + e.getMessage(), e);
+        }
     }
 
     public void loadPickedForYouProductsFragment(Fragment fragment) {
-        FragmentManager fm = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.addToBackStack("HomeFragment");
-        fragmentTransaction.add(R.id.pickedforyouproductframelayout,fragment);
-        fragmentTransaction.commit();
+        try {
+            Log.d("FragmentTransaction", "Starting to load Picked For You Products Fragment.");
+            FragmentManager fm = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.addToBackStack("HomeFragment");
+            fragmentTransaction.add(R.id.pickedforyouproductframelayout, fragment);
+            fragmentTransaction.commit();
+            Log.d("FragmentTransaction", "Successfully loaded Picked For You Products Fragment.");
+        } catch (Exception e) {
+            Log.e("FragmentTransaction", "Error loading Picked For You Products Fragment: " + e.getMessage(), e);
+        }
     }
 
     public void loadFragment(Fragment fragment) {
