@@ -3,7 +3,7 @@ package com.amar.myecomerceapp.fragments;
 import static com.amar.myecomerceapp.activities.MainActivity.EVERY_PRODUCT;
 import static com.amar.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
-import static com.amar.myecomerceapp.adapters.ProductAdapter.filteredList;
+
 
 import android.os.Bundle;
 
@@ -24,7 +24,7 @@ import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 
 public class EveryProductRecyclerViewFragment extends Fragment implements MyProductOnClickListener {
 RecyclerView recyclerView;
-public static ProductAdapter adapter;
+public static ProductAdapter everyProductAdapter;
 GridLayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,9 +37,9 @@ GridLayoutManager layoutManager;
 
     private void initializeView(View view) {
         recyclerView=view.findViewById(R.id.everyproductrecyclerview);
-        adapter= new ProductAdapter(this,getProductsData(EVERY_PRODUCT),getContext());
+        everyProductAdapter = new ProductAdapter(this,getProductsData(EVERY_PRODUCT),getContext());
         layoutManager=new GridLayoutManager(getContext(),2);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(everyProductAdapter);
         recyclerView.setLayoutManager(layoutManager);
     }
     private  void loadFragment(Fragment fragment) {
@@ -53,7 +53,7 @@ GridLayoutManager layoutManager;
 
     @Override
     public void productClicked(int position) {
-        productInProductViewFragment = filteredList.get(position);
+        productInProductViewFragment = everyProductAdapter.filteredList.get(position);
         ProductViewFragment productViewFragment = new ProductViewFragment();
         loadFragment(productViewFragment);
     }

@@ -13,12 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.amar.myecomerceapp.R;
+import com.amar.myecomerceapp.adapters.PickedForYouAdapter;
 import com.amar.myecomerceapp.adapters.ProductAdapter;
 import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 
 public class PickedForYouFragment extends Fragment implements MyProductOnClickListener {
     RecyclerView pickedForYouProductsRecyclerview;
-    ProductAdapter adapter;
+    PickedForYouAdapter pickedForYOuAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,8 +28,8 @@ public class PickedForYouFragment extends Fragment implements MyProductOnClickLi
         pickedForYouProductsRecyclerview = view.findViewById(R.id.pickedforyourecyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         pickedForYouProductsRecyclerview.setLayoutManager(linearLayoutManager);
-        adapter = new ProductAdapter(this, getPickedForYouProductsData(), getContext());
-        pickedForYouProductsRecyclerview.setAdapter(adapter);
+        pickedForYOuAdapter = new PickedForYouAdapter(this, getPickedForYouProductsData(), getContext());
+        pickedForYouProductsRecyclerview.setAdapter(pickedForYOuAdapter);
         return view;
     }
 

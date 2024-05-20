@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.amar.myecomerceapp.R;
+import com.amar.myecomerceapp.adapters.PopularProductAdapter;
 import com.amar.myecomerceapp.adapters.ProductAdapter;
 import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 
 public class PopularProductsFragment extends Fragment implements MyProductOnClickListener {
     RecyclerView recyclerView;
-    ProductAdapter adapter;
+    PopularProductAdapter popularProductAdapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,8 +29,8 @@ public class PopularProductsFragment extends Fragment implements MyProductOnClic
         recyclerView = view.findViewById(R.id.popularproductrecyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ProductAdapter(this, getPopularProductsData(), getContext());
-        recyclerView.setAdapter(adapter);
+        popularProductAdapter = new PopularProductAdapter(this, getPopularProductsData(), getContext());
+        recyclerView.setAdapter(popularProductAdapter);
         return view;
     }
 

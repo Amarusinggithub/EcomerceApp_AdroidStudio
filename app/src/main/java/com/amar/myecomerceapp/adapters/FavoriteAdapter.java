@@ -5,7 +5,6 @@ import static com.amar.myecomerceapp.activities.MainActivity.productsFavorited;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,36 +16,36 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
-import com.amar.myecomerceapp.interfaces.MySalesOnclickListener;
+import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.amar.myecomerceapp.models.Product;
+import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder> {
-    private final MySalesOnclickListener mySalesOnclickListener;
-    private final List<Product> salesArrayList;
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>{
+    private final List<Product> favoritesList;
+    private final MyProductOnClickListener productOnclickListener;
     private final Context context;
 
-    public SalesAdapter(MySalesOnclickListener mySalesOnclickListener, List<Product> salesArrayList, Context context) {
-        this.mySalesOnclickListener = mySalesOnclickListener;
-        this.salesArrayList = salesArrayList;
+    public FavoriteAdapter(List<Product> favoritesList, MyProductOnClickListener productOnclickListener, Context context) {
+        this.favoritesList = favoritesList;
+        this.productOnclickListener = productOnclickListener;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public SalesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sales_cardview, parent, false);
-        return new MyViewHolder(view, mySalesOnclickListener, context);
+    public FavoriteAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_cardview, parent, false);
+        return new FavoriteAdapter.MyViewHolder(view, productOnclickListener, context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SalesAdapter.MyViewHolder holder, int position) {
-
-        if (position >= 0 && position < salesArrayList.size()) {
-            Product currentProduct = salesArrayList.get(position);
+    public void onBindViewHolder(@NonNull FavoriteAdapter.MyViewHolder holder, int position) {
+        if (position >= 0 && position < favoritesList.size()) {
+            Product currentProduct = favoritesList.get(position);
 
             Glide.with(context)
                     .load(currentProduct.getProductImage())
@@ -61,16 +60,16 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
             holder.addToCartBtn.setOnClickListener(v -> addToCart(currentProduct));
 
         } else {
-            Log.e("ProductAdapter", "Index " + position + " out of bounds for length " + salesArrayList.size());
+            Log.e("ProductAdapter", "Index " + position + " out of bounds for length " + favoritesList.size());
         }
     }
 
     @Override
     public int getItemCount() {
-        return salesArrayList.size();
+        return favoritesList.size();
     }
 
-    private void updateFavoriteIcon(SalesAdapter.MyViewHolder holder, Product product) {
+    private void updateFavoriteIcon(FavoriteAdapter.MyViewHolder holder, Product product) {
         if (productsFavorited.contains(product)) {
             Glide.with(context)
                     .load(R.drawable.favoriteicon2)
@@ -84,10 +83,11 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
                     .into(holder.favoriteBtn);
             product.setProductAlreadyInFavorites(false);
         }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void toggleFavorite(SalesAdapter.MyViewHolder holder, Product product) {
+    private void toggleFavorite(FavoriteAdapter.MyViewHolder holder, Product product) {
         if (product.isProductAlreadyInFavorites()) {
             productsFavorited.remove(product);
             Glide.with(context)
@@ -126,25 +126,21 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView productImage;
         TextView productName;
         TextView productPrice;
         ImageView favoriteBtn;
         ImageView addToCartBtn;
-        TextView productSalesPrice;
-
-
-        public MyViewHolder(@NonNull View itemView, MySalesOnclickListener mySalesOnclickListener, Context context) {
+        boolean productAlreadyInFavorites;
+        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnClickListener, Context context) {
             super(itemView);
+
             productImage = itemView.findViewById(R.id.productImage);
             productName = itemView.findViewById(R.id.productTitle);
             productPrice = itemView.findViewById(R.id.Price);
             favoriteBtn = itemView.findViewById(R.id.favoritebtn);
             addToCartBtn = itemView.findViewById(R.id.addtocartbtn);
-            productSalesPrice = itemView.findViewById(R.id.SalesPrice);
-
-            productPrice.setPaintFlags(productPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
             Glide.with(context)
                     .load(R.drawable.addtocart)
@@ -154,7 +150,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
             itemView.setOnClickListener(v -> {
                 int position = getBindingAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    mySalesOnclickListener.salesProductClicked(position);
+                    productOnClickListener.productClicked(position);
                 }
             });
         }

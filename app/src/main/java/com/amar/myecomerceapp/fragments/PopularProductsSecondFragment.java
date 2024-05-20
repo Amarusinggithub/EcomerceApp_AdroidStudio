@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.amar.myecomerceapp.adapters.PopularProductAdapter;
 import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.adapters.ProductAdapter;
@@ -25,7 +26,7 @@ import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 public class PopularProductsSecondFragment extends Fragment implements MyProductOnClickListener {
      ImageView backBtn;
      RecyclerView recyclerView;
-     ProductAdapter adapter;
+     PopularProductAdapter adapter;
      GridLayoutManager layoutManager;
 
     @Override
@@ -46,7 +47,7 @@ public class PopularProductsSecondFragment extends Fragment implements MyProduct
         setupBackButton();
     }
     private void setUpRecyclerView() {
-        adapter= new ProductAdapter(this,getPopularProductsData(),getContext());
+        adapter= new PopularProductAdapter(this,getPopularProductsData(),getContext());
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

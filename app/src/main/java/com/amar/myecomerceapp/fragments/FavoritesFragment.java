@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.amar.myecomerceapp.adapters.FavoriteAdapter;
 import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
 
@@ -33,7 +34,7 @@ public class FavoritesFragment extends Fragment implements MyProductOnClickListe
     ImageView backBtn;
     ImageView emptyFavoritesImage;
     GridLayoutManager layoutManager;
-    ProductAdapter favoritesAdapter;
+    FavoriteAdapter favoritesAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,7 +72,7 @@ public class FavoritesFragment extends Fragment implements MyProductOnClickListe
     private void setUpFavoritesRecyclerView() {
         emptyFavoritesImage.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
-        favoritesAdapter= new ProductAdapter(this,productsFavorited,getContext());
+        favoritesAdapter= new FavoriteAdapter(productsFavorited,this,getContext());
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(favoritesAdapter);

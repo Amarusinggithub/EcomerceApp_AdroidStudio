@@ -2,9 +2,8 @@ package com.amar.myecomerceapp.fragments;
 
 
 import static com.amar.myecomerceapp.activities.MainActivity.getCategory;
-import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
-import static com.amar.myecomerceapp.adapters.ProductAdapter.filteredList;
-import static com.amar.myecomerceapp.fragments.EveryProductRecyclerViewFragment.adapter;
+
+import static com.amar.myecomerceapp.fragments.EveryProductRecyclerViewFragment.everyProductAdapter;
 import static com.amar.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;
 
 import android.annotation.SuppressLint;
@@ -38,7 +37,7 @@ import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.amar.myecomerceapp.models.Category;
 
 
-public class HomeFragment extends Fragment implements MyCategoryOnClickListener, MyProductOnClickListener {
+public class HomeFragment extends Fragment implements MyCategoryOnClickListener {
     ImageView cashbackImage;
     ImageView favoriteIcon;
     ScrollView scrollView;
@@ -95,8 +94,6 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         loadPickedForYouProductsFragment(new PickedForYouFragment());
 
 
-
-
         favoritesCd.setOnClickListener(v -> loadFragment(new FavoritesFragment()));
         seeAllPopularProducts.setOnClickListener(v -> loadFragment( new PopularProductsSecondFragment()));
         seeAllPickedForYou.setOnClickListener(v -> loadFragment(new PickedForYOuSecondFragment()));
@@ -117,8 +114,8 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s!=null&&adapter!=null){
-                    adapter.filter(s.toString());
+                if(s!=null&& everyProductAdapter !=null){
+                    everyProductAdapter.filter(s.toString());
                 }
             }
 
@@ -188,10 +185,4 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
         loadFragment(new ProductRecyclerViewFragment());
     }
 
-
-    @Override
-    public void productClicked(int position) {
-        productInProductViewFragment = filteredList.get(position);
-        loadFragment(new ProductViewFragment());
-    }
 }

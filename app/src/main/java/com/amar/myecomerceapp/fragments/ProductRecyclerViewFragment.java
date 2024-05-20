@@ -4,7 +4,7 @@ package com.amar.myecomerceapp.fragments;
 import static com.amar.myecomerceapp.activities.MainActivity.getCategory;
 import static com.amar.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
-import static com.amar.myecomerceapp.adapters.ProductAdapter.filteredList;
+
 
 
 import android.os.Bundle;
@@ -36,9 +36,9 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
     public static  String categoryId;
     RecyclerView categoryRecycleView;
      ImageView favoriteIcon;
-      CardView favoritesCd;
-
+     CardView favoritesCd;
     EditText searchView;
+    private ProductAdapter productAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +59,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
                 .load(R.drawable.favoriteicon2)
                 .fitCenter()
                 .into(favoriteIcon);
-        ProductAdapter productAdapter = new ProductAdapter(this, getProductsData(categoryId),getContext());
+        productAdapter = new ProductAdapter(this, getProductsData(categoryId),getContext());
         GridLayoutManager layoutManager=new GridLayoutManager(getContext(),2);
         productRecyclerView.setLayoutManager(layoutManager);
         productRecyclerView.setAdapter(productAdapter);
@@ -74,7 +74,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != null && productAdapter!= null) {
+                if (s != null && productAdapter != null) {
                     productAdapter.filter(s.toString());
                 }
             }
@@ -106,7 +106,7 @@ public class ProductRecyclerViewFragment extends Fragment implements MyProductOn
 
     @Override
     public void productClicked(int position) {
-       productInProductViewFragment = filteredList.get(position);
+       productInProductViewFragment = productAdapter.filteredList.get(position);
         loadFragment(new ProductViewFragment());
     }
 

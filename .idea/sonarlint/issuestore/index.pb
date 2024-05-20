@@ -102,3 +102,9 @@ Fapp/src/main/java/com/amar/myecomerceapp/fragments/OrdersFragment.java,6\5\65b
 Uapp/src/main/java/com/amar/myecomerceapp/fragments/PopularProductsSecondFragment.java,1\0\10178509df2666d459e4dab887c45980df7106b5
 
 Oapp/src/main/java/com/amar/myecomerceapp/fragments/PopularProductsFragment.java,f\b\fbef89e60dd0e611c77f7b9124b8658a31910b1f
+|
+Lapp/src/main/java/com/amar/myecomerceapp/adapters/PopularProductAdapter.java,d\a\da3fda975ed8adc56c669ce851369e6fd37ccd94
+v
+Fapp/src/main/java/com/amar/myecomerceapp/adapters/FavoriteAdapter.java,e\1\e10d8c8758f16042cd91a1d0d85953c9df4a3b16
+z
+Japp/src/main/java/com/amar/myecomerceapp/adapters/PickedForYouAdapter.java,2\7\27ec5df3194f07651b28662c3b6cece76bc3cbef

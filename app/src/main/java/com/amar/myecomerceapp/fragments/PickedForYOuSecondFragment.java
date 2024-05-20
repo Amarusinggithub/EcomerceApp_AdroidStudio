@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.amar.myecomerceapp.adapters.PickedForYouAdapter;
 import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.adapters.ProductAdapter;
@@ -25,7 +26,7 @@ import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 public class PickedForYOuSecondFragment extends Fragment implements MyProductOnClickListener {
     ImageView backBtn;
     RecyclerView recyclerView;
-    ProductAdapter adapter;
+    PickedForYouAdapter adapter;
     GridLayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +45,7 @@ public class PickedForYOuSecondFragment extends Fragment implements MyProductOnC
         setupBackButton();
     }
     private void setUpRecyclerView() {
-        adapter= new ProductAdapter(this,getPickedForYouProductsData(),getContext());
+        adapter= new PickedForYouAdapter(this,getPickedForYouProductsData(),getContext());
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

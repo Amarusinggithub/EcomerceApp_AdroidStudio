@@ -61,9 +61,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             price=itemView.findViewById(R.id.productPrice);
             quantity=itemView.findViewById(R.id.productQuantity);
 
-
-
-
             itemView.setOnClickListener(v -> {
                 int position=getBindingAdapterPosition();
                 orderOnclickListener.orderClicked(position);

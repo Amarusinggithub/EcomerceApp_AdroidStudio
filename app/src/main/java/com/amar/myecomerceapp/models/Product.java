@@ -11,6 +11,8 @@ public class Product {
     private String productDescription;
     private String  productSalesPrice;
 
+    boolean productAlreadyInFavorites=false;
+
 
 
     public Product(int productImage, String productName, String productPrice, String productDescription, String productId) {
@@ -94,5 +96,11 @@ public class Product {
         this.productSalesPrice = productSalesPrice;
     }
 
+    public boolean isProductAlreadyInFavorites() {
+        return productAlreadyInFavorites;
+    }
 
+    public void setProductAlreadyInFavorites(boolean productAlreadyInFavorites) {
+        this.productAlreadyInFavorites = productAlreadyInFavorites;
+    }
 }
