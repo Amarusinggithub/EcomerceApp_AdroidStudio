@@ -132,10 +132,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         db.collection("users")
                 .add(user)
                 .addOnSuccessListener(documentReference -> Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId()))
-                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));
-
-
-    }
+                .addOnFailureListener(e -> Log.w(TAG, "Error adding document", e));}
 
 
     public static boolean isValidEmail(String email) {

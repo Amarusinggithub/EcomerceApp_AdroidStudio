@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/backgroundColor"
-    tools:context=".fragments.PopularProductsFragment">
+    tools:context=".fragments.PickedForYouFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

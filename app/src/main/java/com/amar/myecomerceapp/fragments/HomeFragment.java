@@ -91,8 +91,9 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener,
                 .into(favoriteIcon);
 
         setupCategoryRecyclerView();
-        loadPickedForYouProductsFragment(new PickedForYouFragment());
         loadPopularProductsFragment(new PopularProductsFragment());
+        loadPickedForYouProductsFragment(new PickedForYouFragment());
+
 
 
 
