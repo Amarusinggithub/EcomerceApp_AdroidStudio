@@ -32,29 +32,23 @@
             android:textStyle="bold|normal"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
+            android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_alignParentEnd="true"
             android:layout_below="@id/view"
             />
 
-        <View
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#7C7C7C"
-            android:layout_below="@id/accountTv"/>
+
         <ImageView
             android:id="@+id/accountbackbtn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="240dp"
-            android:layout_toEndOf="@id/accountTv"
+           android:layout_toStartOf="@id/accountTv"
             android:layout_below="@id/view"
             tools:ignore="ContentDescription" />
 
@@ -64,28 +58,22 @@
             android:textStyle="bold|normal"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
+            android:layout_width="345dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="5dp"
             android:layout_below="@id/accountTv"
             />
 
-        <View
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#7C7C7C"
-            android:layout_below="@id/notificationTv"/>
+
         <ImageView
             android:id="@+id/notificationbackbtn"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="200dp"
-            android:layout_toEndOf="@id/notificationTv"
+            android:layout_toStartOf="@id/notificationTv"
             android:layout_below="@id/accountbackbtn"
             android:layout_marginTop="25dp"
             tools:ignore="ContentDescription" />
@@ -96,29 +84,22 @@
             android:textStyle="bold|normal"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
+            android:layout_width="345dp"
+            android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="5dp"
             android:layout_below="@id/notificationTv"
             />
 
-        <View
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#7C7C7C"
-            android:layout_below="@id/privacyTv"/>
         <ImageView
             android:id="@+id/privacybackbtn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="35dp"
-            android:layout_marginStart="250dp"
-            android:layout_toEndOf="@id/privacyTv"
+            android:layout_toStartOf="@id/privacyTv"
             android:layout_below="@id/notificationbackbtn"
             tools:ignore="ContentDescription" />
 
@@ -129,29 +110,23 @@
             android:textStyle="bold|normal"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
+            android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="5dp"
             android:layout_below="@id/privacyTv"
+            android:layout_alignParentEnd="true"
             />
 
-        <View
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#7C7C7C"
-            android:layout_below="@id/supportTv"/>
+
         <ImageView
             android:id="@+id/supportbackbtn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="25dp"
-            android:layout_marginStart="160dp"
-            android:layout_toEndOf="@id/supportTv"
+            android:layout_toStartOf="@id/supportTv"
            android:layout_below="@id/privacybackbtn"
             tools:ignore="ContentDescription" />
 
@@ -161,30 +136,23 @@
             android:textStyle="bold|normal"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
+            android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="5dp"
             android:layout_below="@id/supportTv"
+            android:layout_alignParentEnd="true"
             />
 
-        <View
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#7C7C7C"
-            android:layout_below="@id/aboutTv"/>
         <ImageView
             android:id="@+id/aboutbackbtn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="25dp"
-            android:layout_toEndOf="@id/supportTv"
+            android:layout_toStartOf="@id/aboutTv"
             android:layout_below="@id/supportbackbtn"
-            android:layout_marginStart="160dp"
             tools:ignore="ContentDescription" />
 
 
@@ -194,30 +162,23 @@
             android:textStyle="bold|normal"
             android:textSize="20dp"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
+            android:layout_width="345dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="5dp"
             android:layout_below="@id/aboutTv"
+            android:layout_alignParentEnd="true"
             />
 
-        <View
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#7C7C7C"
-            android:layout_below="@id/logoutTv"/>
         <ImageView
             android:id="@+id/logoutbackbtn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="25dp"
-            android:layout_toEndOf="@id/supportTv"
+            android:layout_toStartOf="@id/supportTv"
             android:layout_below="@id/aboutbackbtn"
-            android:layout_marginStart="160dp"
             tools:ignore="ContentDescription" />
     </RelativeLayout>
 </FrameLayout>

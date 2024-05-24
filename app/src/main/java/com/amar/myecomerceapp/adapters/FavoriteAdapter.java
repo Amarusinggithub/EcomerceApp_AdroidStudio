@@ -21,7 +21,6 @@ import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.amar.myecomerceapp.models.Product;
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>{
@@ -48,7 +47,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
             Product currentProduct = favoritesList.get(position);
 
             Glide.with(context)
-                    .load(currentProduct.getProductImage())
+                    .load(currentProduct.getImage())
                     .into(holder.productImage);
 
             holder.productName.setText(currentProduct.getProductName());
@@ -60,7 +59,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
             holder.addToCartBtn.setOnClickListener(v -> addToCart(currentProduct));
 
         } else {
-            Log.e("ProductAdapter", "Index " + position + " out of bounds for length " + favoritesList.size());
+            Log.e("FavoriteAdapter", "Index " + position + " out of bounds for length " + favoritesList.size());
         }
     }
 

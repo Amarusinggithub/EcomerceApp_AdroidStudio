@@ -7,6 +7,7 @@ public class User {
     String email;
     String username;
     String password;
+    String address;
     ArrayList<Product> productsUserOrdered = new ArrayList<>();
     ArrayList<Product> productsUserAddedToCart= new ArrayList<>();
     ArrayList<Product> productsFavorited = new ArrayList<>();
@@ -57,5 +58,13 @@ public class User {
 
     public void setProductsFavorited(ArrayList<Product> productsFavorited) {
         this.productsFavorited = productsFavorited;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

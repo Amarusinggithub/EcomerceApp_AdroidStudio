@@ -5,11 +5,14 @@ import static com.amar.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.activities.MainActivity.productsFavorited;
+import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered;
 
 import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,10 +32,10 @@ import java.util.Objects;
 
 public class SalesProductViewFragment extends Fragment {
     Button addToCart;
-    Product product;
     ImageView addFavoriteBtn;
     ImageView shareBtn;
     ImageView backBtn;
+    Button buyBtn;
     boolean productAlreadyInFavorites;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +50,7 @@ public class SalesProductViewFragment extends Fragment {
         addFavoriteBtn = productView.findViewById(R.id.favoritebtn);
         shareBtn= productView.findViewById(R.id.sharebtn);
         backBtn= productView.findViewById(R.id.backbtn);
+        buyBtn=productView.findViewById(R.id.buyBtn);
 
 
         TextView productNameTextView =  productView.findViewById(R.id.Name);
@@ -75,7 +79,7 @@ public class SalesProductViewFragment extends Fragment {
         productPriceTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductPrice());
         productDescriptionTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductDescription());
         Glide.with(this)
-                .load(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductImage())
+                .load(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getImage())
                 .fitCenter()
                 .into(productImageView);
         productPriceTextView.setPaintFlags(productPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -112,6 +116,11 @@ public class SalesProductViewFragment extends Fragment {
             }
         });
 
+        buyBtn.setOnClickListener(v -> {
+            productsUserOrdered.add(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
+            loadFragment(new OrderRecieptFragment());
+        });
+
 
         addToCart.setOnClickListener(v -> {
             if (getProductsData(EVERY_PRODUCT).get(getProductInPosition()) != null) {
@@ -134,6 +143,16 @@ public class SalesProductViewFragment extends Fragment {
             }
         });
 
+
+
+    }
+
+    public void loadFragment(Fragment fragment) {
+        FragmentManager fm = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.addToBackStack("ProductViewFragment");
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
     }
 
     public int getProductInPosition(){

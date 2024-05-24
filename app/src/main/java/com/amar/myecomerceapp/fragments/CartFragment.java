@@ -3,9 +3,9 @@ package com.amar.myecomerceapp.fragments;
 
 
 
+
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
-
-
+import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered;
 
 import android.os.Bundle;
 
@@ -34,6 +34,7 @@ import com.amar.myecomerceapp.models.Product;
 
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 
@@ -58,7 +59,6 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
     }
 
     private void initializeViewElements(View view) {
-
         checkOutBtn= view.findViewById(R.id.checkoutbtn);
         recyclerView= view.findViewById(R.id.recyclerview);
         emptyCartImage= view.findViewById(R.id.cartisemptyimage);
@@ -73,11 +73,18 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
             setupCartEmptyView();
         }
 
+        checkOutBtn.setOnClickListener(v -> {
+            ArrayList<Product> productsToRemove = new ArrayList<>();
+            for (Product productInCart : productsAddedToCart) {
+                productsUserOrdered.add(productInCart);
+                productsToRemove.add(productInCart);
+            }
+            productsAddedToCart.removeAll(productsToRemove);
+            loadFragment(new OrderRecieptFragment());
+        });
 
 
     }
-
-
 
     private void setupCartEmptyView() {
         emptyCartImage.setVisibility(View.VISIBLE);
@@ -154,7 +161,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
             bundle.putString("proPrice", product.getProductPrice());
             bundle.putString("productDescription", product.getProductDescription());
             bundle.putString("position", product.getProductId());
-            bundle.putInt("productImage", product.getProductImage());
+            bundle.putInt("productImage", product.getImage());
             ProductViewFragment productViewFragment = new ProductViewFragment();
             productViewFragment.setArguments(bundle);
             loadFragment(productViewFragment);

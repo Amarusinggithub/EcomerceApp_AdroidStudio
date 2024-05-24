@@ -47,6 +47,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:id="@+id/productQuantity"
+            android:textStyle="normal|bold"
+            android:layout_marginStart="10dp"
+            android:text="$1000.99"
+            android:textColor="@color/my_light_accent_color"
+            android:textSize="16sp"
+            android:layout_toEndOf="@id/productImage"
+            android:layout_below="@id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 
     </RelativeLayout>
 

@@ -3,8 +3,6 @@ package com.amar.myecomerceapp.activities;
 
 
 
-
-
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -22,15 +20,21 @@ import com.amar.myecomerceapp.fragments.OrdersFragment;
 import com.amar.myecomerceapp.models.Category;
 import com.amar.myecomerceapp.models.Product;
 import com.amar.myecomerceapp.models.User;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
+
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Product> productsAddedToCart;
     public static ArrayList<Product> productsUserOrdered;
     public static ArrayList<Product> productsFavorited;
+
+
     private static MainActivity instance;
     public static User user;
 
@@ -53,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     String email;
     String username;
-    FirebaseFirestore db;
+    public static Product product;
+    public static FirebaseFirestore db;
 
     // Phones
     public static Product SAMSUNGGalaxyS24Plus = new Product(R.drawable.s24plus, 1, "SAMSUNG Galaxy S24+", "$969.99", "$775.99", "SAMSUNG Galaxy S24+ Plus Cell Phone, 512GB AI Smartphone, Unlocked Android, 50MP Camera, Fastest Processor, Long Battery Life, US Version, 2024, Onyx Black", PHONES);
@@ -125,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
     public static Product ninjaKitchenSystem = new Product(R.drawable.blender, 1, "Ninja Kitchen System", " $159.95", "$127.96", "Ninja BL770 Mega Kitchen System, 1500W, 4 Functions for Smoothies, Processing, Dough, Drinks & More, with 72-oz.* Blender Pitcher, 64-oz. Processor Bowl, (2) 16-oz. To-Go Cups & (2) Lids, Black", APPLIANCES);
     public static Product electricKettle = new Product(R.drawable.kettle, 1, "Electric Kettle", "$69.99", "$55.99", "COSORI Electric Gooseneck Kettle with 5 Temperature Control Presets, Pour Over Kettle for Coffee & Tea, Hot Water Boiler, 100% Stainless Steel Inner Lid & Bottom, 1200W/0.8L", APPLIANCES);
     public static Product ledLamp = new Product(R.drawable.lamp, 1, "LED Lamp", "$115.99", "$92.79", "LED Floor Lamp, Height Adjustable Floor Lamps for Living Room, Super Bright Standing Lamp with Timer, Adjustable Colors & Brightness Floor lamp for Bedroom with Remote & Touch Control, Black", APPLIANCES);
-
     public static void finishActivity() {
       instance.finish();
 
@@ -242,6 +248,24 @@ public class MainActivity extends AppCompatActivity {
             productsArrayList.add(iPhone15ProMax);
             productsArrayList.add(iPhone14ProMax);
 
+           /* db = FirebaseFirestore.getInstance();
+            db.collection("products")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                product = document.toObject(Product.class);
+                                if(Objects.equals(product.getProductId(), PHONES)){
+                                    productsArrayList.add(product);
+                                }
+                            }
+                            Log.d(TAG, "No product found with name: " + product.getProductName());
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    });*/
+
         } else if (LAPTOP.equals(id)) {
             productsArrayList.add(acerAspire3);
             productsArrayList.add(lenovoLegion7i);
@@ -256,6 +280,24 @@ public class MainActivity extends AppCompatActivity {
             productsArrayList.add(hpVictus15);
             productsArrayList.add(msiPulse17);
 
+           /* db = FirebaseFirestore.getInstance();
+            db.collection("products")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                product = document.toObject(Product.class);
+                                if(Objects.equals(product.getProductId(), LAPTOP)){
+                                    productsArrayList.add(product);
+                                }
+                            }
+                            Log.d(TAG, "No product found with name: " + product.getProductName());
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    });
+*/
         } else if (GAMES.equals(id)) {
             productsArrayList.add(massEffectLegendary);
             productsArrayList.add(deadSpaceStandard);
@@ -270,6 +312,24 @@ public class MainActivity extends AppCompatActivity {
             productsArrayList.add(redDeadRedemption2);
             productsArrayList.add(battlefield3PremiumEdition);
 
+           /* db = FirebaseFirestore.getInstance();
+            db.collection("products")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                product = document.toObject(Product.class);
+                                if(Objects.equals(product.getProductId(), GAMES)){
+                                    productsArrayList.add(product);
+                                }
+                            }
+                            Log.d(TAG, "No product found with name: " + product.getProductName());
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    });*/
+
         } else if (CONSOLES.equals(id)) {
             productsArrayList.add(nintendoSwitch);
             productsArrayList.add(metaQuest2);
@@ -283,6 +343,23 @@ public class MainActivity extends AppCompatActivity {
             productsArrayList.add(playstation4);
             productsArrayList.add(xboxOneS);
             productsArrayList.add(xboxOne);
+            /*db = FirebaseFirestore.getInstance();
+            db.collection("products")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                product = document.toObject(Product.class);
+                                if(Objects.equals(product.getProductId(), CONSOLES)){
+                                    productsArrayList.add(product);
+                                }
+                            }
+                            Log.d(TAG, "No product found with name: " + product.getProductName());
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    });*/
         } else if (APPLIANCES.equals(id)) {
             productsArrayList.add(samsung32Inch4K);
             productsArrayList.add(clearCookAirFryer);
@@ -296,6 +373,24 @@ public class MainActivity extends AppCompatActivity {
             productsArrayList.add(ninjaKitchenSystem);
             productsArrayList.add(electricKettle);
             productsArrayList.add(ledLamp);
+
+           /* db = FirebaseFirestore.getInstance();
+            db.collection("products")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                product = document.toObject(Product.class);
+                                if(Objects.equals(product.getProductId(), CONSOLES)){
+                                    productsArrayList.add(product);
+                                }
+                            }
+                            Log.d(TAG, "No product found with name: " + product.getProductName());
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    });*/
         } else if (EVERY_PRODUCT.equals(id)) {
             productsArrayList.add(SAMSUNGGalaxyS24Plus);
             productsArrayList.add(oneplus_12);
@@ -356,6 +451,23 @@ public class MainActivity extends AppCompatActivity {
             productsArrayList.add(ninjaKitchenSystem);
             productsArrayList.add(electricKettle);
             productsArrayList.add(ledLamp);
+
+           /* // Fetch all products
+            db = FirebaseFirestore.getInstance();
+            db.collection("products")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, "Document retrieved: " + document.getId());
+                                product = document.toObject(Product.class);
+                                productsArrayList.add(product);
+                            }
+                            Log.d(TAG, "Fetched " + productsArrayList.size() + " products from Firestore");
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    });*/
         }
 
         return productsArrayList;
@@ -364,7 +476,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static List<Product> getPopularProductsData() {
         List<Product> productsArrayList = new ArrayList<>();
-        productsArrayList.add(lenovoLegion7i);
+        /*productsArrayList.add(lenovoLegion7i);
         productsArrayList.add(asusROGStrix16);
         productsArrayList.add(asusTUFA17Gaming);
         productsArrayList.add(asusTufA16);
@@ -375,7 +487,16 @@ public class MainActivity extends AppCompatActivity {
         productsArrayList.add(playstation4Slim);
         productsArrayList.add(valveSteamDeck);
         productsArrayList.add(asusRogAlly);
-        productsArrayList.add(smartTowerFan);
+        productsArrayList.add(smartTowerFan);*/
+
+        List<Product>  allProducts=getProductsData(EVERY_PRODUCT);
+        Collections.shuffle(allProducts, new Random());
+
+
+        int numberOfProductsToAdd = Math.min(12,allProducts.size());
+        for (int i = 0; i < numberOfProductsToAdd; i++) {
+            productsArrayList.add(allProducts.get(i));
+        }
         return productsArrayList;
     }
 
@@ -398,15 +519,26 @@ public class MainActivity extends AppCompatActivity {
 
     public static List<Product> getPickedForYouProductsData() {
         List<Product> productsArrayList = new ArrayList<>();
-        productsArrayList.add(needForSpeedUnboundPalace);
+        /*productsArrayList.add(needForSpeedUnboundPalace);
         productsArrayList.add(xboxSeriesX);
         productsArrayList.add(SAMSUNGGalaxyS24Plus);
         productsArrayList.add(oneplus_12);
         productsArrayList.add(lenovoLegion7i);
         productsArrayList.add(googlePixel8);
         productsArrayList.add(samsungGalaxyA54);
-        productsArrayList.add(redmiNote13Pro);
+        productsArrayList.add(redmiNote13Pro);*/
+
+
+        List<Product>  allProducts=getProductsData(EVERY_PRODUCT);
+        Collections.shuffle(allProducts, new Random());
+
+        // Get the first 12 products from the shuffled list
+        int numberOfProductsToAdd = Math.min(12,allProducts.size());
+        for (int i = 0; i < numberOfProductsToAdd; i++) {
+            productsArrayList.add(allProducts.get(i));
+        }
         return productsArrayList;
     }
+
 
 }

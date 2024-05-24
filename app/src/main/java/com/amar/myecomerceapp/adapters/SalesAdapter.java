@@ -49,7 +49,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
             Product currentProduct = salesArrayList.get(position);
 
             Glide.with(context)
-                    .load(currentProduct.getProductImage())
+                    .load(currentProduct.getImage())
                     .into(holder.productImage);
 
             holder.productName.setText(currentProduct.getProductName());

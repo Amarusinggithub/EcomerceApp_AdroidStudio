@@ -50,7 +50,7 @@ public class PickedForYouAdapter extends RecyclerView.Adapter<PickedForYouAdapte
             Product currentProduct = filteredList.get(position);
 
             Glide.with(context)
-                    .load(currentProduct.getProductImage())
+                    .load(currentProduct.getImage())
                     .into(holder.productImage);
 
             holder.productName.setText(currentProduct.getProductName());

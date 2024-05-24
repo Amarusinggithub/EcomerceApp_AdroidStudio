@@ -21,7 +21,6 @@ public class PopularProductsFragment extends Fragment implements MyProductOnClic
     RecyclerView recyclerView;
     PopularProductAdapter popularProductAdapter;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment

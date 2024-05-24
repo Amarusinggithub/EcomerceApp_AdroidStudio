@@ -51,7 +51,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             Product product = cartProducts.get(position);
 
             Glide.with(context)
-                    .load(product.getProductImage())
+                    .load(product.getImage())
                     .into(holder.image);
 
             Glide.with(context)

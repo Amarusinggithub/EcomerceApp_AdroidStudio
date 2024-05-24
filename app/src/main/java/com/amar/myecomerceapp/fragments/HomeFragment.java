@@ -29,6 +29,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.adapters.CategoryAdapter;
@@ -184,5 +187,6 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener 
         categoryId= category.getCategoryId();
         loadFragment(new ProductRecyclerViewFragment());
     }
+
 
 }

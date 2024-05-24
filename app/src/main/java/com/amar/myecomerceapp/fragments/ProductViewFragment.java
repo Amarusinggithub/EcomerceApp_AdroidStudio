@@ -1,11 +1,13 @@
 package com.amar.myecomerceapp.fragments;
 
-
 import static com.amar.myecomerceapp.activities.MainActivity.EVERY_PRODUCT;
+import static com.amar.myecomerceapp.activities.MainActivity.STRIPE_PUBLISH_KEY;
+import static com.amar.myecomerceapp.activities.MainActivity.STRIPE_SECRET_KEY;
 import static com.amar.myecomerceapp.activities.MainActivity.getProductsData;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.activities.MainActivity.productsFavorited;
+import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -23,68 +25,69 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.models.Product;
+import com.stripe.android.PaymentConfiguration;
+import com.stripe.android.paymentsheet.PaymentSheet;
+import com.stripe.android.paymentsheet.PaymentSheetResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-
 public class ProductViewFragment extends Fragment {
-    Button addToCart;
-    Button buyBtn;
-    ImageView addFavoriteBtn;
-    ImageView shareBtn;
-    ImageView backBtn;
-    boolean productAlreadyInFavorites;
+    private static final String TAG = "ProductViewFragment";
+
+    private Button addToCart;
+    private Button buyBtn;
+    private ImageView addFavoriteBtn;
+    private ImageView shareBtn;
+    private ImageView backBtn;
+    private boolean productAlreadyInFavorites;
+    private PaymentSheet paymentSheet;
+    private String customerId;
+    private String ephemeralKey;
+    private String clientSecret;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View view=inflater.inflate(R.layout.fragment_productview, container, false);
+        View view = inflater.inflate(R.layout.fragment_productview, container, false);
         initializeViewElements(view);
-
         return view;
     }
 
     private void initializeViewElements(View view) {
-        addToCart= view.findViewById(R.id.addtocartbtn);
+        addToCart = view.findViewById(R.id.addtocartbtn);
         addFavoriteBtn = view.findViewById(R.id.favoritebtn);
-        shareBtn= view.findViewById(R.id.sharebtn);
-        backBtn= view.findViewById(R.id.backbtn);
-        buyBtn=view.findViewById(R.id.buyBtn);
+        shareBtn = view.findViewById(R.id.sharebtn);
+        backBtn = view.findViewById(R.id.backbtn);
+        buyBtn = view.findViewById(R.id.buyBtn);
 
+        TextView productNameTextView = view.findViewById(R.id.Name);
+        TextView productPriceTextView = view.findViewById(R.id.Price);
+        TextView productDescriptionTextView = view.findViewById(R.id.Description);
+        ImageView productImageView = view.findViewById(R.id.Image);
 
-            TextView productNameTextView =  view.findViewById(R.id.Name);
-            TextView productPriceTextView =  view.findViewById(R.id.Price);
-            TextView productDescriptionTextView =  view.findViewById(R.id.Description);
-            ImageView productImageView =  view.findViewById(R.id.Image);
+        PaymentConfiguration.init(requireContext(), STRIPE_PUBLISH_KEY);
 
+        paymentSheet = new PaymentSheet(this, this::onPaymentResult);
 
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
-            if (!productsFavorited.contains(getProductsData(EVERY_PRODUCT).get(getProductInPosition()))) {
-                productAlreadyInFavorites = false;
-                Glide.with(requireContext())
-                        .load(R.drawable.unfavorite)
-                        .fitCenter()
-                        .into(addFavoriteBtn);
-            }else{
-                Glide.with(requireContext())
-                        .load(R.drawable.favoriteicon2)
-                        .fitCenter()
-                        .into(addFavoriteBtn);
-                productAlreadyInFavorites =true;
-            }
+        createStripeCustomer(requestQueue);
 
-            productNameTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName());
-            productPriceTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductPrice());
-            productDescriptionTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductDescription());
-            Glide.with(this)
-                    .load(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductImage())
-                    .fitCenter()
-                    .into(productImageView);
-
+        setupProductDetails(productNameTextView, productPriceTextView, productDescriptionTextView, productImageView);
+        setupButtons();
 
         Glide.with(requireContext())
                 .load(R.drawable.share)
@@ -97,53 +100,186 @@ public class ProductViewFragment extends Fragment {
                 .into(backBtn);
 
         backBtn.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
+    }
 
+    private void createStripeCustomer(RequestQueue requestQueue) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/customers",
+                response -> {
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        customerId = object.getString("id");
+                        Toast.makeText(requireContext(), "Customer ID: " + customerId, Toast.LENGTH_SHORT).show();
+                        createEphemeralKey(requestQueue, customerId);
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Error parsing customer response", e);
+                    }
+                }, error -> Log.e(TAG, "Error creating customer", error)) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + STRIPE_SECRET_KEY);
+                return headers;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void createEphemeralKey(RequestQueue requestQueue, String customerId) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/ephemeral_keys",
+                response -> {
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        ephemeralKey = object.getString("id");
+                        Toast.makeText(requireContext(), "Ephemeral Key: " + ephemeralKey, Toast.LENGTH_SHORT).show();
+                        createPaymentIntent(requestQueue, customerId, ephemeralKey);
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Error parsing ephemeral key response", e);
+                    }
+                }, error -> Log.e(TAG, "Error creating ephemeral key", error)) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + STRIPE_SECRET_KEY);
+                headers.put("Stripe-Version", "2022-08-01");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer", customerId);
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void createPaymentIntent(RequestQueue requestQueue, String customerId, String ephemeralKey) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/payment_intents",
+                response -> {
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        clientSecret = object.getString("client_secret");
+                        Toast.makeText(requireContext(), "Client Secret: " + clientSecret, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Error parsing payment intent response", e);
+                    }
+                }, error -> Log.e(TAG, "Error creating payment intent", error)) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + STRIPE_SECRET_KEY);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer", customerId);
+                params.put("amount", "1000");
+                params.put("currency", "usd");
+                params.put("automatic_payment_methods[enabled]", "true");
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void onPaymentResult(PaymentSheetResult paymentSheetResult) {
+        if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
+            Toast.makeText(requireContext(), "Payment Completed", Toast.LENGTH_SHORT).show();
+        } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
+            Log.e(TAG, "Payment Failed: " + ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
+        } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
+            Log.d(TAG, "Payment Canceled");
+        }
+    }
+
+    private void setupProductDetails(TextView productNameTextView, TextView productPriceTextView, TextView productDescriptionTextView, ImageView productImageView) {
+        Product product = getProductsData(EVERY_PRODUCT).get(getProductInPosition());
+        productNameTextView.setText(product.getProductName());
+        productPriceTextView.setText(product.getProductPrice());
+        productDescriptionTextView.setText(product.getProductDescription());
+        Glide.with(this)
+                .load(product.getImage())
+                .fitCenter()
+                .into(productImageView);
+
+        if (productsFavorited.contains(product)) {
+            productAlreadyInFavorites = true;
+            Glide.with(requireContext())
+                    .load(R.drawable.favoriteicon2)
+                    .fitCenter()
+                    .into(addFavoriteBtn);
+        } else {
+            productAlreadyInFavorites = false;
+            Glide.with(requireContext())
+                    .load(R.drawable.unfavorite)
+                    .fitCenter()
+                    .into(addFavoriteBtn);
+        }
+    }
+
+    private void setupButtons() {
         addFavoriteBtn.setOnClickListener(v -> {
+            Product product = getProductsData(EVERY_PRODUCT).get(getProductInPosition());
             if (productAlreadyInFavorites) {
-                productsFavorited.remove(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
+                productsFavorited.remove(product);
                 Glide.with(requireContext())
                         .load(R.drawable.unfavorite)
                         .fitCenter()
                         .into(addFavoriteBtn);
-                Toast.makeText(getContext(), "This " + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), product.getProductName() + " was removed from favorites.", Toast.LENGTH_SHORT).show();
                 productAlreadyInFavorites = false;
             } else {
-                productsFavorited.add(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
-                productAlreadyInFavorites = true;
+                productsFavorited.add(product);
                 Glide.with(requireContext())
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(addFavoriteBtn);
-                Toast.makeText(getContext(), getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), product.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
+                productAlreadyInFavorites = true;
             }
         });
 
-
         addToCart.setOnClickListener(v -> {
-            if (productInProductViewFragment != null) {
+            Product product = getProductsData(EVERY_PRODUCT).get(getProductInPosition());
+            if (product != null) {
                 boolean productAlreadyInCart = false;
                 for (Product productInCart : productsAddedToCart) {
-                    if (productInCart.getProductName().equals(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName())) {
-                        int newQuantity = productInCart.getProductQuantity() + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductQuantity();
+                    if (productInCart.getProductName().equals(product.getProductName())) {
+                        int newQuantity = productInCart.getProductQuantity() + product.getProductQuantity();
                         productInCart.setProductQuantity(newQuantity);
-                        Toast.makeText(getContext(), "Quantity of " + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Quantity of " + product.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
                         productAlreadyInCart = true;
                         break;
                     }
                 }
                 if (!productAlreadyInCart) {
-                    productsAddedToCart.add(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
-                    Toast.makeText(getContext(), getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
+                    productsAddedToCart.add(product);
+                    Toast.makeText(getContext(), product.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Log.d("ProductViewFragment", "The product is null");
+                Log.d(TAG, "The product is null");
             }
         });
 
-        buyBtn.setOnClickListener(v -> {
+        buyBtn.setOnClickListener(v -> paymentFlow());
+    }
 
-        });
-
+    private void paymentFlow() {
+        if (clientSecret != null && customerId != null && ephemeralKey != null) {
+            paymentSheet.presentWithPaymentIntent(
+                    clientSecret,
+                    new PaymentSheet.Configuration("Swift Cart",
+                            new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey))
+            );
+        } else {
+            Toast.makeText(requireContext(), "Unable to initiate payment", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void loadFragment(Fragment fragment) {
@@ -154,15 +290,14 @@ public class ProductViewFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    public int getProductInPosition(){
-        int position=0;
-        for(Product productInEveryThing: getProductsData(EVERY_PRODUCT)){
-            if(Objects.equals(productInEveryThing.getProductName(), productInProductViewFragment.getProductName())){
-                position=getProductsData(EVERY_PRODUCT).indexOf(productInEveryThing);
+    public int getProductInPosition() {
+        int position = 0;
+        for (Product productInEveryThing : getProductsData(EVERY_PRODUCT)) {
+            if (Objects.equals(productInEveryThing.getProductName(), productInProductViewFragment.getProductName())) {
+                position = getProductsData(EVERY_PRODUCT).indexOf(productInEveryThing);
+                break;
             }
         }
         return position;
     }
-
-
 }

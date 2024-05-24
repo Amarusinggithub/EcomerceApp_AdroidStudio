@@ -50,7 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             Product currentProduct = filteredList.get(position);
 
             Glide.with(context)
-                    .load(currentProduct.getProductImage())
+                    .load(currentProduct.getImage())
                     .into(holder.productImage);
 
             holder.productName.setText(currentProduct.getProductName());

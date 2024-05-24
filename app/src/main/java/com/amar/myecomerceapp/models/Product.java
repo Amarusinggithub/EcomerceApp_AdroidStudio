@@ -3,7 +3,7 @@ package com.amar.myecomerceapp.models;
 
 
 public class Product {
-    private  int productImage;
+    private  int image;
     private  String productName;
     private  String productPrice;
     private  String productId;
@@ -14,16 +14,19 @@ public class Product {
     boolean productAlreadyInFavorites=false;
 
 
+    public Product() {
+    }
 
-    public Product(int productImage, String productName, String productPrice, String productDescription, String productId) {
-        this.productImage = productImage;
+
+    public Product(int image, String productName, String productPrice, String productDescription, String productId) {
+        this.image = image;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productId = productId;
         this.productDescription = productDescription;
     }
-    public Product(int productImage,int productQuantity ,String productName, String productPrice,String  productSalesPrice, String productDescription, String productId) {
-        this.productImage = productImage;
+    public Product(int image, int productQuantity , String productName, String productPrice, String  productSalesPrice, String productDescription, String productId) {
+        this.image = image;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productId = productId;
@@ -31,8 +34,8 @@ public class Product {
         this.productSalesPrice=productSalesPrice;
         this.productQuantity=productQuantity;
     }
-    public Product(int productImage , String productName, String productPrice,String  productSalesPrice, String productDescription, String productId) {
-        this.productImage = productImage;
+    public Product(int image, String productName, String productPrice, String  productSalesPrice, String productDescription, String productId) {
+        this.image = image;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productId = productId;
@@ -41,12 +44,12 @@ public class Product {
     }
 
 
-    public int getProductImage() {
-        return productImage;
+    public int getImage() {
+        return image;
     }
 
-    public void setProductImage(int productImage) {
-        this.productImage = productImage;
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public String getProductName() {
