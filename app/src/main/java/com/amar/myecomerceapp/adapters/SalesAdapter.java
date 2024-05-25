@@ -54,6 +54,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
 
             holder.productName.setText(currentProduct.getProductName());
             holder.productPrice.setText(currentProduct.getProductPrice());
+            holder.productSalesPrice.setText(currentProduct.getProductSalesPrice());
 
             updateFavoriteIcon(holder, currentProduct);
 

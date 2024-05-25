@@ -4,7 +4,6 @@ package com.amar.myecomerceapp.activities;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,12 +17,9 @@ import com.amar.myecomerceapp.fragments.OrdersFragment;
 import com.amar.myecomerceapp.models.Category;
 import com.amar.myecomerceapp.models.Product;
 import com.amar.myecomerceapp.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -190,7 +186,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static ArrayList<Product> getSalesProductsData() {
         ArrayList<Product> productsArrayList = new ArrayList<>();
-        productsArrayList=everyProduct;
+        ArrayList<Product>  allProducts= everyProduct;
+        Collections.shuffle(allProducts, new Random());
+        // Get the first 12 products from the shuffled list
+        int numberOfProductsToAdd = Math.min(12,allProducts.size());
+        for (int i = 0; i < numberOfProductsToAdd; i++) {
+            productsArrayList.add(allProducts.get(i));
+        }
         return productsArrayList;
     }
 
