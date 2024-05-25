@@ -1,10 +1,14 @@
 package com.amar.myecomerceapp.fragments;
 
 
-import static com.amar.myecomerceapp.activities.MainActivity.getSalesProductsData;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
+import static com.amar.myecomerceapp.activities.MainActivity.salesProductData;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,15 +16,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.adapters.SalesAdapter;
 import com.amar.myecomerceapp.interfaces.MySalesOnclickListener;
+import com.bumptech.glide.Glide;
 
 
 public class SalesFragment extends Fragment implements MySalesOnclickListener {
@@ -46,7 +45,7 @@ public class SalesFragment extends Fragment implements MySalesOnclickListener {
         setupBackButton();
     }
     private void setUpRecyclerView() {
-        adapter= new SalesAdapter(this,getSalesProductsData(),getContext());
+        adapter= new SalesAdapter(this,salesProductData,getContext());
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -72,7 +71,7 @@ public class SalesFragment extends Fragment implements MySalesOnclickListener {
 
     @Override
     public void salesProductClicked(int position) {
-        productInProductViewFragment = getSalesProductsData().get(position);
+        productInProductViewFragment = salesProductData.get(position);
         SalesProductViewFragment fragment = new SalesProductViewFragment();
         loadFragment(fragment);
     }

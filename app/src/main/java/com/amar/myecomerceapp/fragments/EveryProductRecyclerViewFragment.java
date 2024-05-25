@@ -1,7 +1,8 @@
 package com.amar.myecomerceapp.fragments;
 
-import static com.amar.myecomerceapp.activities.MainActivity.EVERY_PRODUCT;
-import static com.amar.myecomerceapp.activities.MainActivity.getProductsData;
+
+import static com.amar.myecomerceapp.activities.MainActivity.everyProduct;
+
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 
 
@@ -37,10 +38,13 @@ GridLayoutManager layoutManager;
 
     private void initializeView(View view) {
         recyclerView=view.findViewById(R.id.everyproductrecyclerview);
-        everyProductAdapter = new ProductAdapter(this,getProductsData(EVERY_PRODUCT),getContext());
-        layoutManager=new GridLayoutManager(getContext(),2);
-        recyclerView.setAdapter(everyProductAdapter);
-        recyclerView.setLayoutManager(layoutManager);
+        if (!everyProduct.isEmpty()){
+            everyProductAdapter = new ProductAdapter(this, everyProduct,getContext());
+            layoutManager=new GridLayoutManager(getContext(),2);
+            recyclerView.setAdapter(everyProductAdapter);
+            recyclerView.setLayoutManager(layoutManager);
+        }
+
     }
     private  void loadFragment(Fragment fragment) {
         FragmentManager fm = requireActivity().getSupportFragmentManager();

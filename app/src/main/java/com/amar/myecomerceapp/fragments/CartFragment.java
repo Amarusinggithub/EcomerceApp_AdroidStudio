@@ -161,7 +161,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
             bundle.putString("proPrice", product.getProductPrice());
             bundle.putString("productDescription", product.getProductDescription());
             bundle.putString("position", product.getProductId());
-            bundle.putInt("productImage", product.getImage());
+            bundle.putString("productImage", product.getImage());
             ProductViewFragment productViewFragment = new ProductViewFragment();
             productViewFragment.setArguments(bundle);
             loadFragment(productViewFragment);

@@ -3,7 +3,7 @@ package com.amar.myecomerceapp.models;
 
 
 public class Product {
-    private  int image;
+    private String image;
     private  String productName;
     private  String productPrice;
     private  String productId;
@@ -18,14 +18,14 @@ public class Product {
     }
 
 
-    public Product(int image, String productName, String productPrice, String productDescription, String productId) {
+    public Product(String image, String productName, String productPrice, String productDescription, String productId) {
         this.image = image;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productId = productId;
         this.productDescription = productDescription;
     }
-    public Product(int image, int productQuantity , String productName, String productPrice, String  productSalesPrice, String productDescription, String productId) {
+    public Product(String image, int productQuantity , String productName, String productPrice, String  productSalesPrice, String productDescription, String productId) {
         this.image = image;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -34,7 +34,7 @@ public class Product {
         this.productSalesPrice=productSalesPrice;
         this.productQuantity=productQuantity;
     }
-    public Product(int image, String productName, String productPrice, String  productSalesPrice, String productDescription, String productId) {
+    public Product(String image, String productName, String productPrice, String  productSalesPrice, String productDescription, String productId) {
         this.image = image;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -44,11 +44,11 @@ public class Product {
     }
 
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

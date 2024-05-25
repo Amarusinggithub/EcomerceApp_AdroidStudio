@@ -1,13 +1,12 @@
 package com.amar.myecomerceapp.fragments;
 
-import static com.amar.myecomerceapp.activities.MainActivity.EVERY_PRODUCT;
+
 import static com.amar.myecomerceapp.activities.MainActivity.STRIPE_PUBLISH_KEY;
 import static com.amar.myecomerceapp.activities.MainActivity.STRIPE_SECRET_KEY;
-import static com.amar.myecomerceapp.activities.MainActivity.getProductsData;
+import static com.amar.myecomerceapp.activities.MainActivity.everyProduct;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.activities.MainActivity.productsFavorited;
-import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -25,14 +24,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.amar.myecomerceapp.R;
+import com.amar.myecomerceapp.models.Product;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.amar.myecomerceapp.R;
-import com.amar.myecomerceapp.models.Product;
 import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
@@ -199,7 +198,7 @@ public class ProductViewFragment extends Fragment {
     }
 
     private void setupProductDetails(TextView productNameTextView, TextView productPriceTextView, TextView productDescriptionTextView, ImageView productImageView) {
-        Product product = getProductsData(EVERY_PRODUCT).get(getProductInPosition());
+        Product product = everyProduct.get(getProductInPosition());
         productNameTextView.setText(product.getProductName());
         productPriceTextView.setText(product.getProductPrice());
         productDescriptionTextView.setText(product.getProductDescription());
@@ -225,7 +224,7 @@ public class ProductViewFragment extends Fragment {
 
     private void setupButtons() {
         addFavoriteBtn.setOnClickListener(v -> {
-            Product product = getProductsData(EVERY_PRODUCT).get(getProductInPosition());
+            Product product = everyProduct.get(getProductInPosition());
             if (productAlreadyInFavorites) {
                 productsFavorited.remove(product);
                 Glide.with(requireContext())
@@ -246,7 +245,7 @@ public class ProductViewFragment extends Fragment {
         });
 
         addToCart.setOnClickListener(v -> {
-            Product product = getProductsData(EVERY_PRODUCT).get(getProductInPosition());
+            Product product = everyProduct.get(getProductInPosition());
             if (product != null) {
                 boolean productAlreadyInCart = false;
                 for (Product productInCart : productsAddedToCart) {
@@ -292,9 +291,9 @@ public class ProductViewFragment extends Fragment {
 
     public int getProductInPosition() {
         int position = 0;
-        for (Product productInEveryThing : getProductsData(EVERY_PRODUCT)) {
+        for (Product productInEveryThing : everyProduct) {
             if (Objects.equals(productInEveryThing.getProductName(), productInProductViewFragment.getProductName())) {
-                position = getProductsData(EVERY_PRODUCT).indexOf(productInEveryThing);
+                position = everyProduct.indexOf(productInEveryThing);
                 break;
             }
         }

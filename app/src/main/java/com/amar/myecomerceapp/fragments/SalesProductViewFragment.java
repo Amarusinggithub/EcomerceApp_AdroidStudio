@@ -1,7 +1,6 @@
 package com.amar.myecomerceapp.fragments;
 
-import static com.amar.myecomerceapp.activities.MainActivity.EVERY_PRODUCT;
-import static com.amar.myecomerceapp.activities.MainActivity.getProductsData;
+import static com.amar.myecomerceapp.activities.MainActivity.everyProduct;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.activities.MainActivity.productsFavorited;
@@ -9,11 +8,6 @@ import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered
 
 import android.graphics.Paint;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.models.Product;
+import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 
@@ -59,7 +57,7 @@ public class SalesProductViewFragment extends Fragment {
         TextView productDescriptionTextView =  productView.findViewById(R.id.Description);
         ImageView productImageView =  productView.findViewById(R.id.Image);
 
-        if (!productsFavorited.contains(getProductsData(EVERY_PRODUCT).get(getProductInPosition()))) {
+        if (!productsFavorited.contains(everyProduct.get(getProductInPosition()))) {
             productAlreadyInFavorites = false;
             Glide.with(requireContext())
                     .load(R.drawable.unfavorite)
@@ -74,12 +72,12 @@ public class SalesProductViewFragment extends Fragment {
         }
 
 
-        productNameTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName());
-        productSalesPriceTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductSalesPrice());
-        productPriceTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductPrice());
-        productDescriptionTextView.setText(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductDescription());
+        productNameTextView.setText(everyProduct.get(getProductInPosition()).getProductName());
+        productSalesPriceTextView.setText(everyProduct.get(getProductInPosition()).getProductSalesPrice());
+        productPriceTextView.setText(everyProduct.get(getProductInPosition()).getProductPrice());
+        productDescriptionTextView.setText(everyProduct.get(getProductInPosition()).getProductDescription());
         Glide.with(this)
-                .load(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getImage())
+                .load(everyProduct.get(getProductInPosition()).getImage())
                 .fitCenter()
                 .into(productImageView);
         productPriceTextView.setPaintFlags(productPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -98,45 +96,45 @@ public class SalesProductViewFragment extends Fragment {
 
         addFavoriteBtn.setOnClickListener(v -> {
             if (productAlreadyInFavorites) {
-                productsFavorited.remove(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
+                productsFavorited.remove(everyProduct.get(getProductInPosition()));
                 Glide.with(requireContext())
                         .load(R.drawable.unfavorite)
                         .fitCenter()
                         .into(addFavoriteBtn);
-                Toast.makeText(getContext(), "This " + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "This " + everyProduct.get(getProductInPosition()).getProductName() + " was removed from favorites. ", Toast.LENGTH_SHORT).show();
                 productAlreadyInFavorites = false;
             } else {
-                productsFavorited.add(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
+                productsFavorited.add(everyProduct.get(getProductInPosition()));
                 productAlreadyInFavorites = true;
                 Glide.with(requireContext())
                         .load(R.drawable.favoriteicon2)
                         .fitCenter()
                         .into(addFavoriteBtn);
-                Toast.makeText(getContext(), getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), everyProduct.get(getProductInPosition()).getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
             }
         });
 
         buyBtn.setOnClickListener(v -> {
-            productsUserOrdered.add(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
+            productsUserOrdered.add(everyProduct.get(getProductInPosition()));
             loadFragment(new OrderRecieptFragment());
         });
 
 
         addToCart.setOnClickListener(v -> {
-            if (getProductsData(EVERY_PRODUCT).get(getProductInPosition()) != null) {
+            if (everyProduct.get(getProductInPosition()) != null) {
                 boolean productAlreadyInCart = false;
                 for (Product productInCart : productsAddedToCart) {
-                    if (productInCart.getProductName().equals(getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName())) {
-                        int newQuantity = productInCart.getProductQuantity() + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductQuantity();
+                    if (productInCart.getProductName().equals(everyProduct.get(getProductInPosition()).getProductName())) {
+                        int newQuantity = productInCart.getProductQuantity() + everyProduct.get(getProductInPosition()).getProductQuantity();
                         productInCart.setProductQuantity(newQuantity);
-                        Toast.makeText(getContext(), "Quantity of " + getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Quantity of " + everyProduct.get(getProductInPosition()).getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
                         productAlreadyInCart = true;
                         break;
                     }
                 }
                 if (!productAlreadyInCart) {
-                    productsAddedToCart.add(getProductsData(EVERY_PRODUCT).get(getProductInPosition()));
-                    Toast.makeText(getContext(), getProductsData(EVERY_PRODUCT).get(getProductInPosition()).getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
+                    productsAddedToCart.add(everyProduct.get(getProductInPosition()));
+                    Toast.makeText(getContext(), everyProduct.get(getProductInPosition()).getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Log.d("ProductViewFragment", "The product is null");
@@ -157,9 +155,9 @@ public class SalesProductViewFragment extends Fragment {
 
     public int getProductInPosition(){
         int position=0;
-        for(Product productInEveryThing: getProductsData(EVERY_PRODUCT)){
+        for(Product productInEveryThing: everyProduct){
             if(Objects.equals(productInEveryThing.getProductName(), productInProductViewFragment.getProductName())){
-                position=getProductsData(EVERY_PRODUCT).indexOf(productInEveryThing);
+                position= everyProduct.indexOf(productInEveryThing);
             }
         }
         return position;

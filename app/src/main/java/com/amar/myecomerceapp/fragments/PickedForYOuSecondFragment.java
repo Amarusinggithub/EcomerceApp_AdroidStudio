@@ -1,9 +1,13 @@
 package com.amar.myecomerceapp.fragments;
 
-import static com.amar.myecomerceapp.activities.MainActivity.getPickedForYouProductsData;
+import static com.amar.myecomerceapp.activities.MainActivity.pickedForYouProductsData;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,16 +15,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import com.amar.myecomerceapp.adapters.PickedForYouAdapter;
-import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
-import com.amar.myecomerceapp.adapters.ProductAdapter;
+import com.amar.myecomerceapp.adapters.PickedForYouAdapter;
 import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
+import com.bumptech.glide.Glide;
 
 
 public class PickedForYOuSecondFragment extends Fragment implements MyProductOnClickListener {
@@ -45,7 +43,7 @@ public class PickedForYOuSecondFragment extends Fragment implements MyProductOnC
         setupBackButton();
     }
     private void setUpRecyclerView() {
-        adapter= new PickedForYouAdapter(this,getPickedForYouProductsData(),getContext());
+        adapter= new PickedForYouAdapter(this,pickedForYouProductsData,getContext());
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -70,7 +68,7 @@ public class PickedForYOuSecondFragment extends Fragment implements MyProductOnC
 
     @Override
     public void productClicked(int position) {
-        productInProductViewFragment = getPickedForYouProductsData().get(position);
+        productInProductViewFragment = pickedForYouProductsData.get(position);
         ProductViewFragment productViewFragment = new ProductViewFragment();
         loadFragment(productViewFragment);
     }
