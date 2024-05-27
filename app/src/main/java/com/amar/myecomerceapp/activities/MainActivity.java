@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Product> salesProductData;
     public static ArrayList<Product> everyProduct;
     private static MainActivity instance;
+    String userDocumentID;
     public static User user;
     public static Product productInProductViewFragment;
     BottomNavigationView bottomNavigationView;
@@ -84,12 +85,16 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
+
                             Log.d(TAG, document.getId() + " => " + document.getData());
                             user = document.toObject(User.class);
                             if (user.getEmail().equals(email)) {
                                 username = user.getUsername();
+                                userDocumentID=document.getId();
+                                productsFavorited=user.getProductsFavorited();
+                                productsUserOrdered=user.getProductsUserOrdered();
+                                productsAddedToCart=user.getProductsUserAddedToCart();
                                 getEveryProductFromDatabase();
-
                                 return;
                             }
                         }
@@ -219,38 +224,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        // Reference to the document you want to update
-        DocumentReference docRef = db.collection("products").document("documentId");
+        DocumentReference docRef = db.collection("users").document(userDocumentID);
 
-        // Data to update
         Map<String, Object> updatedData = new HashMap<>();
-        updatedData.put("fieldName", "newValue");
+        updatedData.put("cart", productsAddedToCart);
+        updatedData.put("ordered", productsUserOrdered);
+        updatedData.put("favorites", productsFavorited);
 
-        // Update the document
         docRef.update(updatedData)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                        Log.d("Firestore", "Document successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Firestore", "Error updating document", e);
-                    }
-                });
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Document successfully updated!"))
+                .addOnFailureListener(e -> Log.w("Firestore", "Error updating document", e));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        DocumentReference docRef = db.collection("users").document(userDocumentID);
+
+        Map<String, Object> updatedData = new HashMap<>();
+        updatedData.put("cart", productsAddedToCart);
+        updatedData.put("ordered", productsUserOrdered);
+        updatedData.put("favorites", productsFavorited);
+
+        docRef.update(updatedData)
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Document successfully updated!"))
+                .addOnFailureListener(e -> Log.w("Firestore", "Error updating document", e));
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        getUserFromDatabase();
     }
 
 
