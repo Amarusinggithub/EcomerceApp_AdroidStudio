@@ -4,6 +4,7 @@ package com.amar.myecomerceapp.activities;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,13 +18,18 @@ import com.amar.myecomerceapp.fragments.OrdersFragment;
 import com.amar.myecomerceapp.models.Category;
 import com.amar.myecomerceapp.models.Product;
 import com.amar.myecomerceapp.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -177,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Product> productsArrayList = new ArrayList<>();
        ArrayList<Product>  allProducts= everyProduct;
         Collections.shuffle(allProducts, new Random());
-        int numberOfProductsToAdd = Math.min(12,allProducts.size());
+        int numberOfProductsToAdd = Math.min(20,allProducts.size());
         for (int i = 0; i < numberOfProductsToAdd; i++) {
             productsArrayList.add(allProducts.get(i));
         }
@@ -188,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Product> productsArrayList = new ArrayList<>();
         ArrayList<Product>  allProducts= everyProduct;
         Collections.shuffle(allProducts, new Random());
-        // Get the first 12 products from the shuffled list
+
         int numberOfProductsToAdd = Math.min(20,allProducts.size());
         for (int i = 0; i < numberOfProductsToAdd; i++) {
             productsArrayList.add(allProducts.get(i));
@@ -200,12 +206,51 @@ public class MainActivity extends AppCompatActivity {
        ArrayList<Product> productsArrayList = new ArrayList<>();
        ArrayList<Product>  allProducts= everyProduct;
         Collections.shuffle(allProducts, new Random());
-        // Get the first 12 products from the shuffled list
+
         int numberOfProductsToAdd = Math.min(20,allProducts.size());
         for (int i = 0; i < numberOfProductsToAdd; i++) {
             productsArrayList.add(allProducts.get(i));
         }
         return productsArrayList;
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Reference to the document you want to update
+        DocumentReference docRef = db.collection("products").document("documentId");
+
+        // Data to update
+        Map<String, Object> updatedData = new HashMap<>();
+        updatedData.put("fieldName", "newValue");
+
+        // Update the document
+        docRef.update(updatedData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Log.d("Firestore", "Document successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Firestore", "Error updating document", e);
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 
 

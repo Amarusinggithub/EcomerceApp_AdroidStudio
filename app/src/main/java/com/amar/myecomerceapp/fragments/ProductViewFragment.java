@@ -6,7 +6,9 @@ import static com.amar.myecomerceapp.activities.MainActivity.everyProduct;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.activities.MainActivity.productsFavorited;
+import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,17 +46,15 @@ import java.util.Objects;
 
 public class ProductViewFragment extends Fragment {
     private static final String TAG = "ProductViewFragment";
-
     private Button addToCart;
     private Button buyBtn;
     private ImageView addFavoriteBtn;
-    private ImageView shareBtn;
-    private ImageView backBtn;
     private boolean productAlreadyInFavorites;
     private PaymentSheet paymentSheet;
     private String customerId;
     private String ephemeralKey;
     private String clientSecret;
+    private int productPriceInCents;
 
     @Nullable
     @Override
@@ -67,8 +67,8 @@ public class ProductViewFragment extends Fragment {
     private void initializeViewElements(View view) {
         addToCart = view.findViewById(R.id.addtocartbtn);
         addFavoriteBtn = view.findViewById(R.id.favoritebtn);
-        shareBtn = view.findViewById(R.id.sharebtn);
-        backBtn = view.findViewById(R.id.backbtn);
+        ImageView shareBtn = view.findViewById(R.id.sharebtn);
+        ImageView backBtn = view.findViewById(R.id.backbtn);
         buyBtn = view.findViewById(R.id.buyBtn);
 
         TextView productNameTextView = view.findViewById(R.id.Name);
@@ -135,9 +135,9 @@ public class ProductViewFragment extends Fragment {
                     if (isAdded()) {
                         try {
                             JSONObject object = new JSONObject(response);
-                            ephemeralKey = object.getString("id");
+                            ephemeralKey = object.getString("secret");
                             Toast.makeText(requireContext(), "Ephemeral Key: " + ephemeralKey, Toast.LENGTH_SHORT).show();
-                            createPaymentIntent(requestQueue, customerId, ephemeralKey);
+                            createPaymentIntent(requestQueue, customerId);
                         } catch (JSONException e) {
                             Log.e(TAG, "Error parsing ephemeral key response", e);
                         }
@@ -148,15 +148,15 @@ public class ProductViewFragment extends Fragment {
             }
         }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + STRIPE_SECRET_KEY);
-                headers.put("Stripe-Version", "2022-08-01");
+                headers.put("Stripe-Version", "2024-04-10");
                 return headers;
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer", customerId);
                 return params;
@@ -166,7 +166,7 @@ public class ProductViewFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void createPaymentIntent(RequestQueue requestQueue, String customerId, String ephemeralKey) {
+    private void createPaymentIntent(RequestQueue requestQueue, String customerId) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/payment_intents",
                 response -> {
                     if (isAdded()) {
@@ -184,17 +184,17 @@ public class ProductViewFragment extends Fragment {
             }
         }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + STRIPE_SECRET_KEY);
                 return headers;
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer", customerId);
-                params.put("amount", "1000");
+                params.put("amount", String.valueOf(productPriceInCents)); // Amount in cents
                 params.put("currency", "usd");
                 params.put("automatic_payment_methods[enabled]", "true");
                 return params;
@@ -207,6 +207,9 @@ public class ProductViewFragment extends Fragment {
     private void onPaymentResult(PaymentSheetResult paymentSheetResult) {
         if (isAdded()) {
             if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
+                Product product = everyProduct.get(getProductInPosition());
+                productsUserOrdered.add(product);
+                loadFragment(new OrderRecieptFragment());
                 Toast.makeText(requireContext(), "Payment Completed", Toast.LENGTH_SHORT).show();
             } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
                 Log.e(TAG, "Payment Failed: " + ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
@@ -219,8 +222,11 @@ public class ProductViewFragment extends Fragment {
     private void setupProductDetails(TextView productNameTextView, TextView productPriceTextView, TextView productDescriptionTextView, ImageView productImageView) {
         Product product = everyProduct.get(getProductInPosition());
         productNameTextView.setText(product.getProductName());
-        productPriceTextView.setText(product.getProductPrice());
+        String productPrice = product.getProductPrice().replace("$", "").replace(",", "");
+        productPriceTextView.setText(productPrice);
         productDescriptionTextView.setText(product.getProductDescription());
+        productPriceInCents = (int) (Double.parseDouble(productPrice) * 100);
+
         Glide.with(this)
                 .load(product.getImage())
                 .fitCenter()
@@ -329,4 +335,3 @@ public class ProductViewFragment extends Fragment {
         return position;
     }
 }
-

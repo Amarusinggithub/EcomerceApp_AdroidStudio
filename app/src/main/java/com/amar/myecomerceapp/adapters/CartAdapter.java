@@ -41,7 +41,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     @Override
     public CartAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_product_cardview, parent, false);
-        return new MyViewHolder(view, productOnclickListener, context);
+        return new MyViewHolder(view, productOnclickListener);
     }
 
     @Override
@@ -87,7 +87,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                 totalNumber.setText(calculateTotalFormatted());
             });
         } else {
-            // Logging for index out of bounds
             Log.e("CartAdapter", "Index " + position + " out of bounds for length " + cartProducts.size());
         }
     }
@@ -120,12 +119,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView image, close;
-        TextView name, price, quantity;
+        ImageView image;
+        ImageView close;
+        TextView name;
+        TextView price;
+        TextView quantity;
         Button minus;
         Button plus;
 
-        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener, Context context) {
+        public MyViewHolder(@NonNull View itemView, MyProductOnClickListener productOnclickListener) {
             super(itemView);
             image = itemView.findViewById(R.id.productImage);
             name = itemView.findViewById(R.id.productName);
