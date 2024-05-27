@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Product>  allProducts= everyProduct;
         Collections.shuffle(allProducts, new Random());
         // Get the first 12 products from the shuffled list
-        int numberOfProductsToAdd = Math.min(12,allProducts.size());
+        int numberOfProductsToAdd = Math.min(20,allProducts.size());
         for (int i = 0; i < numberOfProductsToAdd; i++) {
             productsArrayList.add(allProducts.get(i));
         }
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
        ArrayList<Product>  allProducts= everyProduct;
         Collections.shuffle(allProducts, new Random());
         // Get the first 12 products from the shuffled list
-        int numberOfProductsToAdd = Math.min(12,allProducts.size());
+        int numberOfProductsToAdd = Math.min(20,allProducts.size());
         for (int i = 0; i < numberOfProductsToAdd; i++) {
             productsArrayList.add(allProducts.get(i));
         }

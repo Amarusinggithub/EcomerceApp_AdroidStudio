@@ -126,7 +126,6 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.MyViewHolder
         }
     }
 
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
         TextView productName;

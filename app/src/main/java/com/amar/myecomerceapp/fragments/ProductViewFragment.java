@@ -1,6 +1,5 @@
 package com.amar.myecomerceapp.fragments;
 
-
 import static com.amar.myecomerceapp.activities.MainActivity.STRIPE_PUBLISH_KEY;
 import static com.amar.myecomerceapp.activities.MainActivity.STRIPE_SECRET_KEY;
 import static com.amar.myecomerceapp.activities.MainActivity.everyProduct;
@@ -104,15 +103,21 @@ public class ProductViewFragment extends Fragment {
     private void createStripeCustomer(RequestQueue requestQueue) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/customers",
                 response -> {
-                    try {
-                        JSONObject object = new JSONObject(response);
-                        customerId = object.getString("id");
-                        Toast.makeText(requireContext(), "Customer ID: " + customerId, Toast.LENGTH_SHORT).show();
-                        createEphemeralKey(requestQueue, customerId);
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Error parsing customer response", e);
+                    if (isAdded()) {
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            customerId = object.getString("id");
+                            Toast.makeText(requireContext(), "Customer ID: " + customerId, Toast.LENGTH_SHORT).show();
+                            createEphemeralKey(requestQueue, customerId);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Error parsing customer response", e);
+                        }
                     }
-                }, error -> Log.e(TAG, "Error creating customer", error)) {
+                }, error -> {
+            if (isAdded()) {
+                Log.e(TAG, "Error creating customer", error);
+            }
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -127,15 +132,21 @@ public class ProductViewFragment extends Fragment {
     private void createEphemeralKey(RequestQueue requestQueue, String customerId) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/ephemeral_keys",
                 response -> {
-                    try {
-                        JSONObject object = new JSONObject(response);
-                        ephemeralKey = object.getString("id");
-                        Toast.makeText(requireContext(), "Ephemeral Key: " + ephemeralKey, Toast.LENGTH_SHORT).show();
-                        createPaymentIntent(requestQueue, customerId, ephemeralKey);
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Error parsing ephemeral key response", e);
+                    if (isAdded()) {
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            ephemeralKey = object.getString("id");
+                            Toast.makeText(requireContext(), "Ephemeral Key: " + ephemeralKey, Toast.LENGTH_SHORT).show();
+                            createPaymentIntent(requestQueue, customerId, ephemeralKey);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Error parsing ephemeral key response", e);
+                        }
                     }
-                }, error -> Log.e(TAG, "Error creating ephemeral key", error)) {
+                }, error -> {
+            if (isAdded()) {
+                Log.e(TAG, "Error creating ephemeral key", error);
+            }
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -158,14 +169,20 @@ public class ProductViewFragment extends Fragment {
     private void createPaymentIntent(RequestQueue requestQueue, String customerId, String ephemeralKey) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://api.stripe.com/v1/payment_intents",
                 response -> {
-                    try {
-                        JSONObject object = new JSONObject(response);
-                        clientSecret = object.getString("client_secret");
-                        Toast.makeText(requireContext(), "Client Secret: " + clientSecret, Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Error parsing payment intent response", e);
+                    if (isAdded()) {
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            clientSecret = object.getString("client_secret");
+                            Toast.makeText(requireContext(), "Client Secret: " + clientSecret, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Error parsing payment intent response", e);
+                        }
                     }
-                }, error -> Log.e(TAG, "Error creating payment intent", error)) {
+                }, error -> {
+            if (isAdded()) {
+                Log.e(TAG, "Error creating payment intent", error);
+            }
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -188,12 +205,14 @@ public class ProductViewFragment extends Fragment {
     }
 
     private void onPaymentResult(PaymentSheetResult paymentSheetResult) {
-        if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
-            Toast.makeText(requireContext(), "Payment Completed", Toast.LENGTH_SHORT).show();
-        } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
-            Log.e(TAG, "Payment Failed: " + ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
-        } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
-            Log.d(TAG, "Payment Canceled");
+        if (isAdded()) {
+            if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
+                Toast.makeText(requireContext(), "Payment Completed", Toast.LENGTH_SHORT).show();
+            } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
+                Log.e(TAG, "Payment Failed: " + ((PaymentSheetResult.Failed) paymentSheetResult).getError().getMessage());
+            } else if (paymentSheetResult instanceof PaymentSheetResult.Canceled) {
+                Log.d(TAG, "Payment Canceled");
+            }
         }
     }
 
@@ -224,49 +243,57 @@ public class ProductViewFragment extends Fragment {
 
     private void setupButtons() {
         addFavoriteBtn.setOnClickListener(v -> {
-            Product product = everyProduct.get(getProductInPosition());
-            if (productAlreadyInFavorites) {
-                productsFavorited.remove(product);
-                Glide.with(requireContext())
-                        .load(R.drawable.unfavorite)
-                        .fitCenter()
-                        .into(addFavoriteBtn);
-                Toast.makeText(getContext(), product.getProductName() + " was removed from favorites.", Toast.LENGTH_SHORT).show();
-                productAlreadyInFavorites = false;
-            } else {
-                productsFavorited.add(product);
-                Glide.with(requireContext())
-                        .load(R.drawable.favoriteicon2)
-                        .fitCenter()
-                        .into(addFavoriteBtn);
-                Toast.makeText(getContext(), product.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
-                productAlreadyInFavorites = true;
+            if (isAdded()) {
+                Product product = everyProduct.get(getProductInPosition());
+                if (productAlreadyInFavorites) {
+                    productsFavorited.remove(product);
+                    Glide.with(requireContext())
+                            .load(R.drawable.unfavorite)
+                            .fitCenter()
+                            .into(addFavoriteBtn);
+                    Toast.makeText(getContext(), product.getProductName() + " was removed from favorites.", Toast.LENGTH_SHORT).show();
+                    productAlreadyInFavorites = false;
+                } else {
+                    productsFavorited.add(product);
+                    Glide.with(requireContext())
+                            .load(R.drawable.favoriteicon2)
+                            .fitCenter()
+                            .into(addFavoriteBtn);
+                    Toast.makeText(getContext(), product.getProductName() + " was added to favorites.", Toast.LENGTH_SHORT).show();
+                    productAlreadyInFavorites = true;
+                }
             }
         });
 
         addToCart.setOnClickListener(v -> {
-            Product product = everyProduct.get(getProductInPosition());
-            if (product != null) {
-                boolean productAlreadyInCart = false;
-                for (Product productInCart : productsAddedToCart) {
-                    if (productInCart.getProductName().equals(product.getProductName())) {
-                        int newQuantity = productInCart.getProductQuantity() + product.getProductQuantity();
-                        productInCart.setProductQuantity(newQuantity);
-                        Toast.makeText(getContext(), "Quantity of " + product.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
-                        productAlreadyInCart = true;
-                        break;
+            if (isAdded()) {
+                Product product = everyProduct.get(getProductInPosition());
+                if (product != null) {
+                    boolean productAlreadyInCart = false;
+                    for (Product productInCart : productsAddedToCart) {
+                        if (productInCart.getProductName().equals(product.getProductName())) {
+                            int newQuantity = productInCart.getProductQuantity() + product.getProductQuantity();
+                            productInCart.setProductQuantity(newQuantity);
+                            Toast.makeText(getContext(), "Quantity of " + product.getProductName() + " increased to " + newQuantity, Toast.LENGTH_SHORT).show();
+                            productAlreadyInCart = true;
+                            break;
+                        }
                     }
+                    if (!productAlreadyInCart) {
+                        productsAddedToCart.add(product);
+                        Toast.makeText(getContext(), product.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.d(TAG, "The product is null");
                 }
-                if (!productAlreadyInCart) {
-                    productsAddedToCart.add(product);
-                    Toast.makeText(getContext(), product.getProductName() + " was added to cart.", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Log.d(TAG, "The product is null");
             }
         });
 
-        buyBtn.setOnClickListener(v -> paymentFlow());
+        buyBtn.setOnClickListener(v -> {
+            if (isAdded()) {
+                paymentFlow();
+            }
+        });
     }
 
     private void paymentFlow() {
@@ -282,11 +309,13 @@ public class ProductViewFragment extends Fragment {
     }
 
     public void loadFragment(Fragment fragment) {
-        FragmentManager fm = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.addToBackStack("ProductViewFragment");
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        fragmentTransaction.commit();
+        if (isAdded()) {
+            FragmentManager fm = requireActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.addToBackStack("ProductViewFragment");
+            fragmentTransaction.replace(R.id.frameLayout, fragment);
+            fragmentTransaction.commit();
+        }
     }
 
     public int getProductInPosition() {
@@ -300,3 +329,4 @@ public class ProductViewFragment extends Fragment {
         return position;
     }
 }
+
