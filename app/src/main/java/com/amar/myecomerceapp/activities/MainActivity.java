@@ -4,7 +4,6 @@ package com.amar.myecomerceapp.activities;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,8 +17,6 @@ import com.amar.myecomerceapp.fragments.OrdersFragment;
 import com.amar.myecomerceapp.models.Category;
 import com.amar.myecomerceapp.models.Product;
 import com.amar.myecomerceapp.models.User;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -106,17 +103,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        bottomNavigationView = findViewById(R.id.bottomnav);
+        instance=this;
         setupBottomNavigationView();
         popularProductsData=getPopularProductsData();
         pickedForYouProductsData=getPickedForYouProductsData();
         salesProductData=getSalesProductsData();
-
-        productsAddedToCart = user.getProductsUserAddedToCart();
-        productsUserOrdered = user.getProductsUserOrdered();
-        productsFavorited = user.getProductsFavorited();
-        instance=this;
-
     }
     private void getEveryProductFromDatabase() {
         everyProduct =new ArrayList<>();
@@ -139,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigationView() {
+        bottomNavigationView = findViewById(R.id.bottomnav);
         loadFragment(new HomeFragment());
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home) {
@@ -257,6 +249,8 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         getUserFromDatabase();
     }
+
+
 
 
 }

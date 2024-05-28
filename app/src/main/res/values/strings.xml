@@ -2,7 +2,7 @@
 
     <string name="default_web_client_id">239100579519-4fdgi2d339cuor9b0aslcm7p0sba64ei.apps.googleusercontent.com</string>
 
-    <string name="app_name">SwiftCart</string>
+    <string name="app_name">Swift Cart</string>
     <string name="categorytitle">Category</string>
     <string name="quantity">0</string>
     <string name="buy">Buy</string>

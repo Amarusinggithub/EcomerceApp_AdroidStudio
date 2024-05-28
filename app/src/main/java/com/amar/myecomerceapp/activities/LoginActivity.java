@@ -156,7 +156,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser) {
        if (currentUser!=null) {
-           Toast.makeText(LoginActivity.this,currentUser.getEmail(),Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra(EMAIL,currentUser.getEmail());
             startActivity(intent);

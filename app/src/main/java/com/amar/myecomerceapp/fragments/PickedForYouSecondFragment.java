@@ -21,7 +21,7 @@ import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.bumptech.glide.Glide;
 
 
-public class PickedForYOuSecondFragment extends Fragment implements MyProductOnClickListener {
+public class PickedForYouSecondFragment extends Fragment implements MyProductOnClickListener {
     ImageView backBtn;
     RecyclerView recyclerView;
     PickedForYouAdapter adapter;

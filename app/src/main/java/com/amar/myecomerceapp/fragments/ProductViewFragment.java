@@ -107,7 +107,7 @@ public class ProductViewFragment extends Fragment {
                         try {
                             JSONObject object = new JSONObject(response);
                             customerId = object.getString("id");
-                            Toast.makeText(requireContext(), "Customer ID: " + customerId, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Customer ID: " + customerId);
                             createEphemeralKey(requestQueue, customerId);
                         } catch (JSONException e) {
                             Log.e(TAG, "Error parsing customer response", e);
@@ -136,7 +136,8 @@ public class ProductViewFragment extends Fragment {
                         try {
                             JSONObject object = new JSONObject(response);
                             ephemeralKey = object.getString("secret");
-                            Toast.makeText(requireContext(), "Ephemeral Key: " + ephemeralKey, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Ephemeral Key: " + ephemeralKey);
+
                             createPaymentIntent(requestQueue, customerId);
                         } catch (JSONException e) {
                             Log.e(TAG, "Error parsing ephemeral key response", e);
@@ -173,7 +174,7 @@ public class ProductViewFragment extends Fragment {
                         try {
                             JSONObject object = new JSONObject(response);
                             clientSecret = object.getString("client_secret");
-                            Toast.makeText(requireContext(), "Client Secret: " + clientSecret, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Client Secret: " + clientSecret);
                         } catch (JSONException e) {
                             Log.e(TAG, "Error parsing payment intent response", e);
                         }

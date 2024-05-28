@@ -2,20 +2,11 @@ package com.amar.myecomerceapp.fragments;
 
 
 import static com.amar.myecomerceapp.activities.MainActivity.getCategory;
-
 import static com.amar.myecomerceapp.fragments.EveryProductRecyclerViewFragment.everyProductAdapter;
 import static com.amar.myecomerceapp.fragments.ProductRecyclerViewFragment.categoryId;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -29,15 +20,18 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.adapters.CategoryAdapter;
 import com.amar.myecomerceapp.interfaces.MyCategoryOnClickListener;
-import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.amar.myecomerceapp.models.Category;
+import com.bumptech.glide.Glide;
 
 
 public class HomeFragment extends Fragment implements MyCategoryOnClickListener {
@@ -99,7 +93,7 @@ public class HomeFragment extends Fragment implements MyCategoryOnClickListener 
 
         favoritesCd.setOnClickListener(v -> loadFragment(new FavoritesFragment()));
         seeAllPopularProducts.setOnClickListener(v -> loadFragment( new PopularProductsSecondFragment()));
-        seeAllPickedForYou.setOnClickListener(v -> loadFragment(new PickedForYOuSecondFragment()));
+        seeAllPickedForYou.setOnClickListener(v -> loadFragment(new PickedForYouSecondFragment()));
         salesBanner.setOnClickListener(v -> loadFragment(new SalesFragment()));
 
         searchView.setOnTouchListener((v, event) -> {

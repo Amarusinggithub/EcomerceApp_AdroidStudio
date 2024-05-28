@@ -2,7 +2,6 @@ package com.amar.myecomerceapp.fragments;
 
 import static com.amar.myecomerceapp.activities.MainActivity.STRIPE_PUBLISH_KEY;
 import static com.amar.myecomerceapp.activities.MainActivity.STRIPE_SECRET_KEY;
-import static com.amar.myecomerceapp.activities.MainActivity.popularProductsData;
 import static com.amar.myecomerceapp.activities.MainActivity.productInProductViewFragment;
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered;
@@ -24,7 +23,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.adapters.CartAdapter;
 import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
@@ -34,6 +32,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.stripe.android.PaymentConfiguration;
 import com.stripe.android.paymentsheet.PaymentSheet;
 import com.stripe.android.paymentsheet.PaymentSheetResult;
