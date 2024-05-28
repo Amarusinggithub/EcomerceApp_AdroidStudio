@@ -7,7 +7,7 @@ public class User {
     private String email;
     private String username;
     private String password;
-    private String address;
+    private ArrayList<String> address;
     private ArrayList<Product> productsUserOrdered = new ArrayList<>();
     private ArrayList<Product> productsUserAddedToCart = new ArrayList<>();
     private ArrayList<Product> productsFavorited = new ArrayList<>();
@@ -46,12 +46,12 @@ public class User {
     }
 
     @PropertyName("address")
-    public String getAddress() {
+    public ArrayList<String> getAddress() {
         return address;
     }
 
     @PropertyName("address")
-    public void setAddress(String address) {
+    public void setAddress(ArrayList<String> address) {
         this.address = address;
     }
 
