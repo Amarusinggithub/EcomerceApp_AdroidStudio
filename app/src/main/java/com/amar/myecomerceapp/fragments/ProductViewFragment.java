@@ -119,7 +119,7 @@ public class ProductViewFragment extends Fragment {
             }
         }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + STRIPE_SECRET_KEY);
                 return headers;
@@ -195,7 +195,7 @@ public class ProductViewFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer", customerId);
-                params.put("amount", String.valueOf(productPriceInCents)); // Amount in cents
+                params.put("amount", String.valueOf(productPriceInCents));
                 params.put("currency", "usd");
                 params.put("automatic_payment_methods[enabled]", "true");
                 return params;
@@ -224,7 +224,7 @@ public class ProductViewFragment extends Fragment {
         Product product = everyProduct.get(getProductInPosition());
         productNameTextView.setText(product.getProductName());
         String productPrice = product.getProductPrice().replace("$", "").replace(",", "");
-        productPriceTextView.setText(productPrice);
+        productPriceTextView.setText(product.getProductPrice());
         productDescriptionTextView.setText(product.getProductDescription());
         productPriceInCents = (int) (Double.parseDouble(productPrice) * 100);
 

@@ -108,3 +108,5 @@ v
 Fapp/src/main/java/com/amar/myecomerceapp/adapters/FavoriteAdapter.java,e\1\e10d8c8758f16042cd91a1d0d85953c9df4a3b16
 z
 Japp/src/main/java/com/amar/myecomerceapp/adapters/PickedForYouAdapter.java,2\7\27ec5df3194f07651b28662c3b6cece76bc3cbef
+‚
+Rapp/src/main/java/com/amar/myecomerceapp/fragments/PickedForYouSecondFragment.java,3\f\3f96d3b94f2e78e05f8a20e0ef2192342ac7e48e

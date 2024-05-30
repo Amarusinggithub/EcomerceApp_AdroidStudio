@@ -197,7 +197,7 @@ public class SalesProductViewFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer", customerId);
-                params.put("amount", String.valueOf(productSalesPriceInCents)); // Amount in cents
+                params.put("amount", String.valueOf(productSalesPriceInCents));
                 params.put("currency", "usd");
                 params.put("automatic_payment_methods[enabled]", "true");
                 return params;
@@ -229,7 +229,7 @@ public class SalesProductViewFragment extends Fragment {
         productPriceTextView.setPaintFlags(productPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         productDescriptionTextView.setText(product.getProductDescription());
         String productSalesPrice = product.getProductSalesPrice().replace("$", "").replace(",", ""); // Remove the $ sign and commas
-        productSalesPriceTextView.setText(productSalesPrice);
+        productSalesPriceTextView.setText(product.getProductPrice());
         productSalesPriceInCents = (int) (Double.parseDouble(productSalesPrice) * 100); // Convert to cents
 
         Glide.with(this)

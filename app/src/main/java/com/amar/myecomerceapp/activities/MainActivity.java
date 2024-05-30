@@ -103,12 +103,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        instance=this;
-        setupBottomNavigationView();
         popularProductsData=getPopularProductsData();
         pickedForYouProductsData=getPickedForYouProductsData();
         salesProductData=getSalesProductsData();
+        instance=this;
+        setupBottomNavigationView();
     }
+
+
     private void getEveryProductFromDatabase() {
         everyProduct =new ArrayList<>();
         db.collection("products")
@@ -138,9 +140,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.orders) {
                 loadFragment(new OrdersFragment());
             } else if (item.getItemId() == R.id.account) {
-
                 loadFragment(new AccountFragment());
-
             } else if (item.getItemId() == R.id.cart) {
                 loadFragment(new CartFragment());
             }
@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
     public void loadFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        /*fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
