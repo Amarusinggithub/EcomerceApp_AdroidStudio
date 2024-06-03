@@ -8,26 +8,36 @@ import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart
 import static com.amar.myecomerceapp.activities.MainActivity.productsFavorited;
 import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.PixelCopy;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.models.Product;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -40,7 +50,13 @@ import com.stripe.android.paymentsheet.PaymentSheetResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,6 +72,9 @@ public class SalesProductViewFragment extends Fragment {
     private String ephemeralKey;
     private String clientSecret;
     private int productSalesPriceInCents;
+    private ImageView backBtn;
+    private String address;
+    private ImageView shareBtn;
 
     @Nullable
     @Override
@@ -68,8 +87,8 @@ public class SalesProductViewFragment extends Fragment {
     private void initializeViewElements(View view) {
         addToCart = view.findViewById(R.id.addtocartbtn);
         addFavoriteBtn = view.findViewById(R.id.favoritebtn);
-        ImageView shareBtn = view.findViewById(R.id.sharebtn);
-        ImageView backBtn = view.findViewById(R.id.backbtn);
+        shareBtn = view.findViewById(R.id.sharebtn);
+        backBtn = view.findViewById(R.id.backbtn);
         buyBtn = view.findViewById(R.id.buyBtn);
 
         TextView productNameTextView = view.findViewById(R.id.Name);
@@ -121,7 +140,7 @@ public class SalesProductViewFragment extends Fragment {
             }
         }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + STRIPE_SECRET_KEY);
                 return headers;
@@ -176,7 +195,6 @@ public class SalesProductViewFragment extends Fragment {
                             JSONObject object = new JSONObject(response);
                             clientSecret = object.getString("client_secret");
                             Log.d(TAG, "Client Secret: " + clientSecret);
-
                         } catch (JSONException e) {
                             Log.e(TAG, "Error parsing payment intent response", e);
                         }
@@ -210,8 +228,7 @@ public class SalesProductViewFragment extends Fragment {
     private void onPaymentResult(PaymentSheetResult paymentSheetResult) {
         if (isAdded()) {
             if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
-                Product product = everyProduct.get(getProductInPosition());
-                productsUserOrdered.add(product);
+                saveProductToOrderList(address);
                 loadFragment(new OrderRecieptFragment());
                 Toast.makeText(requireContext(), "Payment Completed", Toast.LENGTH_SHORT).show();
             } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
@@ -229,8 +246,8 @@ public class SalesProductViewFragment extends Fragment {
         productPriceTextView.setPaintFlags(productPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         productDescriptionTextView.setText(product.getProductDescription());
         String productSalesPrice = product.getProductSalesPrice().replace("$", "").replace(",", ""); // Remove the $ sign and commas
-        productSalesPriceTextView.setText(product.getProductPrice());
-        productSalesPriceInCents = (int) (Double.parseDouble(productSalesPrice) * 100); // Convert to cents
+        productSalesPriceTextView.setText(product.getProductSalesPrice());
+        productSalesPriceInCents = (int) (Double.parseDouble(productSalesPrice) * 100);
 
         Glide.with(this)
                 .load(product.getImage())
@@ -302,12 +319,38 @@ public class SalesProductViewFragment extends Fragment {
 
         buyBtn.setOnClickListener(v -> {
             if (isAdded()) {
-                paymentFlow();
+                showAddressDialog();
             }
         });
+
+        backBtn.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
+
+        shareBtn.setOnClickListener(v -> takeScreenshot());
     }
 
-    private void paymentFlow() {
+    private void showAddressDialog() {
+        Context context = requireContext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Enter Shipping Address");
+
+        final EditText input = new EditText(context);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            address = input.getText().toString();
+            if (!address.isEmpty()) {
+                startPaymentFlow();
+            } else {
+                Toast.makeText(context, "Address cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    private void startPaymentFlow() {
         if (clientSecret != null && customerId != null && ephemeralKey != null) {
             paymentSheet.presentWithPaymentIntent(
                     clientSecret,
@@ -317,6 +360,14 @@ public class SalesProductViewFragment extends Fragment {
         } else {
             Toast.makeText(requireContext(), "Unable to initiate payment", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void saveProductToOrderList(String address) {
+        Product product = everyProduct.get(getProductInPosition());
+        String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+        product.setAddressDeliveredTo(address);
+        product.setDateAndTimeout(currentDateTime);
+        productsUserOrdered.add(product);
     }
 
     public void loadFragment(Fragment fragment) {
@@ -338,5 +389,55 @@ public class SalesProductViewFragment extends Fragment {
             }
         }
         return position;
+    }
+
+    private void takeScreenshot() {
+        final View rootView = requireActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+
+        Bitmap bitmap = Bitmap.createBitmap(rootView.getWidth(), rootView.getHeight(), Bitmap.Config.ARGB_8888);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            PixelCopy.request(requireActivity().getWindow(), bitmap, copyResult -> {
+                if (copyResult == PixelCopy.SUCCESS) {
+                    try {
+                        saveScreenshot(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Failed to save screenshot", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Failed to take screenshot", Toast.LENGTH_SHORT).show();
+                }
+            }, new Handler());
+        }
+    }
+
+    private void saveScreenshot(Bitmap bitmap) throws IOException {
+        File screenshotFile = createImageFile();
+        try (FileOutputStream outputStream = new FileOutputStream(screenshotFile)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            Toast.makeText(getContext(), "Screenshot saved", Toast.LENGTH_SHORT).show();
+            shareScreenshot(screenshotFile);
+        }
+    }
+
+    private File createImageFile() throws IOException {
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+    }
+
+    private void shareScreenshot(File screenshotFile) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(requireContext(), "com.amar.myecomerceapp.fileprovider", screenshotFile));
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(shareIntent, "Share screenshot using"));
     }
 }

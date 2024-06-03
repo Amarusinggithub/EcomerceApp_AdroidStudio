@@ -21,10 +21,7 @@ import java.util.ArrayList;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder>{
     ArrayList<Product> orderedProducts;
     MyOrderOnClickListener myOrderOnClickListener;
-
     Context context;
-
-
 
     public OrderAdapter(ArrayList<Product> orderedProducts, MyOrderOnClickListener myOrderOnClickListener, Context context) {
         this.orderedProducts = orderedProducts;
@@ -48,13 +45,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                     .fitCenter()
                     .into(holder.image);
             holder.name.setText(currentProduct.getProductName());
-            holder.quantity.setText(String.valueOf(currentProduct.getProductQuantity())); // Convert int to String
+            holder.quantity.setText(String.valueOf(currentProduct.getProductQuantity()));
             holder.price.setText(currentProduct.getProductPrice());
+            holder.dateAndTime.setText(currentProduct.getDateAndTimeout());
+            holder.address.setText(currentProduct.getAddressDeliveredTo());
         } else {
             Log.e("OrderAdapter", "Index " + position + " out of bounds for length " + orderedProducts.size());
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -66,6 +64,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         TextView name;
         TextView price;
         TextView quantity;
+        TextView address;
+        TextView dateAndTime;
 
 
         public MyViewHolder(@NonNull View itemView, MyOrderOnClickListener orderOnclickListener) {
@@ -74,6 +74,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             name=itemView.findViewById(R.id.productName);
             price=itemView.findViewById(R.id.productPrice);
             quantity=itemView.findViewById(R.id.productQuantity);
+            address=itemView.findViewById(R.id.productAddress);
+            dateAndTime=itemView.findViewById(R.id.productDateAndTime);
+
 
             itemView.setOnClickListener(v -> {
                 int position=getBindingAdapterPosition();

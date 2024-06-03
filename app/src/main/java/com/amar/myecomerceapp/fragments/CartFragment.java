@@ -6,12 +6,16 @@ import static com.amar.myecomerceapp.activities.MainActivity.productInProductVie
 import static com.amar.myecomerceapp.activities.MainActivity.productsAddedToCart;
 import static com.amar.myecomerceapp.activities.MainActivity.productsUserOrdered;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +31,6 @@ import com.amar.myecomerceapp.R;
 import com.amar.myecomerceapp.adapters.CartAdapter;
 import com.amar.myecomerceapp.interfaces.MyProductOnClickListener;
 import com.amar.myecomerceapp.models.Product;
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -41,7 +44,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -60,6 +65,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
     private String customerId;
     private String ephemeralKey;
     private String clientSecret;
+    private String address;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,11 +99,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
 
         checkOutBtn.setOnClickListener(v -> {
             if (clientSecret != null && customerId != null && ephemeralKey != null) {
-                paymentSheet.presentWithPaymentIntent(
-                        clientSecret,
-                        new PaymentSheet.Configuration("Swift Cart",
-                                new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey))
-                );
+                showAddressDialog();
             } else {
                 Log.e(TAG, "Unable to initiate payment. Missing required data.");
             }
@@ -122,7 +124,7 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
             }
         }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + STRIPE_SECRET_KEY);
                 return headers;
@@ -208,12 +210,15 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
     private void onPaymentResult(PaymentSheetResult paymentSheetResult) {
         if (isAdded()) {
             if (paymentSheetResult instanceof PaymentSheetResult.Completed) {
-                ArrayList<Product> productsToRemove = new ArrayList<>();
                 for (Product productInCart : productsAddedToCart) {
+                    String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                    productInCart.setAddressDeliveredTo(address);
+                    productInCart.setDateAndTimeout(currentDateTime);
                     productsUserOrdered.add(productInCart);
-                    productsToRemove.add(productInCart);
+                    productsAddedToCart.remove(productInCart);
+
                 }
-                productsAddedToCart.removeAll(productsToRemove);
+
                 loadFragment(new OrderRecieptFragment());
                 Toast.makeText(requireContext(), "Payment Completed", Toast.LENGTH_SHORT).show();
             } else if (paymentSheetResult instanceof PaymentSheetResult.Failed) {
@@ -287,5 +292,39 @@ public class CartFragment extends Fragment implements MyProductOnClickListener {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.addToBackStack("cartFragment");
         fragmentTransaction.commit();
+    }
+
+    private void showAddressDialog() {
+        Context context = requireContext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Enter Shipping Address");
+
+        final EditText input = new EditText(context);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            address = input.getText().toString();
+            if (!address.isEmpty()) {
+                paymentFlow();
+            } else {
+                Toast.makeText(context, "Address cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    private void paymentFlow() {
+        if (clientSecret != null && customerId != null && ephemeralKey != null) {
+            paymentSheet.presentWithPaymentIntent(
+                    clientSecret,
+                    new PaymentSheet.Configuration("Swift Cart",
+                            new PaymentSheet.CustomerConfiguration(customerId, ephemeralKey))
+            );
+        } else {
+            Toast.makeText(requireContext(), "Unable to initiate payment", Toast.LENGTH_SHORT).show();
+        }
     }
 }

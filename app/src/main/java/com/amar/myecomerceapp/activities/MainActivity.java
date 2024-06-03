@@ -50,20 +50,12 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Product> salesProductData;
     public static ArrayList<Product> everyProduct;
     private static MainActivity instance;
-    String userDocumentID;
-    public static User user;
+    private FirebaseFirestore  db;
     public static Product productInProductViewFragment;
+    public User user;
+    String userDocumentID;
     BottomNavigationView bottomNavigationView;
     String email;
-    String username;
-
-    public static Product product;
-    public static FirebaseFirestore  db;
-
-    public static void finishActivity() {
-      instance.finish();
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db = FirebaseFirestore.getInstance();
         getUserFromDatabase();
-
     }
 
     private void getUserFromDatabase() {
@@ -86,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, document.getId() + " => " + document.getData());
                             user = document.toObject(User.class);
                             if (user.getEmail().equals(email)) {
-                                username = user.getUsername();
                                 userDocumentID=document.getId();
                                 productsFavorited=user.getProductsFavorited();
                                 productsUserOrdered=user.getProductsUserOrdered();
@@ -110,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNavigationView();
     }
 
-
     private void getEveryProductFromDatabase() {
         everyProduct =new ArrayList<>();
         db.collection("products")
@@ -119,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d(TAG, document.getId() + " => " + document.getData());
-                            product = document.toObject(Product.class);
+                            Product product = document.toObject(Product.class);
                             everyProduct.add(product);
                         }
                         if(!everyProduct.isEmpty()){
@@ -190,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Product> productsArrayList = new ArrayList<>();
         ArrayList<Product>  allProducts= everyProduct;
         Collections.shuffle(allProducts, new Random());
-
         int numberOfProductsToAdd = Math.min(20,allProducts.size());
         for (int i = 0; i < numberOfProductsToAdd; i++) {
             productsArrayList.add(allProducts.get(i));
@@ -210,11 +198,9 @@ public class MainActivity extends AppCompatActivity {
         return productsArrayList;
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
-
         DocumentReference docRef = db.collection("users").document(userDocumentID);
 
         Map<String, Object> updatedData = new HashMap<>();
@@ -230,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         DocumentReference docRef = db.collection("users").document(userDocumentID);
 
         Map<String, Object> updatedData = new HashMap<>();
@@ -243,13 +228,15 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Log.w("Firestore", "Error updating document", e));
     }
 
-    @Override
+   /* @Override
     protected void onRestart() {
         super.onRestart();
         getUserFromDatabase();
+    }*/
+
+    public static void finishActivity() {
+        instance.finish();
+
     }
-
-
-
 
 }
