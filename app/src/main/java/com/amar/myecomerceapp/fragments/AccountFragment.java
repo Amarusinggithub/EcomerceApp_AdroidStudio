@@ -1,9 +1,11 @@
 package com.amar.myecomerceapp.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,43 +32,41 @@ public class AccountFragment extends Fragment {
     ImageView aboutNp;
     TextView support;
     ImageView supportNp;
-
     TextView logOut;
     ImageView logOutNp;
     FirebaseAuth mAuth;
-
     FirebaseUser currentUser;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
         initializeViewElements(view);
         return view;
     }
 
     private void initializeViewElements(View view) {
         mAuth = FirebaseAuth.getInstance();
-        account=view.findViewById(R.id.accountTv);
-        notification=view.findViewById(R.id.notificationTv);
-        privacy=view.findViewById(R.id.privacyTv);
-        about=view.findViewById(R.id.aboutTv);
-        support=view.findViewById(R.id.supportTv);
-        logOut=view.findViewById(R.id.logoutTv);
+        account = view.findViewById(R.id.accountTv);
+        notification = view.findViewById(R.id.notificationTv);
+        privacy = view.findViewById(R.id.privacyTv);
+        about = view.findViewById(R.id.aboutTv);
+        support = view.findViewById(R.id.supportTv);
+        logOut = view.findViewById(R.id.logoutTv);
 
-
-        accountNp=view.findViewById(R.id.accountbackbtn);
-        notificationNp=view.findViewById(R.id.notificationbackbtn);
-        privacyNp=view.findViewById(R.id.privacybackbtn);
-        aboutNp=view.findViewById(R.id.aboutbackbtn);
-        supportNp=view.findViewById(R.id.supportbackbtn);
-        logOutNp=view.findViewById(R.id.logoutbackbtn);
+        accountNp = view.findViewById(R.id.accountbackbtn);
+        notificationNp = view.findViewById(R.id.notificationbackbtn);
+        privacyNp = view.findViewById(R.id.privacybackbtn);
+        aboutNp = view.findViewById(R.id.aboutbackbtn);
+        supportNp = view.findViewById(R.id.supportbackbtn);
+        logOutNp = view.findViewById(R.id.logoutbackbtn);
 
         loadNextPageBtn();
-        setupOnclickListiner();
+        setupOnClickListeners();
     }
 
-    private void setupOnclickListiner() {
+    private void setupOnClickListeners() {
         account.setOnClickListener(v -> {
 
         });
@@ -107,53 +107,54 @@ public class AccountFragment extends Fragment {
 
         });
 
-        logOut.setOnClickListener(v -> {
-            currentUser=mAuth.getCurrentUser();
-            mAuth.signOut();
-            startActivity(new Intent(getContext(), LoginActivity.class));
-            MainActivity.finishActivity();
-        });
+        logOut.setOnClickListener(v -> showLogoutDialog());
 
-        logOutNp.setOnClickListener(v -> {
-            currentUser=mAuth.getCurrentUser();
-            mAuth.signOut();
-            startActivity(new Intent(getContext(), LoginActivity.class));
-            MainActivity.finishActivity();
-        });
+        logOutNp.setOnClickListener(v -> showLogoutDialog());
+    }
 
-
+    private void showLogoutDialog() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    currentUser = mAuth.getCurrentUser();
+                    mAuth.signOut();
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                    MainActivity.finishActivity();
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     private void loadNextPageBtn() {
+        Glide.with(this)
+                .load(R.drawable.about)
+                .fitCenter()
+                .into(aboutNp);
 
         Glide.with(this)
-                .load(R.drawable.nextpage)
+                .load(R.drawable.username)
                 .fitCenter()
-                .into( aboutNp);
+                .into(accountNp);
 
         Glide.with(this)
-                .load(R.drawable.nextpage)
+                .load(R.drawable.lock)
                 .fitCenter()
-                .into( accountNp);
+                .into(privacyNp);
 
         Glide.with(this)
-                .load(R.drawable.nextpage)
+                .load(R.drawable.notification)
                 .fitCenter()
-                .into( privacyNp);
+                .into(notificationNp);
 
         Glide.with(this)
-                .load(R.drawable.nextpage)
+                .load(R.drawable.support)
                 .fitCenter()
-                .into( notificationNp);
+                .into(supportNp);
 
         Glide.with(this)
-                .load(R.drawable.nextpage)
+                .load(R.drawable.logout)
                 .fitCenter()
-                .into( supportNp);
-
-        Glide.with(this)
-                .load(R.drawable.nextpage)
-                .fitCenter()
-                .into( logOutNp);
+                .into(logOutNp);
     }
 }

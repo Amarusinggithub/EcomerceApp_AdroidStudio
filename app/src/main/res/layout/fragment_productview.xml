@@ -134,9 +134,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="The Hype 4 performs as portable studio monitors, and recalls back on the original meaning of in-ear monitors. From its wide soundstage to excellent stereo imaging and layering capabilities, the Hype 4 provides technical discernment that rivals even the best of studio monitors and monitoring headphones. The sub-bass-boosted neutral tuning signature is meant to deliver the exact tonality that the music was originally mixed on. The Hype 4 focuses on one thing - being as accurate and precise as it can. So, musicians, studio engineers, and audiophiles who want the real deal, the Hype 4 is the IEM for you."
-                android:textAlignment="gravity"
+                android:textAlignment="textStart"
                 android:textColor="@color/black"
-                android:textSize="17sp"
+                android:textSize="15sp"
                 />
 
             <Button
