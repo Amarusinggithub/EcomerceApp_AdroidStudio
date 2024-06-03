@@ -67,14 +67,13 @@ public class LoginActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 Drawable drawableEnd = passwordEditText.getCompoundDrawables()[2];
                 if (drawableEnd != null && event.getRawX() >= (passwordEditText.getRight() - drawableEnd.getBounds().width())) {
-                    // Toggle password visibility
+
                     if (isPasswordVisible) {
                         passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     } else {
                         passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     }
                     isPasswordVisible = !isPasswordVisible;
-                    // Move the cursor to the end of the text
                     passwordEditText.setSelection(passwordEditText.getText().length());
                     return true;
                 }

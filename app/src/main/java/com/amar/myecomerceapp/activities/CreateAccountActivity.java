@@ -3,10 +3,15 @@ package com.amar.myecomerceapp.activities;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -42,7 +47,10 @@ public class CreateAccountActivity extends AppCompatActivity {
     String password;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
+    private boolean isPasswordVisible=false;
+    private boolean isConfirmPasswordVisible=false;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +76,43 @@ public class CreateAccountActivity extends AppCompatActivity {
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
+        });
+
+        passwordEt.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                Drawable drawableEnd =  passwordEt.getCompoundDrawables()[2];
+                if (drawableEnd != null && event.getRawX() >= ( passwordEt.getRight() - drawableEnd.getBounds().width())) {
+
+                    if (isPasswordVisible) {
+                        passwordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    } else {
+                        passwordEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    }
+                    isPasswordVisible = !isPasswordVisible;
+                    passwordEt.setSelection(passwordEt.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
+
+
+        confirmPasswordEt.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                Drawable drawableEnd =  confirmPasswordEt.getCompoundDrawables()[2];
+                if (drawableEnd != null && event.getRawX() >= ( confirmPasswordEt.getRight() - drawableEnd.getBounds().width())) {
+
+                    if (isConfirmPasswordVisible) {
+                        confirmPasswordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    } else {
+                        confirmPasswordEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    }
+                    isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                    confirmPasswordEt.setSelection(confirmPasswordEt.getText().length());
+                    return true;
+                }
+            }
+            return false;
         });
 
     }

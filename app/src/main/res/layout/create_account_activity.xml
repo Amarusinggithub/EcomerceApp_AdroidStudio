@@ -17,9 +17,9 @@
         android:text="signup"
         android:textStyle="bold"
         android:textAlignment="center"
-        android:textAllCaps="true"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textAllCaps="true"
+        android:textSize="45sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -31,11 +31,11 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="660dp"
         app:cardCornerRadius="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="130dp">
+        android:layout_marginTop="120dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="10dp"/>
 
             <EditText
                 android:id="@+id/usernameet"
@@ -73,7 +73,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="10dp"/>
 
 
 
@@ -88,7 +88,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="10dp"/>
 
             <EditText
                 android:id="@+id/emailet"
@@ -108,7 +108,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/passwordtv"
@@ -142,7 +142,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/confirmpasswordtv"
@@ -156,7 +156,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="10dp"/>
 
             <EditText
                 android:id="@+id/confirmpasswordet"
@@ -177,7 +177,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 tools:ignore="HardcodedText" />
 
             <Button
@@ -194,7 +194,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -202,13 +202,13 @@
                 android:id="@+id/alreadyhaveanaccounttv"
                 android:layout_below="@id/signupbtn"
                 android:text="Already Have An Account?"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -223,8 +223,7 @@
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="70dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 tools:ignore="HardcodedText" />
 
         </RelativeLayout>
