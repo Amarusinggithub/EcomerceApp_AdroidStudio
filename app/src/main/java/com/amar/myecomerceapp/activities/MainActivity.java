@@ -31,8 +31,6 @@ import java.util.Objects;
 import java.util.Random;
 
 
-
-
 public class MainActivity extends AppCompatActivity {
     public static final String STRIPE_SECRET_KEY = "sk_test_51PEvksP13euDVuhqWG2M6aI09MAAI9tKJwiJxjuCF4YRX6nRsbkEPRtD4cRM8LujTGKfApzYvTJsezSeW4Ckl8Vx00khuc6HHr";
     public static final String STRIPE_PUBLISH_KEY = "pk_test_51PEvksP13euDVuhqdujVacuTKlz9tSOoBW2CwTlUhgkn6xgUwDgoYFgMR7eYFFGQUFGWVlJz4yRlndv65mBtLB1p00ICZgRXGU";
@@ -228,11 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Log.w("Firestore", "Error updating document", e));
     }
 
-   /* @Override
-    protected void onRestart() {
-        super.onRestart();
-        getUserFromDatabase();
-    }*/
+
 
     public static void finishActivity() {
         instance.finish();
